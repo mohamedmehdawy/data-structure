@@ -2,13 +2,44 @@ import ctypes
 
 class Array:
     def __init__(self, size):
-        self.array_data_type = ctypes.py_object * size
-        self.memory = self.array_data_type()
-        self.size = size
+        self._capacity = max(16, size * 2) # actual memory size
+        self.size = size # user size
         
-        for i in range(size):
+        # create array
+        self.array_data_type = ctypes.py_object * self._capacity
+        self.memory = self.array_data_type()
+        
+        for i in range(self._capacity):
             self.memory[i] = None
         
+
+    def expend_capacity(self):
+        # set new value to capacity
+        self._capacity *= 2
+        print(f"expend capacity: {self._capacity}")
+        
+        # create new array
+        array_data_type = ctypes.py_object * self._capacity
+        new_memory = array_data_type()
+        
+        # copy old data
+        for i in range(self.size):
+            new_memory[i] = self.memory[i]
+        
+        # delete old memory
+        del self.memory
+        self.memory = new_memory
+    
+    def append(self, item):
+        # check if size arrive to capacity
+        if self._capacity == self.size:
+            self.expend_capacity()
+        
+        # set item
+        self.memory[self.size] = item
+        self.size += 1
+    
+    # magic methods
     def __len__(self):
         return self.size
     
@@ -17,24 +48,17 @@ class Array:
     
     def __setitem__(self, idx, value):
         self.memory[idx] = value
-    def append(self, item):
-        # create new array
-        array_data_type = ctypes.py_object * (self.size + 1)
-        new_memory = array_data_type()
-        
-        # copy old array
+    
+    def __repr__(self) -> str:
+        result = '['
         for i in range(self.size):
-            new_memory[i] = self.memory[i]
-            
-        # put new element
-        new_memory[self.size] = item
-        self.size += 1
-        
-        # del old array
-        del self.memory
-        self.memory = new_memory
-
-arr = Array(1)
-arr[0] = "ahmed"
-arr.append(20)
-print(arr[1])
+            result += f"{self.memory[i]}{', ' if i != self.size - 1 else ''}"
+        result += ']'
+        return result
+    
+if __name__ == "__main__":
+    arr = Array(3)
+    arr.append(20)
+    print(arr)
+    for i in range(10 ** 6):
+        arr.append(i)
