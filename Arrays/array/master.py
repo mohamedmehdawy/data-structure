@@ -40,7 +40,8 @@ class Array:
         self.size += 1
     
     def insert(self, idx, item):
-        assert 0 <= idx < self.size, "out of range"
+        if idx < 0 or idx >= self.size:
+            raise Exception("out of range")
         
         # check if size arrive to capacity
         if self._capacity == self.size:
@@ -72,6 +73,7 @@ class Array:
         result += ']'
         return result
     
+
 if __name__ == "__main__":
     arr = Array(7)
     for i in range(7):
