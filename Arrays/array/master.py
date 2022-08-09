@@ -39,6 +39,22 @@ class Array:
         self.memory[self.size] = item
         self.size += 1
     
+    def insert(self, idx, item):
+        assert 0 <= idx < self.size, "out of range"
+        
+        # check if size arrive to capacity
+        if self._capacity == self.size:
+            self.expend_capacity()
+            
+        current = self.size - 1
+        
+        while current >= idx:
+            self.memory[current + 1] = self.memory[current]
+            current -= 1
+        
+        self.memory[idx] = item
+        self.size += 1
+        
     # magic methods
     def __len__(self):
         return self.size
@@ -57,8 +73,13 @@ class Array:
         return result
     
 if __name__ == "__main__":
-    arr = Array(3)
+    arr = Array(7)
+    for i in range(7):
+        arr[i] = i + 1
     arr.append(20)
     print(arr)
-    for i in range(10 ** 6):
-        arr.append(i)
+    # for i in range(10 ** 6):
+    #     arr.append(i)
+    arr.insert(2, "moamed")
+    print(arr._capacity)
+    print(arr)
