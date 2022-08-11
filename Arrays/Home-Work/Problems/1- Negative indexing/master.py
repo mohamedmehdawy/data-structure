@@ -1,4 +1,5 @@
 
+from array import array
 import ctypes
 
 class Array:
@@ -41,6 +42,9 @@ class Array:
         self.size += 1
     
     def insert(self, idx, item):
+        if type(idx) != int:
+            raise Exception("you should enter valid index")
+        
         if (self.size * -1) > idx or idx >= self.size:
             raise Exception("out of range")
         
