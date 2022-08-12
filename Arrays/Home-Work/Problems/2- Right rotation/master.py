@@ -65,7 +65,7 @@ class Array:
         self.memory[idx] = item
         self.size += 1
         
-    def right_rotation(self):
+    def right_rotate(self):
         current = self.memory[self.size - 1]
         
         for i in range(self.size - 2, -1, -1):
@@ -90,5 +90,5 @@ class Array:
     
 array = Array(1)
 array[0] = 1
-array.right_rotation()
+array.right_rotate()
 print(array)
