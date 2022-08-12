@@ -65,12 +65,18 @@ class Array:
         self.memory[idx] = item
         self.size += 1
         
-    def right_rotation(self):
+    def right_rotate(self):
         current = self.memory[self.size - 1]
         
         for i in range(self.size - 2, -1, -1):
             self.memory[i+1] = self.memory[i]
         self.memory[0] = current
+    
+    def left_rotate(self):
+        current = self.memory[0]
+        for i in range(1, self.size):
+            self.memory[i - 1] = self.memory[i]
+        self.memory[self.size - 1] = current
     # magic methods
     def __len__(self):
         return self.size
@@ -87,4 +93,15 @@ class Array:
             result += f"{self.memory[i]}{', ' if i != self.size - 1 else ''}"
         result += ']'
         return result
+    
+
+array = Array(0)
+for i in range(5):
+    array.append(i)
+
+print(array)
+array.left_rotate()
+print(array)
+array.left_rotate()
+print(array)
     
