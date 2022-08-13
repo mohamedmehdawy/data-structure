@@ -12,7 +12,22 @@ class Array:
 
         for i in range(self._capacity):
             self.memory[i] = None
-
+    
+    def check_range(self, idx):
+        """
+            if index is out of the range raise error
+        """
+        if type(idx) != int:
+            raise Exception("you should enter valid index")
+        
+        if  idx < (self.size * -1) or idx >= self.size:
+            raise Exception("out of range")
+        
+        if idx < 0:
+            return idx + self.size
+        else:
+            return idx
+    
     def expend_capacity(self):
         # set new value to capacity
         self._capacity *= 2
@@ -40,15 +55,8 @@ class Array:
         self.size += 1
 
     def insert(self, idx, item):
-        if type(idx) != int:
-            raise Exception("you should enter valid index")
 
-        if (self.size * -1) > idx or idx >= self.size:
-            raise Exception("out of range")
-
-        # convert to real index if is less than 0
-        if idx < 0:
-            idx = self.size + idx
+        idx = self.check_range(idx)
 
         # check if size arrive to capacity
         if self._capacity == self.size:
@@ -79,6 +87,18 @@ class Array:
         for i in range(1, self.size):
             self.memory[i - 1] = self.memory[i]
         self.memory[self.size - 1] = current
+    
+    def pop(self, idx):
+        idx = self.check_range(idx)
+        
+        target = self.memory[idx]
+        
+        for i in range(idx, self.size - 1):
+            self.memory[i] = self.memory[i+1]
+            
+        self.size -= 1
+        return target
+            
     # magic methods
 
     def __len__(self):
@@ -99,11 +119,21 @@ class Array:
 
 
 array = Array(0)
-for i in range(5):
+for i in range(10, 50, 10):
     array.append(i)
-
-# print(array)
-array.right_rotate_steps(3)
+    
 print(array)
-array.right_rotate_steps(10)
+
+print(array.pop(0))
+print(array)
+print(array.pop(2))
+print(array)
+
+for i in range(60, 90, 10):
+    array.append(i)
+    
+print(array.pop(-1))
+print(array)
+
+print(array.pop(-4))
 print(array)
