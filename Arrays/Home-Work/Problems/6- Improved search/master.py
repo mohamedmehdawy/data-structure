@@ -99,6 +99,17 @@ class Array:
         self.size -= 1
         return target
             
+    def index_transposition(self, value):
+        for i in range(self.size):
+            if self.memory[i] == value:
+                if i != 0:
+                    prev = self.memory[i - 1]
+                    self.memory[i - 1] = self.memory[i]
+                    self.memory[i] = prev
+                    return i - 1
+                else:
+                    return i
+        return -1
     # magic methods
 
     def __len__(self):
@@ -119,21 +130,16 @@ class Array:
 
 
 array = Array(0)
-for i in range(10, 50, 10):
+for i in range(10, 60, 10):
     array.append(i)
     
-print(array)
 
-print(array.pop(0))
 print(array)
-print(array.pop(2))
+print(array.index_transposition(10))
 print(array)
-
-for i in range(60, 90, 10):
-    array.append(i)
-    
-print(array.pop(-1))
+print(array.index_transposition(50))
 print(array)
-
-print(array.pop(-4))
+print(array.index_transposition(50))
+print(array)
+print(array.index_transposition(60))
 print(array)
