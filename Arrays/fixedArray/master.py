@@ -55,25 +55,37 @@ class Array:
         self.size += 1
 
     def insert(self, idx, item):
-
-        idx = self.check_range(idx)
-
+        if type(idx) != int:
+            raise Exception("you should enter valid index")
+        
+        if idx >= self.size:
+            self.append(item)
+            return
+        
+        if idx < -self.size:
+            idx = -self.size
+    
+        # convert to real index if is less than 0
+        if idx < 0:
+            idx += self.size
+            
         # check if size arrive to capacity
         if self._capacity == self.size:
             self.expend_capacity()
-
+            
         current = self.size - 1
-
+        
         while current >= idx:
             self.memory[current + 1] = self.memory[current]
             current -= 1
-
+        
         self.memory[idx] = item
         self.size += 1
-
+        
     def right_rotate(self):
+        if self.size < 1:
+            return
         current = self.memory[self.size - 1]
-
         for i in range(self.size - 2, -1, -1):
             self.memory[i+1] = self.memory[i]
         self.memory[0] = current
@@ -83,11 +95,13 @@ class Array:
             self.right_rotate()
 
     def left_rotate(self):
+        if self.size < 1:
+            return
         current = self.memory[0]
         for i in range(1, self.size):
             self.memory[i - 1] = self.memory[i]
         self.memory[self.size - 1] = current
-    
+        
     def pop(self, idx):
         idx = self.check_range(idx)
         
@@ -103,9 +117,7 @@ class Array:
         for i in range(self.size):
             if self.memory[i] == value:
                 if i != 0:
-                    prev = self.memory[i - 1]
-                    self.memory[i - 1] = self.memory[i]
-                    self.memory[i] = prev
+                    self.memory[i], self.memory[i - 1] = self.memory[i - 1], self.memory[i]
                     return i - 1
                 else:
                     return i
@@ -127,20 +139,3 @@ class Array:
             result += f"{self.memory[i]}{', ' if i != self.size - 1 else ''}"
         result += ']'
         return result
-
-
-if __name__ == "__main__":
-    array = Array(0)
-    for i in range(10, 60, 10):
-        array.append(i)
-        
-
-    print(array)
-    print(array.index_transposition(10))
-    print(array)
-    print(array.index_transposition(50))
-    print(array)
-    print(array.index_transposition(50))
-    print(array)
-    print(array.index_transposition(60))
-    print(array)
