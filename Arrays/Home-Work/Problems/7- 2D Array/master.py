@@ -3,7 +3,7 @@ sys.path.append("d:\\My-Work\\python\\data strucure\\Arrays")
 from fixedArray import Array
 
 class Array2D:
-    def __init__(self, row, column, init_value = 0):
+    def __init__(self, row, column, init_value = None):
         self.row = row
         self.column = column
         self.memory = Array(row)
@@ -45,20 +45,24 @@ class Array2D:
             result += "["
             for j in range(self.column):
                 result += f"{self.memory[i][j]}{', ' if j != self.column - 1 else ''}"
-            result += "]"
+            result += f"]{', ' if i != self.row - 1 else ''}"
         result += "]"
         return result
     
 if __name__ == "__main__":
+    
     array = Array2D(2, 4)
-    array2 = Array2D(2, 4)
-    array[0][2] = 3
-    array[1][1] = 5
-    array[1][3] = 7
-    array2[0][2] = 2
-    array2[1][1] = 10
-    array2[1][3] = 3
-    print(array * array2)
+    array[0][1] = 10
+    print(array[0][1])
+    print(array)
+    # array2 = Array2D(2, 4)
+    # array[0][2] = 3
+    # array[1][1] = 5
+    # array[1][3] = 7
+    # array2[0][2] = 2
+    # array2[1][1] = 10
+    # array2[1][3] = 3
+    # print(array * array2)
 
     # print(array)
     # print(array)

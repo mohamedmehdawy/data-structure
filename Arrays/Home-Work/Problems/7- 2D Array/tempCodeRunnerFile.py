@@ -1,1 +1,1 @@
-print(sys.path)
+sys.path.append("d:\\My-Work\\python\\data strucure\\Arrays")
