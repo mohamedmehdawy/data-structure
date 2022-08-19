@@ -43,12 +43,16 @@ class Array:
         if type(idx) != int:
             raise Exception("you should enter valid index")
         
-        if (self.size * -1) > idx or idx >= self.size:
-            raise Exception("out of range")
+        if idx >= self.size:
+            self.append(item)
+            return
         
+        if idx < -self.size:
+            idx = -self.size
+    
         # convert to real index if is less than 0
         if idx < 0:
-            idx = self.size + idx
+            idx += self.size
             
         # check if size arrive to capacity
         if self._capacity == self.size:
