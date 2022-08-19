@@ -43,12 +43,16 @@ class Array:
         if type(idx) != int:
             raise Exception("you should enter valid index")
         
-        if (self.size * -1) > idx or idx >= self.size:
-            raise Exception("out of range")
+        if idx >= self.size:
+            self.append(item)
+            return
         
+        if idx < -self.size:
+            idx = -self.size
+    
         # convert to real index if is less than 0
         if idx < 0:
-            idx = self.size + idx
+            idx += self.size
             
         # check if size arrive to capacity
         if self._capacity == self.size:
@@ -64,13 +68,16 @@ class Array:
         self.size += 1
         
     def right_rotate(self):
+        if self.size == 0:
+            return
         current = self.memory[self.size - 1]
-        
         for i in range(self.size - 2, -1, -1):
             self.memory[i+1] = self.memory[i]
         self.memory[0] = current
     
     def left_rotate(self):
+        if self.size == 0:
+            return
         current = self.memory[0]
         for i in range(1, self.size):
             self.memory[i - 1] = self.memory[i]
