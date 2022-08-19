@@ -64,8 +64,9 @@ class Array:
         self.size += 1
         
     def right_rotate(self):
+        if self.size == 0:
+            return
         current = self.memory[self.size - 1]
-        
         for i in range(self.size - 2, -1, -1):
             self.memory[i+1] = self.memory[i]
         self.memory[0] = current
@@ -86,7 +87,3 @@ class Array:
         result += ']'
         return result
     
-array = Array(1)
-array[0] = 1
-array.right_rotate()
-print(array)
