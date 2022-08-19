@@ -68,7 +68,7 @@ class Array:
         self.size += 1
         
     def right_rotate(self):
-        if self.size == 0:
+        if self.size < 1:
             return
         current = self.memory[self.size - 1]
         for i in range(self.size - 2, -1, -1):
@@ -76,7 +76,7 @@ class Array:
         self.memory[0] = current
     
     def left_rotate(self):
-        if self.size == 0:
+        if self.size < 1:
             return
         current = self.memory[0]
         for i in range(1, self.size):
