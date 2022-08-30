@@ -1,0 +1,1 @@
+print(id(node3.next))
