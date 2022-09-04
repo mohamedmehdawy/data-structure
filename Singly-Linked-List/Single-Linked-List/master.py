@@ -30,24 +30,32 @@ class LinkedList:
             return current
         return None
 
+    def index(self, value):
+        temp_head = self.head
+        idx = 0
+        while temp_head:
+            if temp_head.data == value:
+                return idx
+            temp_head = temp_head.next
+            idx += 1
+        return -1
+    
     def __len__(self):
         return self.length
     
     def __iter__(self):
         current = self.head
-        while current is not None:
+        while current:
             yield current
             current = current.next
         
 
 ll = LinkedList()
 
-for n in range(5):
-    ll.insert_end(n)
+ll.insert_end(6)
+ll.insert_end(10)
+ll.insert_end(8)
+ll.insert_end(15)
 
-for item in ll:
-    print(item)
-    
-
-print(f"length => {len(ll)}")
-print(ll.get_nth(5))
+for value in [6, 10, 8, 15, 99]:
+    print(f"index of {value} => {ll.index(value)}")
