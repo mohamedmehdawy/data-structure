@@ -1,1 +1,1 @@
-print(id(node3.next))
+index_transposition
