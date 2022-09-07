@@ -12,8 +12,8 @@ class LinkedList:
         self.head = None
         self.tail = None
         self.length = 0
-        
-        if init_values:
+        self._debug_data = []
+        if init_values: 
             for value in init_values:
                 self.insert_end(value)
 
@@ -25,6 +25,7 @@ class LinkedList:
             self.tail.next = node
             self.tail = node
         self.length += 1
+        self._debug_data.append(node)
 
     def get_nth(self, n):
         if n <= self.length:
@@ -59,6 +60,62 @@ class LinkedList:
             idx += 1
         return -1
 
+    def _debug_verify_data_integrity(self):
+        if self.length == 0:
+            assert self.head == None
+            assert self.tail == None
+            return
+        
+        assert self.head != None
+        assert self.tail != None
+        assert self.tail.next == None
+        
+        if self.length == 1:
+            assert self.head == self.tail
+        elif self.length == 2:
+            assert self.head.next == self.tail
+        else:
+            temp_head = self.head
+            counter = 0
+            
+            while temp_head:
+                temp_head = temp_head.next
+                counter += 1
+                assert counter < 1000
+                
+            assert self.length == counter
+            assert self.length == len(self._debug_data)
+        
+        return "all is good"
+    def _debug_print_exsiting_nodes(self):
+        result = ""
+        temp_head = self.head
+        while temp_head:
+            result += f"{temp_head}\t->\t{temp_head.next}"
+            if temp_head == self.head:
+                result += "\t head"
+            elif temp_head.next == None:
+                result += "\t tail"
+            result += "\n"
+            temp_head = temp_head.next
+
+        result += "*" * 30
+        return result
+    
+    def _debug_print_address(self):
+        result = ""
+        temp_head = self.head
+        while temp_head:
+            result += f"{id(temp_head)}\t->\t{id(temp_head.next) if temp_head.next else temp_head.next}"
+            if temp_head == self.head:
+                result += "\t head"
+            elif temp_head.next == None:
+                result += "\t tail"
+            result += "\n"
+            temp_head = temp_head.next
+
+        result += "*" * 30
+        return result
     def __repr__(self) -> str:
         result = "["
         temp_head = self.head
@@ -78,11 +135,14 @@ class LinkedList:
             current = current.next
         
 
-ll = LinkedList([6, 10, 8, 15])
-print(ll)
-for value in [15, 15, 15, 15, 15]:
-    print(f"index of {value} => {ll.index_transposition(value)}")
-    print(ll)
-for value in [8, 6, 99]:
-    print(f"index of {value} => {ll.index_transposition(value)}")
-    print(ll)
+ll = LinkedList([1, 2])
+print(ll._debug_print_exsiting_nodes())
+print(ll._debug_print_address())
+# for value in [15, 15, 15, 15, 15]:
+#     print(f"index of {value} => {ll.index_transposition(value)}")
+#     print(ll)
+# for value in [8, 6, 99]:
+#     print(f"index of {value} => {ll.index_transposition(value)}")
+#     print(ll)
+
+print(ll._debug_verify_data_integrity())
