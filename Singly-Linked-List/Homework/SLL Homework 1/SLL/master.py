@@ -1,3 +1,6 @@
+from unittest import result
+
+
 class Node:
     def __init__(self, value, next=None):
         self.data = value
@@ -132,6 +135,7 @@ class LinkedList:
 
         result += "*" * 30
         return result
+
     def __repr__(self) -> str:
         result = "["
         temp_head = self.head
@@ -151,7 +155,37 @@ class LinkedList:
             current = current.next
         
 
-ll = LinkedList([1, 2, 3, 4])
-ll.insert_front(5)
-ll.insert_front(2)
-print(ll._debug_print_exsiting_nodes())
+def test1(data, expected):
+    lst = LinkedList(data)
+    print(lst._debug_print_exsiting_nodes())
+    result = str(lst)
+    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
+    print("PASSED")
+
+def test2(data, expected):
+    lst = LinkedList(data)
+    lst.insert_front(2)
+    print(lst._debug_print_exsiting_nodes())
+    result = str(lst)
+    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
+    print("PASSED")
+    
+
+def test3(data, expected):
+    lst = LinkedList(data)
+    lst.insert_front(2)
+    lst.insert_front(3)
+    print(lst._debug_print_exsiting_nodes())
+    result = str(lst)
+    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
+    print("PASSED")
+# ll = LinkedList([1, 2])
+# ll.insert_front(5)
+# ll.insert_front(2)
+# print(ll._debug_print_exsiting_nodes())
+
+
+if __name__ == "__main__":
+    # test1([1,2], "[1,2]")
+    # test2([1], "[2,1]")
+    test3([1], "[3,2,1]")
