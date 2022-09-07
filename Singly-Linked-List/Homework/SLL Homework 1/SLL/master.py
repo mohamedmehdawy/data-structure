@@ -16,8 +16,24 @@ class LinkedList:
         if init_values: 
             for value in init_values:
                 self.insert_end(value)
-
+    def insert_front(self, value):
+        """
+            Time: O(1)
+            Memory: O(1)
+        """
+        node = Node(value)
+        if self.head == None:
+            self.head = self.tail = node
+        else:
+            node.next = self.head
+            self.head = node
+        self.length += 1
+        
     def insert_end(self, value):
+        """
+            Time: O(1)
+            Memory: O(1)
+        """
         node = Node(value)
         if self.head == None:
             self.head = self.tail = node
@@ -84,7 +100,7 @@ class LinkedList:
                 assert counter < 1000
                 
             assert self.length == counter
-            assert self.length == len(self._debug_data)
+            # assert self.length == len(self._debug_data)
         
         return "all is good"
     def _debug_print_exsiting_nodes(self):
@@ -135,14 +151,7 @@ class LinkedList:
             current = current.next
         
 
-ll = LinkedList([1, 2])
+ll = LinkedList([1, 2, 3, 4])
+ll.insert_front(5)
+ll.insert_front(2)
 print(ll._debug_print_exsiting_nodes())
-print(ll._debug_print_address())
-# for value in [15, 15, 15, 15, 15]:
-#     print(f"index of {value} => {ll.index_transposition(value)}")
-#     print(ll)
-# for value in [8, 6, 99]:
-#     print(f"index of {value} => {ll.index_transposition(value)}")
-#     print(ll)
-
-print(ll._debug_verify_data_integrity())
