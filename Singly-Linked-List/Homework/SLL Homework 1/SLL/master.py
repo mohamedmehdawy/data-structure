@@ -1,6 +1,3 @@
-from unittest import result
-
-
 class Node:
     def __init__(self, value, next=None):
         self.data = value
@@ -50,6 +47,18 @@ class LinkedList:
             self.tail.next = node
             self.tail = node
         self._add_node(node)
+    def delete_front(self):
+        """
+            Time: O(1)
+            Memory: O(1)
+        """
+        if self.head:
+            node = self.head
+            self.head = self.head.next
+            self._delete_node(node)
+            del node
+            if self.length < 1:
+                self.tail = self.head
 
     def get_nth(self, n):
         if n <= self.length:
@@ -169,7 +178,7 @@ def test1(data, expected):
 
 def test2(data, expected):
     lst = LinkedList(data)
-    lst.insert_front(2)
+    lst.delete_front()
     print(lst._debug_print_exsiting_nodes())
     result = str(lst)
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
@@ -178,8 +187,10 @@ def test2(data, expected):
 
 def test3(data, expected):
     lst = LinkedList(data)
-    lst.insert_front(2)
-    lst.insert_front(3)
+    lst.delete_front()
+    lst.delete_front()
+    lst.delete_front()
+    print(lst.tail)
     print(lst._debug_print_exsiting_nodes())
     result = str(lst)
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
@@ -191,6 +202,6 @@ def test3(data, expected):
 
 
 if __name__ == "__main__":
-    # test1([1,2], "[1,2]")
-    # test2([1], "[2,1]")
-    test3([1], "[3,2,1]")
+    test1([1,2,3], "[1,2,3]")
+    test2([1], "[]")
+    test3([1,2,3], "[]")
