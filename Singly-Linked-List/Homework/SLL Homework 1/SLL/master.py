@@ -19,6 +19,12 @@ class LinkedList:
         if init_values: 
             for value in init_values:
                 self.insert_end(value)
+    def _add_node(self, node):
+        self._debug_data.append(node)
+        self.length += 1
+    def _delete_node(self, node):
+        self._debug_data.remove(node)
+        self.length -= 1
     def insert_front(self, value):
         """
             Time: O(1)
@@ -30,7 +36,7 @@ class LinkedList:
         else:
             node.next = self.head
             self.head = node
-        self.length += 1
+        self._add_node(node)
         
     def insert_end(self, value):
         """
@@ -43,8 +49,7 @@ class LinkedList:
         else:
             self.tail.next = node
             self.tail = node
-        self.length += 1
-        self._debug_data.append(node)
+        self._add_node(node)
 
     def get_nth(self, n):
         if n <= self.length:
