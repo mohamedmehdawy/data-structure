@@ -67,7 +67,12 @@ class LinkedList:
                 current = current.next
             return current
         return None
-
+    def get_nth_back(self, n):
+        """
+            Time: O(n)
+            Memeory: O(1)
+        """
+        return self.get_nth(self.length - n + 1)
     
     def index(self, value):
         temp_head = self.head
@@ -179,18 +184,15 @@ def test1(data, expected):
 
 def test2(data, expected):
     lst = LinkedList(data)
-    lst.delete_front()
     print(lst._debug_print_exsiting_nodes())
-    result = str(lst)
+    result = str(lst.get_nth_back(3))
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
     
 
 def test3(data, expected):
     lst = LinkedList(data)
-    lst.delete_front()
-    lst.delete_front()
-    lst.delete_front()
+    lst.get_nth(20)
     print(lst.tail)
     print(lst._debug_print_exsiting_nodes())
     result = str(lst)
@@ -203,7 +205,8 @@ def test3(data, expected):
 
 
 if __name__ == "__main__":
-    # test1([1,2,3], "[1,2,3]")
-    # test2([1], "[]")
+    test1([1,2,3], "[1,2,3]")
+    test2([6, 10, 8, 15], "10")
     # test3([1,2,3], "[]")
-    pass
+    
+    print("ALL CASES PASSED")
