@@ -68,6 +68,7 @@ class LinkedList:
             return current
         return None
 
+    
     def index(self, value):
         temp_head = self.head
         idx = 0
@@ -202,6 +203,7 @@ def test3(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1,2,3], "[1,2,3]")
-    test2([1], "[]")
-    test3([1,2,3], "[]")
+    # test1([1,2,3], "[1,2,3]")
+    # test2([1], "[]")
+    # test3([1,2,3], "[]")
+    pass
