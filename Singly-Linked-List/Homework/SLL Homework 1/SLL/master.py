@@ -1,3 +1,5 @@
+
+
 class Node:
     def __init__(self, value, next=None):
         self.data = value
@@ -74,6 +76,38 @@ class LinkedList:
         """
         return self.get_nth(self.length - n + 1)
     
+    def is_identical_data(self, ll):
+        """
+            Time: O(n)
+            Memery: O(1)
+        """
+        len1 = 0
+        len2 = 0
+        
+        temp_head = self.head
+        while temp_head:
+            len1 += 1
+            temp_head = temp_head.next
+        temp_head = ll.head
+        while temp_head:
+
+            len2 += 1
+            temp_head = temp_head.next
+            if len2 > len1:
+                return False
+        if len1 + len2 == 0:
+            return True
+        elif len1 == len2:
+            first_temp = self.head
+            second_temp = ll.head
+            
+            while first_temp:
+                if first_temp.data != second_temp.data:
+                    return False
+                first_temp = first_temp.next
+                second_temp = second_temp.next
+            return True
+        return False
     def index(self, value):
         temp_head = self.head
         idx = 0
@@ -177,36 +211,42 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
+    lst2 = LinkedList()
     print(lst._debug_print_exsiting_nodes())
-    result = str(lst)
+    result = lst.is_identical_data(lst2)
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
 
 def test2(data, expected):
     lst = LinkedList(data)
+    lst2 = LinkedList([1])
     print(lst._debug_print_exsiting_nodes())
-    result = str(lst.get_nth_back(3))
+    result = lst.is_identical_data(lst2)
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
     
 
 def test3(data, expected):
     lst = LinkedList(data)
-    lst.get_nth(20)
-    print(lst.tail)
+    lst2 = LinkedList([1, 2, 3, 4 ,5])
     print(lst._debug_print_exsiting_nodes())
-    result = str(lst)
+    result = lst.is_identical_data(lst2)
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
-# ll = LinkedList([1, 2])
-# ll.insert_front(5)
-# ll.insert_front(2)
-# print(ll._debug_print_exsiting_nodes())
+def test4(data, expected):
+    lst = LinkedList(data)
+    lst2 = LinkedList([1,2,3,4])
+    print(lst._debug_print_exsiting_nodes())
+    result = lst.is_identical_data(lst2)
+    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
+    print("PASSED")
 
 
 if __name__ == "__main__":
-    test1([1,2,3], "[1,2,3]")
-    test2([6, 10, 8, 15], "10")
-    # test3([1,2,3], "[]")
+    test1([], True)
+    test2([1], True)
+    test3([1,2,3,4,5], True)
+    test4([], False)
     
     print("ALL CASES PASSED")
+
