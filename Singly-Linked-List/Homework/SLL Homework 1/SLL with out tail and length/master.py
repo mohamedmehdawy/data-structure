@@ -15,6 +15,10 @@ class LinkedList:
             for value in initial_values:
                 self.add_element(value)
     def add_element(self, value):
+        """
+            Time: O(1)
+            Memory: O(1)
+        """
         node = Node(value)
         
         if not self.head:
@@ -23,6 +27,10 @@ class LinkedList:
             node.next = self.head
             self.head = node
     def get_tail(self):
+        """
+            Time: O(n)
+            Memory: O(1)
+        """
         temp_head = self.head
         while temp_head and temp_head.next:
             temp_head = temp_head.next
