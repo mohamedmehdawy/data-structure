@@ -20,12 +20,8 @@ class LinkedList:
             Memory: O(1)
         """
         node = Node(value)
-        
-        if not self.head:
-            self.head = node
-        else:
-            node.next = self.head
-            self.head = node
+        node.next = self.head
+        self.head = node
     def get_tail(self):
         """
             Time: O(n)
