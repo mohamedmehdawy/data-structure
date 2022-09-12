@@ -20,6 +20,7 @@ class LinkedList:
                 self.insert_end(value)
     def _add_node(self, node):
         self._debug_data.append(node)
+        del node
         self.length += 1
     def _delete_node(self, node):
         self._debug_data.remove(node)
@@ -36,6 +37,7 @@ class LinkedList:
             node.next = self.head
             self.head = node
         self._add_node(node)
+        self._debug_verify_data_integrity()
         
     def insert_end(self, value):
         """
@@ -58,7 +60,6 @@ class LinkedList:
             node = self.head
             self.head = self.head.next
             self._delete_node(node)
-            del node
             if self.length < 1:
                 self.tail = self.head
 
@@ -81,33 +82,13 @@ class LinkedList:
             Time: O(n)
             Memery: O(1)
         """
-        len1 = 0
-        len2 = 0
+        h1, h2 = self.head, ll.head
         
-        temp_head = self.head
-        while temp_head:
-            len1 += 1
-            temp_head = temp_head.next
-        temp_head = ll.head
-        while temp_head:
-
-            len2 += 1
-            temp_head = temp_head.next
-            if len2 > len1:
+        while h1 and h2:
+            if h1.data != h2.data:
                 return False
-        if len1 + len2 == 0:
-            return True
-        elif len1 == len2:
-            first_temp = self.head
-            second_temp = ll.head
-            
-            while first_temp:
-                if first_temp.data != second_temp.data:
-                    return False
-                first_temp = first_temp.next
-                second_temp = second_temp.next
-            return True
-        return False
+            h1, h2 = h1.next, h2.next
+        return not h1 and not h2
     def index(self, value):
         temp_head = self.head
         idx = 0
@@ -243,10 +224,10 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test1([], True)
-    test2([1], True)
-    test3([1,2,3,4,5], True)
-    test4([], False)
+    # test1([], True)
+    # test2([1], True)
+    # test3([1,2,3,4,5], True)
+    # test4([], False)
     
     print("ALL CASES PASSED")
 
