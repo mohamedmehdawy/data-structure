@@ -20,10 +20,10 @@ class LinkedList:
                 self.insert_end(value)
     def _add_node(self, node):
         self._debug_data.append(node)
-        del node
         self.length += 1
     def _delete_node(self, node):
         self._debug_data.remove(node)
+        del node
         self.length -= 1
     def insert_front(self, value):
         """
@@ -62,7 +62,22 @@ class LinkedList:
             self._delete_node(node)
             if self.length < 1:
                 self.tail = self.head
-
+    def delete_back(self):
+        """
+            Time: O(n)
+            memory: O(1)
+        """
+        if self.head:
+            if self.head == self.tail:
+                self._delete_node(self.head)
+                self.head = self.tail = None
+            else: 
+                prev = self.head
+                while prev.next != self.tail:
+                    prev = prev.next
+                self._delete_node(self.tail)
+                self.tail = prev
+                prev.next = None
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
@@ -192,17 +207,20 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
-    lst2 = LinkedList()
+    lst.delete_front()
+    result = str(lst)
     print(lst._debug_print_exsiting_nodes())
-    result = lst.is_identical_data(lst2)
+    lst._debug_verify_data_integrity()
+
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
 
 def test2(data, expected):
     lst = LinkedList(data)
-    lst2 = LinkedList([1])
+    lst.delete_back()
+    result = str(lst)
     print(lst._debug_print_exsiting_nodes())
-    result = lst.is_identical_data(lst2)
+    lst._debug_verify_data_integrity()
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
     
@@ -224,10 +242,9 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    # test1([], True)
-    # test2([1], True)
-    # test3([1,2,3,4,5], True)
-    # test4([], False)
+    test1([1,3], "[3]")
+    test2([1,2], "[1]")
+
     
     print("ALL CASES PASSED")
 
