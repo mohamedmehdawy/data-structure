@@ -78,6 +78,26 @@ class LinkedList:
                 self._delete_node(self.tail)
                 self.tail = prev
                 prev.next = None
+    def delete_nth(self, n):
+        """
+            Time: O(n)
+            memory: O(1)
+        """
+        if self.length and n <= self.length and n > 0:
+            if n == 1:
+                self.delete_front()
+            elif n == self.length:
+                self.delete_back()
+            else:
+                current = self.head
+                prev = None
+                count = 1
+                while count != n:
+                    prev = current
+                    current = current.next
+                    count += 1
+                prev.next = current.next
+                self._delete_node(current)
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
@@ -207,7 +227,7 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
-    lst.delete_front()
+    lst.delete_nth(1)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -217,19 +237,22 @@ def test1(data, expected):
 
 def test2(data, expected):
     lst = LinkedList(data)
-    lst.delete_back()
+    lst.delete_nth(3)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
+
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
     
 
 def test3(data, expected):
     lst = LinkedList(data)
-    lst2 = LinkedList([1, 2, 3, 4 ,5])
+    lst.delete_nth(2)
+    result = str(lst)
     print(lst._debug_print_exsiting_nodes())
-    result = lst.is_identical_data(lst2)
+    lst._debug_verify_data_integrity()
+
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
 def test4(data, expected):
@@ -242,8 +265,9 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1,3], "[3]")
-    test2([1,2], "[1]")
+    test1([1, 2, 3], "[2,3]")
+    test2([1, 2, 3], "[1,2]")
+    test3([1, 2, 3, 4], "[1,3,4]")
 
     
     print("ALL CASES PASSED")
