@@ -98,6 +98,27 @@ class LinkedList:
                     count += 1
                 prev.next = current.next
                 self._delete_node(current)
+    def delete_value(self, value):
+        if self.length:
+            prev = None
+            current = self.head
+            
+            while current:
+                if current.data == value:
+                    break
+                prev = current
+                current = current.next
+            if current:
+                if current == self.head:
+                    self.delete_front()
+                elif current == self.tail:
+                    self.delete_back()
+                else:
+                    prev.next = current.next
+                    self._delete_node(current)
+                return                
+        return f"value=>{value}, is not found"
+        
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
@@ -227,7 +248,7 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
-    lst.delete_nth(1)
+    lst.delete_value(1)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -237,7 +258,7 @@ def test1(data, expected):
 
 def test2(data, expected):
     lst = LinkedList(data)
-    lst.delete_nth(3)
+    lst.delete_value(2)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -248,26 +269,30 @@ def test2(data, expected):
 
 def test3(data, expected):
     lst = LinkedList(data)
-    lst.delete_nth(2)
+    lst.delete_value(5)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
 
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
+
 def test4(data, expected):
     lst = LinkedList(data)
-    lst2 = LinkedList([1,2,3,4])
+    lst.delete_value(20)
+    result = str(lst)
     print(lst._debug_print_exsiting_nodes())
-    result = lst.is_identical_data(lst2)
+    lst._debug_verify_data_integrity()
+
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
 
 
 if __name__ == "__main__":
     test1([1, 2, 3], "[2,3]")
-    test2([1, 2, 3], "[1,2]")
-    test3([1, 2, 3, 4], "[1,3,4]")
+    test2([1, 2, 3], "[1,3]")
+    test3([1, 2,3,4,5], "[1,2,3,4]")
+    test4([1, 2,3,4,5], "[1,2,3,4,5]")
 
     
     print("ALL CASES PASSED")
