@@ -67,17 +67,14 @@ class LinkedList:
             Time: O(n)
             memory: O(1)
         """
-        if self.head:
-            if self.head == self.tail:
-                self._delete_node(self.head)
-                self.head = self.tail = None
-            else: 
-                prev = self.head
-                while prev.next != self.tail:
-                    prev = prev.next
-                self._delete_node(self.tail)
-                self.tail = prev
-                prev.next = None
+        if self.length <= 1:
+            self.delete_front()
+            return
+        else: 
+            prev = self.get_nth(self.length - 1)
+            self._delete_node(self.tail)
+            self.tail = prev
+            prev.next = None
     def delete_nth(self, n):
         """
             Time: O(n)
@@ -89,15 +86,11 @@ class LinkedList:
             elif n == self.length:
                 self.delete_back()
             else:
-                current = self.head
-                prev = None
-                count = 1
-                while count != n:
-                    prev = current
-                    current = current.next
-                    count += 1
+                prev = self.get_nth(n - 1)
+                current = prev.next
                 prev.next = current.next
                 self._delete_node(current)
+                
     def delete_value(self, value):
         if self.length:
             prev = None
@@ -248,7 +241,7 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
-    lst.delete_value(1)
+    lst.delete_back()
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -279,7 +272,7 @@ def test3(data, expected):
 
 def test4(data, expected):
     lst = LinkedList(data)
-    lst.delete_value(20)
+    lst.delete_nth(4)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -289,10 +282,7 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1, 2, 3], "[2,3]")
-    test2([1, 2, 3], "[1,3]")
-    test3([1, 2,3,4,5], "[1,2,3,4]")
-    test4([1, 2,3,4,5], "[1,2,3,4,5]")
+    test4([1,2,3,4], "[1,2,3]")
 
     
     print("ALL CASES PASSED")
