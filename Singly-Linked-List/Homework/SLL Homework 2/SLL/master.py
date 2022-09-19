@@ -49,8 +49,20 @@ class LinkedList:
             self.head = self.tail = node
         else:
             self.tail.next = node
-            self.tail = node
+        self.tail = node
         self._add_node(node)
+
+    def _delete_next_node(self, node):
+        target = node.next
+        assert node.next is not None
+        
+        is_tail = target == self.tail
+        
+        node.next = target.next
+        self._delete_node(target)
+        if is_tail:
+            self.tail = node
+
     def delete_front(self):
         """
             Time: O(1)
@@ -89,15 +101,8 @@ class LinkedList:
             elif n == self.length:
                 self.delete_back()
             else:
-                current = self.head
-                prev = None
-                count = 1
-                while count != n:
-                    prev = current
-                    current = current.next
-                    count += 1
-                prev.next = current.next
-                self._delete_node(current)
+                prev = self.get_nth(n - 1)
+                self._delete_next_node(prev)
     def delete_value(self, value):
         """
             Time: O(n)
@@ -107,20 +112,16 @@ class LinkedList:
             prev = None
             current = self.head
             
-            while current:
-                if current.data == value:
-                    break
-                prev = current
-                current = current.next
-            if current:
-                if current == self.head:
-                    self.delete_front()
-                elif current == self.tail:
-                    self.delete_back()
-                else:
-                    prev.next = current.next
-                    self._delete_node(current)
-                return                
+            if current.data == value:
+                self.delete_front()
+            else:
+                while current:
+                    if current.data == value:
+                        self._delete_next_node(prev)
+                        break
+                    prev = current
+                    current = current.next
+            
         return f"value=>{value}, is not found"
         
     def get_nth(self, n):
@@ -252,7 +253,7 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
-    lst.delete_value(1)
+    lst.delete_nth(4)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -293,10 +294,10 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1, 2, 3], "[2,3]")
-    test2([1, 2, 3], "[1,3]")
-    test3([1, 2,3,4,5], "[1,2,3,4]")
-    test4([1, 2,3,4,5], "[1,2,3,4,5]")
+    test1([1, 2, 3, 4], "[1,2,3]")
+    # test2([1, 2, 3], "[1,3]")
+    # test3([1, 2,3,4,5], "[ 1,2,3,4]")
+    # test4([1, 2,3,4,5], "[1,2,3,4,5]")
 
     
     print("ALL CASES PASSED")
