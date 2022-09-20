@@ -180,15 +180,11 @@ class LinkedList:
             Time: O(n)
             memory: O(1)
         """
-        if self.length >= 2:
-            left, right = self.head, self.head.next
+        temp = self.head
+        while temp and temp.next:
+            temp.data, temp.next.data = temp.next.data, temp.data
             
-            while left and right:
-                left.data, right.data = right.data, left.data
-                
-                left = left.next.next
-                if left:
-                    right = right.next.next
+            temp = temp.next.next
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
