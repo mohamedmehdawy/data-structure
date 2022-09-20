@@ -175,6 +175,8 @@ class LinkedList:
             idx += 1
         return -1
 
+    def swap_pairs(slef):
+        pass
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
