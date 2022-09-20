@@ -175,8 +175,20 @@ class LinkedList:
             idx += 1
         return -1
 
-    def swap_pairs(slef):
-        pass
+    def swap_pairs(self):
+        """
+            Time: O(n)
+            memory: O(1)
+        """
+        if self.length >= 2:
+            left, right = self.head, self.head.next
+            
+            while left and right:
+                left.data, right.data = right.data, left.data
+                
+                left = left.next.next
+                if left:
+                    right = right.next.next
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -255,7 +267,7 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
-    lst.delete_nth(4)
+    lst.swap_pairs()
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -296,10 +308,7 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1, 2, 3, 4], "[1,2,3]")
-    # test2([1, 2, 3], "[1,3]")
-    # test3([1, 2,3,4,5], "[ 1,2,3,4]")
-    # test4([1, 2,3,4,5], "[1,2,3,4,5]")
+    test1([1,2,3,4,5,6,7], "[2,1,4,3,6,5,7]")
 
     
     print("ALL CASES PASSED")
