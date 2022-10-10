@@ -4,7 +4,6 @@ class Node:
     def __init__(self, value, next=None):
         self.data = value
         self.next = next
-
     def __repr__(self) -> str:
         return f"{self.data}"
     
@@ -51,7 +50,34 @@ class LinkedList:
             self.tail.next = node
         self.tail = node
         self._add_node(node)
-
+    def insert_sorted(self, value):
+        """
+            Time: O(n)
+            Memory: O(1)
+        """
+        if not self.head: # if empty insert node
+            self.insert_front(value)
+        else:
+            
+            prev = None
+            current = self.head
+            while current:
+                if value <= current.data:
+                    if not prev:
+                        self.insert_front(value)
+                    else:
+                        node = Node(value)
+                        node.next = current
+                        prev.next = node
+                        self._add_node(node)
+                    break
+                else:
+                    prev = current
+                    current = current.next
+            else: # if end with out insert insert it in end
+                self.insert_end(value)
+        self._debug_verify_data_integrity()
+            
     def _delete_next_node(self, node):
         target = node.next
         assert node.next is not None
@@ -320,8 +346,10 @@ def test2(data, expected):
     
 
 def test3(data, expected):
-    lst = LinkedList(data)
-    lst.delete_value(5)
+    lst = LinkedList()
+    
+    for value in data:
+        lst.insert_sorted(value)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -341,7 +369,11 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test2([1,2,3,4,5,6,7, 8], "[1,3,5,7]")
-
     
+    lst = LinkedList()
+    
+    for value in [10, 2, 30, 4, 1]:
+        lst.insert_sorted(value)
+
+    print(lst._debug_print_exsiting_nodes())
     print("ALL CASES PASSED")
