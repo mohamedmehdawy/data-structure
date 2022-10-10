@@ -20,6 +20,13 @@ class LinkedList:
     def _add_node(self, node):
         self._debug_data.append(node)
         self.length += 1
+    
+    def _insert_after(self, node, value):
+        new_node = Node(value)
+        new_node.next = node.next
+        node.next = new_node
+        self._add_node(new_node)
+    
     def _delete_node(self, node):
         self._debug_data.remove(node)
         del node
@@ -50,32 +57,26 @@ class LinkedList:
             self.tail.next = node
         self.tail = node
         self._add_node(node)
+
     def insert_sorted(self, value):
         """
             Time: O(n)
             Memory: O(1)
         """
-        if not self.head: # if empty insert node
+        if not self.head or value <= self.head.data: # if empty insert node
             self.insert_front(value)
+        elif self.tail.data <= value:
+            self.insert_end(value)
         else:
-            
-            prev = None
-            current = self.head
+            prev = self.head
+            current = prev.next
             while current:
                 if value <= current.data:
-                    if not prev:
-                        self.insert_front(value)
-                    else:
-                        node = Node(value)
-                        node.next = current
-                        prev.next = node
-                        self._add_node(node)
+                    self._insert_after(prev, value)
                     break
                 else:
                     prev = current
                     current = current.next
-            else: # if end with out insert insert it in end
-                self.insert_end(value)
         self._debug_verify_data_integrity()
             
     def _delete_next_node(self, node):
@@ -370,10 +371,6 @@ def test4(data, expected):
 
 if __name__ == "__main__":
     
-    lst = LinkedList()
-    
-    for value in [10, 2, 30, 4, 1]:
-        lst.insert_sorted(value)
+    test3([10, 2, 30, 4, 1], "[1,2,4,10,30]")
 
-    print(lst._debug_print_exsiting_nodes())
     print("ALL CASES PASSED")
