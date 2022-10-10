@@ -123,7 +123,22 @@ class LinkedList:
                     current = current.next
             
         return f"value=>{value}, is not found"
+    def delete_even_positions(self):
+        """
+            Time: O(n)
+            Memory: O(1)
+        """
+        if self.length < 2:
+            return
         
+        prev = self.head        
+        
+        while prev and prev.next:
+            self._delete_next_node(prev)
+            prev = prev.next
+        
+        self._debug_verify_data_integrity()
+            
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
@@ -202,6 +217,7 @@ class LinkedList:
             temp1, temp2 = temp2, temp3
         # rest head and tail
         self.head, self.tail = self.tail, self.head
+        self._debug_verify_data_integrity()
 
     def _debug_verify_data_integrity(self):
         if self.length == 0:
@@ -294,7 +310,7 @@ def test1(data, expected):
 
 def test2(data, expected):
     lst = LinkedList(data)
-    lst.delete_value(2)
+    lst.delete_even_positions()
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -325,7 +341,7 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1,2,3,4], "[4,3,2,1]")
+    test2([1,2,3,4,5,6,7, 8], "[1,3,5,7]")
 
     
     print("ALL CASES PASSED")
