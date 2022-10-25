@@ -81,7 +81,7 @@ class LinkedList:
             
     def _delete_next_node(self, node):
         target = node.next
-        assert node.next is not None
+        assert target is not None
         
         is_tail = target == self.tail
         
@@ -135,21 +135,21 @@ class LinkedList:
             Time: O(n)
             Memory: O(1)
         """
-        if self.length:
+        if not self.length:
+            return
+            
+        if self.head.data == value:
+            self.delete_front()
+        else:
             prev = None
             current = self.head
-            
-            if current.data == value:
-                self.delete_front()
-            else:
-                while current:
-                    if current.data == value:
-                        self._delete_next_node(prev)
-                        break
-                    prev = current
-                    current = current.next
-            
-        return f"value=>{value}, is not found"
+            while current:
+                if current.data == value:
+                    self._delete_next_node(prev)
+                    break
+                prev = current
+                current = current.next
+        self._debug_verify_data_integrity()
     def delete_even_positions(self):
         """
             Time: O(n)
