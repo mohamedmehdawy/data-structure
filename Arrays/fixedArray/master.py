@@ -2,7 +2,7 @@ import ctypes
 
 
 class Array:
-    def __init__(self, size):
+    def __init__(self, size, initial_value = None):
         self._capacity = max(16, size * 2)  # actual memory size
         self.size = size  # user size
 
@@ -11,7 +11,7 @@ class Array:
         self.memory = self.array_data_type()
 
         for i in range(self._capacity):
-            self.memory[i] = None
+            self.memory[i] = initial_value
     
     def check_range(self, idx):
         """
