@@ -11,9 +11,6 @@ class Array2D:
         for i in range(row):
             self.memory[i] = Array(column)
         
-        for i in range(row):
-            for j in range(column):
-                self.memory[i][j] = init_value
     def two_operation_check(self, target):
         if type(self) != type(target):
             raise Exception("unsupported type")
