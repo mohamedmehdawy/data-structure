@@ -20,10 +20,10 @@ class LinkedList:
                 self.insert_end(value)
     def _add_node(self, node):
         self._debug_data.append(node)
-        del node
         self.length += 1
     def _delete_node(self, node):
         self._debug_data.remove(node)
+        del node
         self.length -= 1
     def insert_front(self, value):
         """
@@ -138,7 +138,7 @@ class LinkedList:
                 assert counter < 1000
                 
             assert self.length == counter
-            # assert self.length == len(self._debug_data)
+            assert self.length == len(self._debug_data)
         
         return "all is good"
     def _debug_print_exsiting_nodes(self):
@@ -221,6 +221,14 @@ def test4(data, expected):
     result = lst.is_identical_data(lst2)
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
+def test5(data, expected):
+    lst = LinkedList(data)
+    lst.insert_front(10)
+    print(lst._debug_verify_data_integrity())
+    print(lst._debug_print_exsiting_nodes())
+    result = str(lst)
+    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
+    print("PASSED")
 
 
 if __name__ == "__main__":
@@ -228,6 +236,6 @@ if __name__ == "__main__":
     # test2([1], True)
     # test3([1,2,3,4,5], True)
     # test4([], False)
-    
+    test5([1,2,3], "[10,1,2,3]")
     print("ALL CASES PASSED")
 
