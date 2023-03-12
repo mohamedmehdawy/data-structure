@@ -77,12 +77,12 @@ class LinkedList:
         """
         return self.get_nth(self.length - n + 1)
     
-    def is_identical_data(self, ll):
+    def is_identical_data(self, other):
         """
             Time: O(n)
             Memery: O(1)
         """
-        h1, h2 = self.head, ll.head
+        h1, h2 = self.head, other.head
         
         while h1 and h2:
             if h1.data != h2.data:
@@ -236,6 +236,6 @@ if __name__ == "__main__":
     # test2([1], True)
     # test3([1,2,3,4,5], True)
     # test4([], False)
-    test5([1,2,3], "[10,1,2,3]")
+    test3([1,2,3,4,4], True)
     print("ALL CASES PASSED")
 
