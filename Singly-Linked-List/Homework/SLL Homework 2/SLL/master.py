@@ -222,11 +222,12 @@ class LinkedList:
             Time: O(n)
             Memory: O(1)
         """
-        temp = self.head
-        while temp and temp.next:
-            temp.data, temp.next.data = temp.next.data, temp.data
-            
-            temp = temp.next.next
+        if self.length >= 2:
+            temp = self.head
+            while temp and temp.next:
+                temp.data, temp.next.data = temp.next.data, temp.data
+                
+                temp = temp.next.next
             
     def reverse(self):
         """
@@ -360,7 +361,7 @@ def test3(data, expected):
 
 def test4(data, expected):
     lst = LinkedList(data)
-    lst.delete_value(20)
+    lst.swap_pairs()
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -371,6 +372,6 @@ def test4(data, expected):
 
 if __name__ == "__main__":
     
-    test3([10, 2, 30, 4, 1], "[1,2,4,10,30]")
+    test4([1,2,3,4], "[2,1,4,3]")
 
     print("ALL CASES PASSED")
