@@ -74,13 +74,13 @@ class LinkedList:
             prev = self.get_nth(self.length - 1)
             self._delete_node(self.tail)
             self.tail = prev
-            prev.next = None
+            self.tail.next = None
     def delete_nth(self, n):
         """
             Time: O(n)
             memory: O(1)
         """
-        if self.length and n <= self.length and n > 0:
+        if n <= self.length and n > 0:
             if n == 1:
                 self.delete_front()
             elif n == self.length:
@@ -91,6 +91,8 @@ class LinkedList:
                 prev.next = current.next
                 self._delete_node(current)
                 
+        else:
+            print("Error. No such nth node")
     def delete_value(self, value):
         if self.length:
             prev = None
@@ -272,7 +274,7 @@ def test3(data, expected):
 
 def test4(data, expected):
     lst = LinkedList(data)
-    lst.delete_nth(4)
+    lst.delete_nth(2)
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -282,7 +284,7 @@ def test4(data, expected):
 
 
 if __name__ == "__main__":
-    test4([1,2,3,4], "[1,2,3]")
+    test4([1,2,3], "[1,3]")
 
     
     print("ALL CASES PASSED")

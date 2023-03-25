@@ -4,6 +4,7 @@ class Node:
     def __init__(self, value, next=None):
         self.data = value
         self.next = next
+
     def __repr__(self) -> str:
         return f"{self.data}"
     
@@ -20,13 +21,6 @@ class LinkedList:
     def _add_node(self, node):
         self._debug_data.append(node)
         self.length += 1
-    
-    def _insert_after(self, node, value):
-        new_node = Node(value)
-        new_node.next = node.next
-        node.next = new_node
-        self._add_node(new_node)
-    
     def _delete_node(self, node):
         self._debug_data.remove(node)
         del node
@@ -55,41 +49,8 @@ class LinkedList:
             self.head = self.tail = node
         else:
             self.tail.next = node
-        self.tail = node
-        self._add_node(node)
-
-    def insert_sorted(self, value):
-        """
-            Time: O(n)
-            Memory: O(1)
-        """
-        if not self.head or value <= self.head.data: # if empty insert node
-            self.insert_front(value)
-        elif self.tail.data <= value:
-            self.insert_end(value)
-        else:
-            prev = self.head
-            current = prev.next
-            while current:
-                if value <= current.data:
-                    self._insert_after(prev, value)
-                    break
-                else:
-                    prev = current
-                    current = current.next
-        self._debug_verify_data_integrity()
-            
-    def _delete_next_node(self, node):
-        target = node.next
-        assert target is not None
-        
-        is_tail = target == self.tail
-        
-        node.next = target.next
-        self._delete_node(target)
-        if is_tail:
             self.tail = node
-
+        self._add_node(node)
     def delete_front(self):
         """
             Time: O(1)
@@ -106,66 +67,53 @@ class LinkedList:
             Time: O(n)
             memory: O(1)
         """
-        if self.head:
-            if self.head == self.tail:
-                self._delete_node(self.head)
-                self.head = self.tail = None
-            else: 
-                prev = self.head
-                while prev.next != self.tail:
-                    prev = prev.next
-                self._delete_node(self.tail)
-                self.tail = prev
-                prev.next = None
+        if self.length <= 1:
+            self.delete_front()
+            return
+        else: 
+            prev = self.get_nth(self.length - 1)
+            self._delete_node(self.tail)
+            self.tail = prev
+            self.tail.next = None
     def delete_nth(self, n):
         """
             Time: O(n)
             memory: O(1)
         """
-        if self.length and n <= self.length and n > 0:
+        if n <= self.length and n > 0:
             if n == 1:
                 self.delete_front()
             elif n == self.length:
                 self.delete_back()
             else:
                 prev = self.get_nth(n - 1)
-                self._delete_next_node(prev)
-    def delete_value(self, value):
-        """
-            Time: O(n)
-            Memory: O(1)
-        """
-        if not self.length:
-            return
-            
-        if self.head.data == value:
-            self.delete_front()
+                current = prev.next
+                prev.next = current.next
+                self._delete_node(current)
+                
         else:
+            print("Error. No such nth node")
+    def delete_value(self, value):
+        if self.length:
             prev = None
             current = self.head
+            
             while current:
                 if current.data == value:
-                    self._delete_next_node(prev)
                     break
                 prev = current
                 current = current.next
-        self._debug_verify_data_integrity()
-    def delete_even_positions(self):
-        """
-            Time: O(n)
-            Memory: O(1)
-        """
-        if self.length < 2:
-            return
+            if current:
+                if current == self.head:
+                    self.delete_front()
+                elif current == self.tail:
+                    self.delete_back()
+                else:
+                    prev.next = current.next
+                    self._delete_node(current)
+                return                
+        return f"value=>{value}, is not found"
         
-        prev = self.head        
-        
-        while prev and prev.next:
-            self._delete_next_node(prev)
-            prev = prev.next
-        
-        self._debug_verify_data_integrity()
-            
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
@@ -217,36 +165,35 @@ class LinkedList:
             idx += 1
         return -1
 
-    def swap_pairs(self):
+    def swap_head_tail(self):
         """
-            Time: O(n)
-            Memory: O(1)
-        """
-        if self.length >= 2:
-            temp = self.head
-            while temp and temp.next:
-                temp.data, temp.next.data = temp.next.data, temp.data
-                
-                temp = temp.next.next
-            
-    def reverse(self):
-        """
-            Time: O(n)
-            Memory: O(1)
+            time: O(n)
+            memory: O(1)
         """
         if self.length < 2:
             return
+        
+        # if length is = 2
+        if self.length == 2:
+            # set tail.next to self.head
+            self.tail.next = self.head
+        
+        # if is more than 2 elements
+        else:
 
-        temp1 = temp3 = None
-        temp2 = self.head
-        while temp2:
-            temp3 = temp2.next
-            temp2.next = temp1
-            temp1, temp2 = temp2, temp3
-        # rest head and tail
+            # set tail.next to the next of head
+            self.tail.next = self.head.next
+            
+            # get prev tail element
+            prev_tail = self.get_nth(self.length - 1)
+            
+            # set prev tail next = the head
+            prev_tail.next = self.head
+        # make next of head = none, and swap head and tail
+        self.head.next = None
         self.head, self.tail = self.tail, self.head
+        
         self._debug_verify_data_integrity()
-
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -326,52 +273,19 @@ class LinkedList:
 def test1(data, expected):
     lst = LinkedList(data)
     print(lst._debug_print_address())
-    lst.reverse()
+    lst.swap_head_tail()
+    result = str(lst)
     print(lst._debug_print_address())
-
-    result = str(lst)
-    print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
 
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
 
-def test2(data, expected):
-    lst = LinkedList(data)
-    lst.delete_even_positions()
-    result = str(lst)
-    print(lst._debug_print_exsiting_nodes())
-    lst._debug_verify_data_integrity()
-
-    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
-    print("PASSED")
-    
-
-def test3(data, expected):
-    lst = LinkedList()
-    
-    for value in data:
-        lst.insert_sorted(value)
-    result = str(lst)
-    print(lst._debug_print_exsiting_nodes())
-    lst._debug_verify_data_integrity()
-
-    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
-    print("PASSED")
-
-def test4(data, expected):
-    lst = LinkedList(data)
-    lst.swap_pairs()
-    result = str(lst)
-    print(lst._debug_print_exsiting_nodes())
-    lst._debug_verify_data_integrity()
-
-    assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
-    print("PASSED")
 
 
 if __name__ == "__main__":
-    
-    test2([1,2,3,4,5], "[1,3,5]")
+    test1([1,2,3,4], "[4,2,3,1]")
 
+    
     print("ALL CASES PASSED")
+
