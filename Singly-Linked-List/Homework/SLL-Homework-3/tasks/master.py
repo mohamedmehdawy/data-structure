@@ -113,7 +113,37 @@ class LinkedList:
                     self._delete_node(current)
                 return                
         return f"value=>{value}, is not found"
-        
+    def delete_next(self, prev):
+        """
+            this function delete next node
+            Time: O(1)
+            Memory: O(1)
+        """
+        node = prev.next
+        prev.next = node.next
+        if node == self.tail:
+            self.delete_back()
+        else:
+            
+            self._delete_node(node)
+    def remove_duplicates_from_not_sorted(self):
+        # if elements less than 2
+        if self.length < 2:
+            return
+        else:
+            # current element
+            current = self.head
+            
+            while current and current.next:
+                # prev of element will be check
+                prev = current
+                while prev.next:
+                    # if found element = current
+                    while prev.next and current.data == prev.next.data:
+                        self.delete_next(prev)
+                    prev = prev.next
+                current = current.next
+                
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
@@ -294,7 +324,7 @@ class LinkedList:
 def test1(data, expected):
     lst = LinkedList(data)
     print(lst._debug_print_exsiting_nodes())
-    lst.left_rotate(20)
+    lst.remove_duplicates_from_not_sorted()
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
@@ -305,7 +335,7 @@ def test1(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1,2,3,4,5,6], "[3,4,5,6,1,2]")
+    test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
 
     
     print("ALL CASES PASSED")
