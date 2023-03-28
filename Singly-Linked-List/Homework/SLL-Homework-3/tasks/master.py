@@ -194,6 +194,27 @@ class LinkedList:
         self.head, self.tail = self.tail, self.head
         
         self._debug_verify_data_integrity()
+    
+    def left_rotate(self, k):
+        # if have 1 or 0 elements
+        if self.length < 2:
+            return
+        # if have more than 1
+        else:
+            # number of iteration
+            iteration = k % self.length
+            for _ in range(iteration):
+                # get new head
+                new_head = self.head.next
+                # set tail.next = head
+                self.tail.next = self.head
+                # set head
+                self.head = new_head
+                # set tail
+                self.tail = self.tail.next
+                # set tail.next= None
+                self.tail.next = None
+        self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -272,10 +293,10 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
-    print(lst._debug_print_address())
-    lst.swap_head_tail()
+    print(lst._debug_print_exsiting_nodes())
+    lst.left_rotate(20)
     result = str(lst)
-    print(lst._debug_print_address())
+    print(lst._debug_print_exsiting_nodes())
     lst._debug_verify_data_integrity()
 
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
@@ -284,8 +305,7 @@ def test1(data, expected):
 
 
 if __name__ == "__main__":
-    test1([1,2,3,4], "[4,2,3,1]")
+    test1([1,2,3,4,5,6], "[3,4,5,6,1,2]")
 
     
     print("ALL CASES PASSED")
-
