@@ -120,24 +120,23 @@ class LinkedList:
             Memory: O(1)
         """
         node = prev.next
-        prev.next = node.next
         if node == self.tail:
             self.delete_back()
         else:
-            
+            prev.next = node.next
             self._delete_node(node)
     def remove_duplicates_from_not_sorted(self):
         # if elements less than 2
         if self.length < 2:
             return
         else:
-            # current element
+            # target element
             current = self.head
             
             while current and current.next:
                 # prev of element will be check
                 prev = current
-                while prev.next:
+                while prev and prev.next:
                     # if found element = current
                     while prev.next and current.data == prev.next.data:
                         self.delete_next(prev)
@@ -323,10 +322,15 @@ class LinkedList:
 
 def test1(data, expected):
     lst = LinkedList(data)
+    print("-" * 50)
     print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
+
     lst.remove_duplicates_from_not_sorted()
     result = str(lst)
     print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
+    print("-" * 50)
     lst._debug_verify_data_integrity()
 
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
@@ -336,6 +340,8 @@ def test1(data, expected):
 
 if __name__ == "__main__":
     test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
+    test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
+    test1([1, 1, 1], "[1]")
 
     
     print("ALL CASES PASSED")
