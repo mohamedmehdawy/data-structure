@@ -146,6 +146,10 @@ class LinkedList:
                 
     def delete_last_occurance(self, target):
         """
+            -----------------------
+            Time: O(n)
+            Memory: O(1)
+            -----------------------
             this function delete last occurance insted of target
             params:
                 target: will be delete the last of it
@@ -172,6 +176,7 @@ class LinkedList:
                 else:
                     # remove next element of prev target
                     self.delete_next(prev_target)
+
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
