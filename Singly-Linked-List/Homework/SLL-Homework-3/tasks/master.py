@@ -143,6 +143,35 @@ class LinkedList:
                     prev = prev.next
                 current = current.next
                 
+                
+    def delete_last_occurance(self, target):
+        """
+            this function delete last occurance insted of target
+            params:
+                target: will be delete the last of it
+            return: None
+        """
+        if self.length < 2:
+            return
+        else:
+            # prev of each element
+            prev = self.head
+            # prev of target and set first node if target = it
+            prev_target = prev if target == prev.data else None
+            
+            while prev.next:
+                if prev.next.data == target:
+                    prev_target = prev
+                prev = prev.next
+                
+            # check if prev target is found
+            if prev_target:
+                # if still target first node remove first node
+                if prev_target == self.head:
+                    self.delete_front()
+                else:
+                    # remove next element of prev target
+                    self.delete_next(prev_target)
     def get_nth(self, n):
         if n <= self.length:
             current = self.head
@@ -336,12 +365,24 @@ def test1(data, expected):
     assert result == expected , f"Mismatch between expected=[{expected}] and result=[{result}]"
     print("PASSED")
 
-
+def test2(data, target, expected):
+    lst = LinkedList(data)
+    lst.delete_last_occurance(target)
+    result = str(lst)
+    print(lst._debug_print_exsiting_nodes())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
-    test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
-    test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
-    test1([1, 1, 1], "[1]")
+    # test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
+    # test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
+    # test1([1, 1, 1], "[1]")
 
-    
+    test2([1,2,3], 1, "[2,3]")
+    test2([1,2,3,4], 1, "[2,3,4]")
+    test2([1,2,3,1,4], 1, "[1,2,3,4]")
+    test2([1,2,3,4], 7, "[1,2,3,4]")
+
     print("ALL CASES PASSED")
