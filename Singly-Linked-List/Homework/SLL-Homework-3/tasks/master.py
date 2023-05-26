@@ -278,6 +278,78 @@ class LinkedList:
                 # set tail.next= None
                 self.tail.next = None
         self._debug_verify_data_integrity()
+    def shift_first_to_end(self):
+        """
+            this function shift first element to the end
+            return: None
+        """
+        self.tail.next = self.head
+        self.tail = self.tail.next
+        self.head = self.head.next
+        self.tail.next = None
+            
+    def shift_to_end(self, prev):
+        """
+            this function shift next prev element to the end
+            parameters:
+                perv: previous of target
+            return: None
+        """
+        
+        # target element
+        target = prev.next
+        
+        self.tail.next = target
+        self.tail = target
+        prev.next = target.next
+        self.tail.next = None
+            
+    def move_the_back(self, key):
+        """
+            this function move any element is same key to the end
+            parameters:
+                key: target
+            return: None
+        """
+        if self.length < 2:
+            return
+        else:
+            # step
+            step = 1
+            
+            # count of shift
+            count = 0
+            
+            # prev of element
+            prev = self.head
+
+            while self.length - count > step:
+
+                # if first element = key
+                if prev.data == key:
+                    self.shift_first_to_end()
+                    
+                    # reset 
+                    prev = self.head
+                    
+                    # increase count
+                    count += 1
+                # if next element of prev = key
+                elif prev.next.data == key:
+                    self.shift_to_end(prev)
+                    
+                    # go to next one
+                    prev = prev.next
+                    
+                    # increase count
+                    count += 1
+                else:
+                    # go to next one
+                    prev = prev.next
+                # increase step
+                step += 1
+            print(self)
+        self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -379,15 +451,27 @@ def test2(data, target, expected):
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
     print("PASSED")
+    
+def test3(data, target, expected):
+    lst = LinkedList(data)
+    lst.move_the_back(target)
+    result = str(lst)
+    print(lst._debug_print_exsiting_nodes())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
     # test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
     # test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
     # test1([1, 1, 1], "[1]")
 
-    test2([1,2,3], 1, "[2,3]")
-    test2([1,2,3,4], 1, "[2,3,4]")
-    test2([1,2,3,1,4], 1, "[1,2,3,4]")
-    test2([1,2,3,4], 7, "[1,2,3,4]")
+    # test2([1,2,3], 1, "[2,3]")
+    # test2([1,2,3,4], 1, "[2,3,4]")
+    # test2([1,2,3,1,4], 1, "[1,2,3,4]")
+    # test2([1,2,3,4], 7, "[1,2,3,4]")
 
+    test3([1, 2, 3, 2, 4, 1], 1, "[2,3,2,4,1,1]")
+    test3([1, 2, 3, 1, 2, 4, 1, 7, 1, 8, 1, 1], 1, "[2,3,2,4,7,8,1,1,1,1,1,1]")
     print("ALL CASES PASSED")
