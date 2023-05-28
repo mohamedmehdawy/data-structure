@@ -258,7 +258,7 @@ class LinkedList:
         
         self._debug_verify_data_integrity()
     
-    def left_rotate(self, k):
+    def right_rotate(self, k):
         # if have 1 or 0 elements
         if self.length < 2:
             return
@@ -278,6 +278,36 @@ class LinkedList:
                 # set tail.next= None
                 self.tail.next = None
         self._debug_verify_data_integrity()
+        
+    def left_rotate(self, k):
+        """
+            this function make tail head insted of k time
+            parameters:
+                k: number of rotates
+            return:
+                None
+        """
+        if self.length < 2:
+            return
+        else:
+            # number of iteration
+            iteration = k % self.length
+            
+            for _ in range(iteration):
+                # get prev tail
+                prev_tail = self.get_nth(self.length - 1)
+                
+                # make tail next is head
+                self.tail.next = self.head
+                
+                # make head = current tail
+                self.head = self.tail
+                
+                # make tail = prev tail
+                self.tail = prev_tail
+                
+                # reset next of tail
+                self.tail.next = None
     def shift_first_to_end(self):
         """
             this function shift first element to the end
@@ -461,6 +491,16 @@ def test3(data, target, expected):
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
     print("PASSED")
+    
+def test4(data, number,expected):
+    lst = LinkedList(data)
+    lst.left_rotate(number)
+    result = str(lst)
+    print(lst._debug_print_exsiting_nodes())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
     # test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
@@ -472,6 +512,8 @@ if __name__ == "__main__":
     # test2([1,2,3,1,4], 1, "[1,2,3,4]")
     # test2([1,2,3,4], 7, "[1,2,3,4]")
 
-    test3([1, 2, 3, 2, 4, 1], 1, "[2,3,2,4,1,1]")
-    test3([1, 2, 3, 1, 2, 4, 1, 7, 1, 8, 1, 1], 1, "[2,3,2,4,7,8,1,1,1,1,1,1]")
+    # test3([1, 2, 3, 2, 4, 1], 1, "[2,3,2,4,1,1]")
+    # test3([1, 2, 3, 1, 2, 4, 1, 7, 1, 8, 1, 1], 1, "[2,3,2,4,7,8,1,1,1,1,1,1]")
+    
+    test4([6, 10, 8, 15], 9, "[15,6,10,8]")
     print("ALL CASES PASSED")
