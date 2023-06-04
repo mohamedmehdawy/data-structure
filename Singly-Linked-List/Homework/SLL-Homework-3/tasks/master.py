@@ -259,6 +259,17 @@ class LinkedList:
         self._debug_verify_data_integrity()
     
     def right_rotate(self, k):
+        """
+            ######################
+            Time: O(n)
+            Memoery: O(1)
+            ######################
+            this function right rotate insted of k time
+            parameters:
+                k: number of rotates
+            return:
+                None
+        """
         # number of iteration
         iteration = k % self.length
         # if have 1 or 0 elements
@@ -280,7 +291,11 @@ class LinkedList:
         
     def left_rotate(self, k):
         """
-            this function make tail head insted of k time
+            ######################
+            Time: O(n)
+            Memoery: O(1)
+            ######################
+            this function left roate insted of k time
             parameters:
                 k: number of rotates
             return:
