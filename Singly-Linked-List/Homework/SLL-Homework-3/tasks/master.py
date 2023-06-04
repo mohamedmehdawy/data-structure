@@ -287,27 +287,29 @@ class LinkedList:
             return:
                 None
         """
-        if self.length < 2:
+        # number of iteration
+        iteration = k % self.length
+        
+        if self.length < 2 or iteration == 0:
             return
         else:
-            # number of iteration
-            iteration = k % self.length
+            # get nth
+            nth = self.get_nth(self.length - iteration)
             
-            for _ in range(iteration):
-                # get prev tail
-                prev_tail = self.get_nth(self.length - 1)
-                
-                # make tail next is head
-                self.tail.next = self.head
-                
-                # make head = current tail
-                self.head = self.tail
-                
-                # make tail = prev tail
-                self.tail = prev_tail
-                
-                # reset next of tail
-                self.tail.next = None
+            # make tail next is head
+            self.tail.next = self.head
+            
+            # make head = next nth
+            self.head = nth.next
+            
+            # make tail = prev tail
+            self.tail = nth
+            
+            # reset next of tail
+            self.tail.next = None
+
+        self._debug_verify_data_integrity()
+
     def shift_first_to_end(self):
         """
             this function shift first element to the end
@@ -515,5 +517,6 @@ if __name__ == "__main__":
     # test3([1, 2, 3, 2, 4, 1], 1, "[2,3,2,4,1,1]")
     # test3([1, 2, 3, 1, 2, 4, 1, 7, 1, 8, 1, 1], 1, "[2,3,2,4,7,8,1,1,1,1,1,1]")
     
-    test4([6, 10, 8, 15], 9, "[15,6,10,8]")
+    test4([6, 10, 8, 15], 4, "[6,10,8,15]")
+    test4([6, 10, 8, 15], 6, "[8,15,6,10]")
     print("ALL CASES PASSED")
