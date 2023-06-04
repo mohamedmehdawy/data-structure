@@ -259,24 +259,23 @@ class LinkedList:
         self._debug_verify_data_integrity()
     
     def right_rotate(self, k):
+        # number of iteration
+        iteration = k % self.length
         # if have 1 or 0 elements
-        if self.length < 2:
+        if self.length < 2 or iteration == 0:
             return
         # if have more than 1
         else:
-            # number of iteration
-            iteration = k % self.length
-            for _ in range(iteration):
-                # get new head
-                new_head = self.head.next
-                # set tail.next = head
-                self.tail.next = self.head
-                # set head
-                self.head = new_head
-                # set tail
-                self.tail = self.tail.next
-                # set tail.next= None
-                self.tail.next = None
+            # get nth
+            nth = self.get_nth(iteration)
+            # set tail.next = head
+            self.tail.next = self.head
+            # set head
+            self.head = nth.next
+            # set tail
+            self.tail = nth
+            # set tail.next= None
+            self.tail.next = None
         self._debug_verify_data_integrity()
         
     def left_rotate(self, k):
@@ -504,6 +503,16 @@ def test4(data, number,expected):
     
     print("PASSED")
 
+def test5(data, number,expected):
+    lst = LinkedList(data)
+    lst.right_rotate(number)
+    result = str(lst)
+    print(lst._debug_print_exsiting_nodes())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
+
 if __name__ == "__main__":
     # test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
     # test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
@@ -519,4 +528,6 @@ if __name__ == "__main__":
     
     test4([6, 10, 8, 15], 4, "[6,10,8,15]")
     test4([6, 10, 8, 15], 6, "[8,15,6,10]")
+    test5([6, 10, 8, 15], 5, "[10,8,15,6]")
+    test5([6, 10, 8, 15], 3, "[15,6,10,8]")
     print("ALL CASES PASSED")
