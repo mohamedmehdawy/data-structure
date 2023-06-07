@@ -25,6 +25,20 @@ class LinkedList:
         self._debug_data.remove(node)
         del node
         self.length -= 1
+    def get_previous(self, node):
+        """
+            this function return previous of node
+            parameters:
+                node: you need to get previous of it
+            return:
+                previous of node
+        """
+        temp = self.head
+        while temp.next:
+            if temp.next == node:
+                return temp
+            temp = temp.next
+        return None
     def insert_front(self, value):
         """
             Time: O(1)
@@ -131,17 +145,19 @@ class LinkedList:
             return
         else:
             # target element
-            current = self.head
+            target = self.head
             
-            while current and current.next:
-                # prev of element will be check
-                prev = current
-                while prev and prev.next:
-                    # if found element = current
-                    while prev.next and current.data == prev.next.data:
+            while target and target.next:
+                prev = target
+                current = target.next
+                while current:
+                    if target.data == current.data:
                         self.delete_next(prev)
-                    prev = prev.next
-                current = current.next
+                        current = prev.next
+                    else:
+                        prev = current
+                        current = current.next
+                target = target.next
                 
                 
     def delete_last_occurance(self, target):
@@ -237,7 +253,7 @@ class LinkedList:
             return
         
         # if length is = 2
-        if self.length == 2:
+        elif self.length == 2:
             # set tail.next to self.head
             self.tail.next = self.head
         
@@ -248,7 +264,7 @@ class LinkedList:
             self.tail.next = self.head.next
             
             # get prev tail element
-            prev_tail = self.get_nth(self.length - 1)
+            prev_tail = self.get_previous(self.tail)
             
             # set prev tail next = the head
             prev_tail.next = self.head
@@ -527,11 +543,24 @@ def test5(data, number,expected):
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
     print("PASSED")
+    
+    
+def test6(data, expected):
+    lst = LinkedList(data)
+    print(lst._debug_print_address())
+    lst.swap_head_tail()
+    result = str(lst)
+    print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
-    # test1([1, 2, 1, 3, 2, 4, 3, 5, 1], "[1,2,3,4,5]")
-    # test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
-    # test1([1, 1, 1], "[1]")
+    test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
+    test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
+    test1([1, 1, 1], "[1]")
 
     # test2([1,2,3], 1, "[2,3]")
     # test2([1,2,3,4], 1, "[2,3,4]")
@@ -541,7 +570,9 @@ if __name__ == "__main__":
     # test3([1, 2, 3, 2, 4, 1], 1, "[2,3,2,4,1,1]")
     # test3([1, 2, 3, 1, 2, 4, 1, 7, 1, 8, 1, 1], 1, "[2,3,2,4,7,8,1,1,1,1,1,1]")
     
-    test4([6, 10, 8, 15], 4, "[6,10,8,15]")
-    test4([6, 10, 8, 15], 6, "[8,15,6,10]")
-    test4([6, 10, 8, 15, 1], 2, "[15,1,6,10,8]")
+    # test4([6, 10, 8, 15], 4, "[6,10,8,15]")
+    # test4([6, 10, 8, 15], 6, "[8,15,6,10]")
+    # test4([6, 10, 8, 15, 1], 2, "[15,1,6,10,8]")
+    # test6([1,2], "[2,1]")
+    # test6([1,2,3,4,5], "[5,2,3,4,1]")
     print("ALL CASES PASSED")
