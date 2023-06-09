@@ -174,15 +174,15 @@ class LinkedList:
         if self.length < 2:
             return
         else:
-            # prev of each element
-            prev = self.head
+            # current element
+            current = self.head
             # prev of target and set first node if target = it
-            prev_target = prev if target == prev.data else None
+            prev_target = current if target == current.data else None
             
-            while prev.next:
-                if prev.next.data == target:
-                    prev_target = prev
-                prev = prev.next
+            while current.next:
+                if current.next.data == target:
+                    prev_target = current
+                current = current.next
                 
             # check if prev target is found
             if prev_target:
@@ -340,32 +340,29 @@ class LinkedList:
 
         self._debug_verify_data_integrity()
 
-    def shift_first_to_end(self):
+        
+    def _move_to_back(self, prev, cur):
         """
-            this function shift first element to the end
-            return: None
-        """
-        self.tail.next = self.head
-        self.tail = self.tail.next
-        self.head = self.head.next
-        self.tail.next = None
-            
-    def shift_to_end(self, prev):
-        """
-            this function shift next prev element to the end
+            this function move element to the end
             parameters:
-                perv: previous of target
-            return: None
+                prev: previous of current
+                cur: the current element
+            return:
+                next of current
         """
+        next = cur.next
         
-        # target element
-        target = prev.next
+        # check if current is head
+        if prev:
+            prev.next = next
+        else:
+            self.head = next
         
-        self.tail.next = target
-        self.tail = target
-        prev.next = target.next
+        # move current to the end
+        self.tail.next = cur
+        self.tail = cur
         self.tail.next = None
-            
+        return next
     def move_the_back(self, key):
         """
             this function move any element is same key to the end
@@ -382,35 +379,22 @@ class LinkedList:
             # count of shift
             count = 0
             
-            # prev of element
-            prev = self.head
+            # prev and current of element
+            current = self.head
+            prev = None
 
-            while self.length - count > step:
+            while self.length - count >= step:
 
-                # if first element = key
-                if prev.data == key:
-                    self.shift_first_to_end()
-                    
-                    # reset 
-                    prev = self.head
-                    
-                    # increase count
-                    count += 1
-                # if next element of prev = key
-                elif prev.next.data == key:
-                    self.shift_to_end(prev)
-                    
-                    # go to next one
-                    prev = prev.next
+                if current.data == key:
+                    # move current and set current to next
+                    current = self._move_to_back(prev, current)
                     
                     # increase count
                     count += 1
                 else:
-                    # go to next one
-                    prev = prev.next
+                    prev, current = current, current.next
                 # increase step
                 step += 1
-            print(self)
         self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
@@ -558,17 +542,17 @@ def test6(data, expected):
     print("PASSED")
 
 if __name__ == "__main__":
-    test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
-    test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
-    test1([1, 1, 1], "[1]")
+    # test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
+    # test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
+    # test1([1, 1, 1], "[1]")
 
     # test2([1,2,3], 1, "[2,3]")
     # test2([1,2,3,4], 1, "[2,3,4]")
     # test2([1,2,3,1,4], 1, "[1,2,3,4]")
     # test2([1,2,3,4], 7, "[1,2,3,4]")
 
-    # test3([1, 2, 3, 2, 4, 1], 1, "[2,3,2,4,1,1]")
-    # test3([1, 2, 3, 1, 2, 4, 1, 7, 1, 8, 1, 1], 1, "[2,3,2,4,7,8,1,1,1,1,1,1]")
+    test3([1, 2, 3, 2, 4, 1], 1, "[2,3,2,4,1,1]")
+    test3([1, 2, 3, 1, 2, 4, 1, 7, 1, 8, 1, 1], 1, "[2,3,2,4,7,8,1,1,1,1,1,1]")
     
     # test4([6, 10, 8, 15], 4, "[6,10,8,15]")
     # test4([6, 10, 8, 15], 6, "[8,15,6,10]")
