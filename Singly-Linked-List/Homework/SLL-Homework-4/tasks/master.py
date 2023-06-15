@@ -425,6 +425,43 @@ class LinkedList:
                     prev1 = prev1.next
             # reset tail
             self.tail = prev2
+            
+    def insert_alternate(self, another_list):
+        """
+            The function inserts the values from another linked list in an alternating way
+            with the original list.
+            parameters:
+                another_list: the list will be add to origin list with zig-zag pattern
+        """
+        
+        # init poiners
+        c1 = self.head
+        c2 = another_list.head
+        
+        while c1 and c2:
+            # set next
+            next = c2.next
+            
+            # link c2 with c1
+            c2.next = c1.next
+            c1.next = c2
+            
+            # add node
+            self._add_node(c2)
+            
+            # move pointers
+            c1 = c2.next
+            c2 = next
+        
+        if c1 and not c2:
+            return
+        elif not c1 and c2:
+            # last one in origin list link with first one the another list
+            self.tail.next = c2
+
+        # reset tail if 2 linked are same length or another is bigger than origin
+        self.tail = another_list.tail
+
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -581,6 +618,20 @@ def test7(data, expected):
     
     print("PASSED")
 
+def test8(origin, another_list, expected):
+    lst = LinkedList(origin)
+    print(lst._debug_print_address())
+    another = LinkedList(another_list)
+    lst.insert_alternate(another)
+    result = str(lst)
+    print(f'result: {result}')
+    print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
+
 if __name__ == "__main__":
     # test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
     # test1([1, 2, 3, 4, 5], "[1,2,3,4,5]")
@@ -599,11 +650,12 @@ if __name__ == "__main__":
     # test4([6, 10, 8, 15, 1], 2, "[15,1,6,10,8]")
     # test6([1,2], "[2,1]")
     # test6([1,2,3,4,5], "[5,2,3,4,1]")
-    test7([1,2], "[1,2]")
-    test7([1,2,3], "[1,3,2]")
-    test7([1,2,3,4], "[1,3,2,4]")
-    test7([1,2,3,4,5,6,7], "[1,3,5,7,2,4,6]")
-    test7([11, 33, 55, 4, 50, 17, 8], "[11,55,50,8,33,4,17]")
-
+    # test7([1,2], "[1,2]")
+    # test7([1,2,3], "[1,3,2]")
+    # test7([1,2,3,4], "[1,3,2,4]")
+    # test7([1,2,3,4,5,6,7], "[1,3,5,7,2,4,6]")
+    # test7([11, 33, 55, 4, 50, 17, 8], "[11,55,50,8,33,4,17]")
+    test8(['1', '2', '3'], ['4', '5', '6'], '[1,4,2,5,3,6]')
+    test8(['1', '2'], ['4', '5', '6'], '[1,4,2,5,6]')
 
     print("ALL CASES PASSED")
