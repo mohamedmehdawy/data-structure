@@ -433,34 +433,44 @@ class LinkedList:
             parameters:
                 another_list: the list will be add to origin list with zig-zag pattern
         """
+        # origin length
+        origin_length = self.length
         
         # init poiners
         c1 = self.head
         c2 = another_list.head
         
-        while c1 and c2:
-            # set next
-            next = c2.next
+        # check if origin is empty
+        if not c1:
+            self.head = another_list.head
+            self.tail = another_list.tail
+            self.length = another_list.length
             
-            # link c2 with c1
-            c2.next = c1.next
-            c1.next = c2
+        else:
+            while c1 and c2:
+                # set next
+                next = c2.next
+                
+                # link c2 with c1
+                c2.next = c1.next
+                c1.next = c2
+                
+                # add node
+                self._add_node(c2)
+                
+                # move pointers
+                c1 = c2.next
+                c2 = next
             
-            # add node
-            self._add_node(c2)
-            
-            # move pointers
-            c1 = c2.next
-            c2 = next
-        
-        if c1 and not c2:
-            return
-        elif not c1 and c2:
-            # last one in origin list link with first one the another list
-            self.tail.next = c2
+            if c1 and not c2:
+                return
+            elif not c1 and c2:
+                # last one in origin list link with first one the another list
+                self.tail.next.next = c2
 
-        # reset tail if 2 linked are same length or another is bigger than origin
-        self.tail = another_list.tail
+                self.length += another_list.length - origin_length
+            # reset tail if 2 linked are same length or another is bigger than origin
+            self.tail = another_list.tail
 
     def _debug_verify_data_integrity(self):
         if self.length == 0:
@@ -655,7 +665,8 @@ if __name__ == "__main__":
     # test7([1,2,3,4], "[1,3,2,4]")
     # test7([1,2,3,4,5,6,7], "[1,3,5,7,2,4,6]")
     # test7([11, 33, 55, 4, 50, 17, 8], "[11,55,50,8,33,4,17]")
-    test8(['1', '2', '3'], ['4', '5', '6'], '[1,4,2,5,3,6]')
-    test8(['1', '2'], ['4', '5', '6'], '[1,4,2,5,6]')
+    test8([1, 2, 3], [4], '[1,4,2,3]')
+    test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
+    test8([], [1, 2, 3], '[1,2,3]')
 
     print("ALL CASES PASSED")
