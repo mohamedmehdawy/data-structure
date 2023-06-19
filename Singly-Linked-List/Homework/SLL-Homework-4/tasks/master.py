@@ -471,7 +471,61 @@ class LinkedList:
                 self.length += another_list.length - origin_length
             # reset tail if 2 linked are same length or another is bigger than origin
             self.tail = another_list.tail
+    def add_num(self, another_list):
+        """
+            this function add another list to origin list
+            parameters:
+                another_list: the list will be add to origin list
+        """
+        
+        # init
+        c1 = self.head
+        c2 = another_list.head
+        increase = False
+        add = None
+        while c1 and c2:
+            if increase:
+                add = c1.data + c2.data + 1
+                increase = False
+            else:
+                add = c1.data + c2.data
+            # check if greater than 10 or not
+            if add > 9:
+                increase = True
+                add = add % 10
+            
+            # set value in origin list
+            c1.data = add
+            
+            # move pointers
+            c1 = c1.next
+            c2 = c2.next
 
+        if not c1 and c2:
+            while c2:
+                if increase:
+                    add = c2.data + 1
+                    increase = False
+                else:
+                    add = c2.data
+                if add > 9:
+                    increase = True
+                    add = add % 10
+                self.insert_end(add)
+                c2 = c2.next
+        elif c1 and not c2:
+            while increase and c1:
+                if increase:
+                    add = c1.data + 1
+                    increase = False
+                
+                if add > 9:
+                    increase = True
+                    add = add % 10
+                c1.data = add
+                
+        
+        self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -641,6 +695,19 @@ def test8(origin, another_list, expected):
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
     print("PASSED")
+def test9(origin, another_list, expected):
+    lst = LinkedList(origin)
+    print(lst._debug_print_address())
+    another = LinkedList(another_list)
+    lst.add_num(another)
+    result = str(lst)
+    print(f'result: {result}')
+    print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
     # test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
@@ -665,8 +732,13 @@ if __name__ == "__main__":
     # test7([1,2,3,4], "[1,3,2,4]")
     # test7([1,2,3,4,5,6,7], "[1,3,5,7,2,4,6]")
     # test7([11, 33, 55, 4, 50, 17, 8], "[11,55,50,8,33,4,17]")
-    test8([1, 2, 3], [4], '[1,4,2,3]')
-    test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
-    test8([], [1, 2, 3], '[1,2,3]')
+    # test8([1, 2, 3], [4], '[1,4,2,3]')
+    # test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
+    # test8([], [1, 2, 3], '[1,2,3]')
+    test9([1,2,3], [4,5,6], "[5,7,9]")
+    test9([9,2,3], [4,5,6], "[3,8,9]")
+    test9([1,2], [4,5,6,7], "[5,7,6,7]")
+    test9([4,5,6,7], [1,2], "[5,7,6,7]")
+    test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
 
     print("ALL CASES PASSED")
