@@ -524,7 +524,9 @@ class LinkedList:
                     add = add % 10
                 c1.data = add
                 
-        
+        # if increase found add 1 to the end
+        if increase:
+            self.insert_end(1)
         self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
@@ -740,5 +742,5 @@ if __name__ == "__main__":
     test9([1,2], [4,5,6,7], "[5,7,6,7]")
     test9([4,5,6,7], [1,2], "[5,7,6,7]")
     test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
-
+    test9([9,9], [9,9], "[8,9,1]")
     print("ALL CASES PASSED")
