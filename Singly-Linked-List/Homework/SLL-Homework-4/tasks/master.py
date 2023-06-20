@@ -343,6 +343,10 @@ class LinkedList:
         
     def _move_to_back(self, prev, cur):
         """
+            ######################
+            Time: O(1)
+            Memoery: O(1)
+            ######################
             this function move element to the end
             parameters:
                 prev: previous of current
@@ -365,6 +369,10 @@ class LinkedList:
         return next
     def move_the_back(self, key):
         """
+            ######################
+            Time: O(n)
+            Memoery: O(1)
+            ######################
             this function move any element is same key to the end
             parameters:
                 key: target
@@ -399,6 +407,10 @@ class LinkedList:
         
     def odd_pos_even_pos(self):
         """
+            ######################
+            Time: O(n)
+            Memoery: O(1)
+            ######################
             this function make odd position in the first
         """
         if self.length < 3:
@@ -428,6 +440,10 @@ class LinkedList:
             
     def insert_alternate(self, another_list):
         """
+            ######################
+            Time: O(n)
+            Memoery: O(1)
+            ######################
             The function inserts the values from another linked list in an alternating way
             with the original list.
             parameters:
@@ -473,6 +489,10 @@ class LinkedList:
             self.tail = another_list.tail
     def add_num(self, another_list):
         """
+            ######################
+            Time: O(n)
+            Memoery: O(1)
+            ######################
             this function add another list to origin list
             parameters:
                 another_list: the list will be add to origin list
@@ -528,6 +548,28 @@ class LinkedList:
         if increase:
             self.insert_end(1)
         self._debug_verify_data_integrity()
+        
+    def delete_all_repeated_from_sorted_except_one(self):
+        """
+            ######################
+            Time: O(n^2)
+            Memoery: O(1)
+            ######################
+            this function remove all repeated value from the list
+        """
+        # check if has value
+        if self.length < 2:
+            return
+        else:
+            current = self.head
+            
+            while current:
+                while current.next and current.next.data == current.data:
+                    self.delete_next(current)
+                current = current.next
+        
+        self._debug_verify_data_integrity()
+        
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -710,6 +752,17 @@ def test9(origin, another_list, expected):
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
     print("PASSED")
+def test10(data, expected):
+    lst = LinkedList(data)
+    print(lst._debug_print_address())
+    lst.delete_all_repeated_from_sorted_except_one()
+    result = str(lst)
+    print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
     # test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
@@ -737,10 +790,15 @@ if __name__ == "__main__":
     # test8([1, 2, 3], [4], '[1,4,2,3]')
     # test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
     # test8([], [1, 2, 3], '[1,2,3]')
-    test9([1,2,3], [4,5,6], "[5,7,9]")
-    test9([9,2,3], [4,5,6], "[3,8,9]")
-    test9([1,2], [4,5,6,7], "[5,7,6,7]")
-    test9([4,5,6,7], [1,2], "[5,7,6,7]")
-    test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
-    test9([9,9], [9,9], "[8,9,1]")
+    # test9([1,2,3], [4,5,6], "[5,7,9]")
+    # test9([9,2,3], [4,5,6], "[3,8,9]")
+    # test9([1,2], [4,5,6,7], "[5,7,6,7]")
+    # test9([4,5,6,7], [1,2], "[5,7,6,7]")
+    # test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
+    # test9([9,9], [9,9], "[8,9,1]")
+    test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
+    test10([1, 1], "[1]")
+    test10([1, 1, 2, 2, 2], "[1,2]")
+    test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
+    test10([1, 2, 2, 2, 3], "[1,2,3]")
     print("ALL CASES PASSED")
