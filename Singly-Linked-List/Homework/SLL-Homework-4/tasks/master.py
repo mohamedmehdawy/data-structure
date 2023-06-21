@@ -569,6 +569,43 @@ class LinkedList:
                 current = current.next
         
         self._debug_verify_data_integrity()
+    def delete_all_repeated_from_sorted(self):
+        """
+            this function remove any nodes with value that appear in dublicate
+        """
+        # check if has value
+        if self.length < 2:
+            return
+        else:
+            # prev of each current
+            prev = None
+            current = self.head
+            
+            # status of will remove current or not
+            status = False
+            while current:
+                while current.next and current.next.data == current.data:
+                    self.delete_next(current)
+                    if not status:
+                        status = True
+                
+                if status:
+                    # reset status
+                    status = False
+                    
+                    # check prev
+                    if not prev:
+                        self.delete_front()
+                        current = self.head
+                    else:
+                        next = current.next
+                        self.delete_next(prev)
+                        current = next
+                else:
+                    prev = current
+                    current = current.next
+        self._debug_verify_data_integrity()
+        
         
     def _debug_verify_data_integrity(self):
         if self.length == 0:
@@ -763,6 +800,18 @@ def test10(data, expected):
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
     print("PASSED")
+    
+def test11(data, expected):
+    lst = LinkedList(data)
+    print(lst._debug_print_address())
+    lst.delete_all_repeated_from_sorted()
+    result = str(lst)
+    print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
     # test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
@@ -796,9 +845,15 @@ if __name__ == "__main__":
     # test9([4,5,6,7], [1,2], "[5,7,6,7]")
     # test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
     # test9([9,9], [9,9], "[8,9,1]")
-    test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
-    test10([1, 1], "[1]")
-    test10([1, 1, 2, 2, 2], "[1,2]")
-    test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
-    test10([1, 2, 2, 2, 3], "[1,2,3]")
+    # test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
+    # test10([1, 1], "[1]")
+    # test10([1, 1, 2, 2, 2], "[1,2]")
+    # test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
+    # test10([1, 2, 2, 2, 3], "[1,2,3]")
+    test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
+    test11([1, 1], "[]")
+    test11([1, 1, 2, 2, 2], "[]")
+    test11([1, 1, 2, 2, 2, 5], "[5]")
+    test11([1, 2, 2, 2, 3], "[1,3]")
+
     print("ALL CASES PASSED")
