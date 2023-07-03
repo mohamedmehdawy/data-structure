@@ -606,7 +606,52 @@ class LinkedList:
                     current = current.next
         self._debug_verify_data_integrity()
         
-        
+    
+    def reverse_chains(self, k):
+        """
+            this function make reverse insted of k
+            parameters:
+                k: number of each chain
+        """
+        if self.length < 2:
+            return
+        else:
+            # init pointers
+            counter = 0
+            p1 = None
+            p2 = self.head
+            p3 = p2.next
+            first_time = True
+            current_link = self.head
+            while p2 and p2.next:
+                print("outside")
+                # set tail last element of each chain
+                self.tail = p2
+                
+                # each chain
+                while p2 and counter < k:
+                    print("inside")
+                    # reverse
+                    p2.next = p1
+                    p1 = p2
+                    p2 = p3
+                    
+                    if p3:
+                        p3 = p3.next
+                    
+                    counter += 1
+                
+                # reset counter
+                counter = 0
+                
+                # check for first chain and set flag false
+                if first_time:
+                    self.head = p1
+                    first_time = False
+                else:
+                    current_link.next = self.tail
+                    current_link = self.tail
+        self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
             assert self.head == None
@@ -812,6 +857,19 @@ def test11(data, expected):
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
     print("PASSED")
+    
+    
+def test12(data, k,expected):
+    lst = LinkedList(data)
+    print(lst._debug_print_address())
+    lst.reverse_chains(k)
+    result = str(lst)
+    # print(lst._debug_print_exsiting_nodes())
+    # print(lst._debug_print_address())
+    
+    assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
+    
+    print("PASSED")
 
 if __name__ == "__main__":
     # test1([1,1, 2, 1, 3, 2, 4, 3, 5], "[1,2,3,4,5]")
@@ -850,10 +908,10 @@ if __name__ == "__main__":
     # test10([1, 1, 2, 2, 2], "[1,2]")
     # test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
     # test10([1, 2, 2, 2, 3], "[1,2,3]")
-    test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
-    test11([1, 1], "[]")
-    test11([1, 1, 2, 2, 2], "[]")
-    test11([1, 1, 2, 2, 2, 5], "[5]")
-    test11([1, 2, 2, 2, 3], "[1,3]")
-
+    # test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
+    # test11([1, 1], "[]")
+    # test11([1, 1, 2, 2, 2], "[]")
+    # test11([1, 1, 2, 2, 2, 5], "[5]")
+    # test11([1, 2, 2, 2, 3], "[1,3]")
+    test12([1,2,3,4], 2, "[2,1,4,3]")
     print("ALL CASES PASSED")
