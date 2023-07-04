@@ -623,14 +623,16 @@ class LinkedList:
             p3 = p2.next
             first_time = True
             current_link = self.head
-            while p2 and p2.next:
-                print("outside")
+            
+            while p2:
                 # set tail last element of each chain
                 self.tail = p2
                 
+                # reset p1
+                p1 = None
+                
                 # each chain
                 while p2 and counter < k:
-                    print("inside")
                     # reverse
                     p2.next = p1
                     p1 = p2
@@ -649,8 +651,9 @@ class LinkedList:
                     self.head = p1
                     first_time = False
                 else:
-                    current_link.next = self.tail
+                    current_link.next = p1
                     current_link = self.tail
+            
         self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
@@ -864,8 +867,8 @@ def test12(data, k,expected):
     print(lst._debug_print_address())
     lst.reverse_chains(k)
     result = str(lst)
-    # print(lst._debug_print_exsiting_nodes())
-    # print(lst._debug_print_address())
+    print(lst._debug_print_exsiting_nodes())
+    print(lst._debug_print_address())
     
     assert result == expected, f"Mismatch between expected=[{expected}] and result=[{result}]"
     
@@ -914,4 +917,8 @@ if __name__ == "__main__":
     # test11([1, 1, 2, 2, 2, 5], "[5]")
     # test11([1, 2, 2, 2, 3], "[1,3]")
     test12([1,2,3,4], 2, "[2,1,4,3]")
+    test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
+    test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
+    test12([1,2,3,4,5,6], 3, "[3,2,1,6,5,4]")
+    test12([1,2,3,4,5,6,7], 2, "[2,1,4,3,6,5,7]")
     print("ALL CASES PASSED")
