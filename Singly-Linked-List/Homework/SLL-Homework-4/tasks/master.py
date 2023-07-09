@@ -493,8 +493,10 @@ class LinkedList:
     def add_num(self, another_list):
         """
             ######################
-            Time: O(n)
-            Memoery: O(1)
+            let X = max(length, another_lst.length)
+            let Y = max(length, another_lst.length) - min(length, another_lst.length)
+            Time: O(X)
+            Memoery: O(Y)
             ######################
             this function add another list to origin list
             parameters:
