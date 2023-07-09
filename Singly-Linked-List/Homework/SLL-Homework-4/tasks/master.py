@@ -504,52 +504,38 @@ class LinkedList:
         # init
         c1 = self.head
         c2 = another_list.head
-        increase = False
-        add = None
-        while c1 and c2:
-            if increase:
-                add = c1.data + c2.data + 1
-                increase = False
-            else:
-                add = c1.data + c2.data
-            # check if greater than 10 or not
-            if add > 9:
-                increase = True
-                add = add % 10
+        carry = 0
+        add = 0
+        while c1 or c2:
+            value1, value2 = 0, 0
+            
+            if c1:
+                value1 = c1.data
+            if c2:
+                value2 = c2.data
+                c2 = c2.next
+            
+            # add values
+            
+            add = value1 + value2 + carry
+            
+            carry = add // 10
+            
+            add %= 10
             
             # set value in origin list
-            c1.data = add
-            
-            # move pointers
-            c1 = c1.next
-            c2 = c2.next
 
-        if not c1 and c2:
-            while c2:
-                if increase:
-                    add = c2.data + 1
-                    increase = False
-                else:
-                    add = c2.data
-                if add > 9:
-                    increase = True
-                    add = add % 10
-                self.insert_end(add)
-                c2 = c2.next
-        elif c1 and not c2:
-            while increase and c1:
-                if increase:
-                    add = c1.data + 1
-                    increase = False
-                
-                if add > 9:
-                    increase = True
-                    add = add % 10
+            if c1:
                 c1.data = add
-                
-        # if increase found add 1 to the end
-        if increase:
-            self.insert_end(1)
+                c1 = c1.next
+            else:
+                self.insert_end(add)
+
+
+
+        # if carry found add carry to the end
+        if carry:
+            self.insert_end(carry)
         self._debug_verify_data_integrity()
         
     def delete_all_repeated_from_sorted_except_one(self):
@@ -904,12 +890,12 @@ if __name__ == "__main__":
     # test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
     # test8([], [1, 2, 3], '[1,2,3]')
 
-    # test9([1,2,3], [4,5,6], "[5,7,9]")
-    # test9([9,2,3], [4,5,6], "[3,8,9]")
-    # test9([1,2], [4,5,6,7], "[5,7,6,7]")
-    # test9([4,5,6,7], [1,2], "[5,7,6,7]")
-    # test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
-    # test9([9,9], [9,9], "[8,9,1]")
+    test9([1,2,3], [4,5,6], "[5,7,9]")
+    test9([9,2,3], [4,5,6], "[3,8,9]")
+    test9([1,2], [4,5,6,7], "[5,7,6,7]")
+    test9([4,5,6,7], [1,2], "[5,7,6,7]")
+    test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
+    test9([9,9], [9,9], "[8,9,1]")
     # test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
     # test10([1, 1], "[1]")
     # test10([1, 1, 2, 2, 2], "[1,2]")
@@ -920,9 +906,9 @@ if __name__ == "__main__":
     # test11([1, 1, 2, 2, 2], "[]")
     # test11([1, 1, 2, 2, 2, 5], "[5]")
     # test11([1, 2, 2, 2, 3], "[1,3]")
-    test12([1,2,3,4], 2, "[2,1,4,3]")
-    test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
-    test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
-    test12([1,2,3,4,5,6], 3, "[3,2,1,6,5,4]")
-    test12([1,2,3,4,5,6,7], 2, "[2,1,4,3,6,5,7]")
+    # test12([1,2,3,4], 2, "[2,1,4,3]")
+    # test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
+    # test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
+    # test12([1,2,3,4,5,6], 3, "[3,2,1,6,5,4]")
+    # test12([1,2,3,4,5,6,7], 2, "[2,1,4,3,6,5,7]")
     print("ALL CASES PASSED")
