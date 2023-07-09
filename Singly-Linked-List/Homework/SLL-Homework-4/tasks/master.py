@@ -449,12 +449,16 @@ class LinkedList:
             parameters:
                 another_list: the list will be add to origin list with zig-zag pattern
         """
-        # origin length
-        origin_length = self.length
+        
+        # add another list to debug data
+        self._debug_data.extend(another_list._debug_data)
         
         # init poiners
         c1 = self.head
         c2 = another_list.head
+        
+        # set length
+        self.length += another_list.length
         
         # check if origin is empty
         if not c1:
@@ -470,8 +474,6 @@ class LinkedList:
                 return next
             
             while c1 and c2:
-                # add node
-                self._add_node(c2)
                 
                 c2 = insert_after(c1, c2)
                 c1 = c1.next.next
@@ -484,8 +486,6 @@ class LinkedList:
             elif not c1 and c2:
                 # last one in origin list link with first one the another list
                 self.tail.next.next = c2
-            
-                self.length += another_list.length - origin_length
             # reset tail if 2 linked are same length or another is bigger than origin
             self.tail = another_list.tail
             
@@ -900,9 +900,9 @@ if __name__ == "__main__":
     # test7([1,2,3,4], "[1,3,2,4]")
     # test7([1,2,3,4,5,6,7], "[1,3,5,7,2,4,6]")
     # test7([11, 33, 55, 4, 50, 17, 8], "[11,55,50,8,33,4,17]")
-    test8([1, 2, 3], [4,5], '[1,4,2,5,3]')
-    test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
-    test8([], [1, 2, 3], '[1,2,3]')
+    # test8([1, 2, 3], [4,5], '[1,4,2,5,3]')
+    # test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
+    # test8([], [1, 2, 3], '[1,2,3]')
 
     # test9([1,2,3], [4,5,6], "[5,7,9]")
     # test9([9,2,3], [4,5,6], "[3,8,9]")
@@ -920,9 +920,9 @@ if __name__ == "__main__":
     # test11([1, 1, 2, 2, 2], "[]")
     # test11([1, 1, 2, 2, 2, 5], "[5]")
     # test11([1, 2, 2, 2, 3], "[1,3]")
-    # test12([1,2,3,4], 2, "[2,1,4,3]")
-    # test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
-    # test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
-    # test12([1,2,3,4,5,6], 3, "[3,2,1,6,5,4]")
-    # test12([1,2,3,4,5,6,7], 2, "[2,1,4,3,6,5,7]")
+    test12([1,2,3,4], 2, "[2,1,4,3]")
+    test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
+    test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
+    test12([1,2,3,4,5,6], 3, "[3,2,1,6,5,4]")
+    test12([1,2,3,4,5,6,7], 2, "[2,1,4,3,6,5,7]")
     print("ALL CASES PASSED")
