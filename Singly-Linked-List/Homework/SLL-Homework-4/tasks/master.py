@@ -543,7 +543,7 @@ class LinkedList:
     def delete_all_repeated_from_sorted_except_one(self):
         """
             ######################
-            Time: O(n^2)
+            Time: O(n)
             Memoery: O(1)
             ######################
             this function remove all repeated value from the list
@@ -554,10 +554,11 @@ class LinkedList:
         else:
             current = self.head
             
-            while current:
-                while current.next and current.next.data == current.data:
+            while current and current.next:
+                if current.data == current.next.data:
                     self.delete_next(current)
-                current = current.next
+                else: 
+                    current = current.next
         
         self._debug_verify_data_integrity()
     def delete_all_repeated_from_sorted(self):
@@ -892,17 +893,17 @@ if __name__ == "__main__":
     # test8([1, 2, 3], [4, 5, 6, 7, 8], '[1,4,2,5,3,6,7,8]')
     # test8([], [1, 2, 3], '[1,2,3]')
 
-    test9([1,2,3], [4,5,6], "[5,7,9]")
-    test9([9,2,3], [4,5,6], "[3,8,9]")
-    test9([1,2], [4,5,6,7], "[5,7,6,7]")
-    test9([4,5,6,7], [1,2], "[5,7,6,7]")
-    test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
-    test9([9,9], [9,9], "[8,9,1]")
-    # test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
-    # test10([1, 1], "[1]")
-    # test10([1, 1, 2, 2, 2], "[1,2]")
-    # test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
-    # test10([1, 2, 2, 2, 3], "[1,2,3]")
+    # test9([1,2,3], [4,5,6], "[5,7,9]")
+    # test9([9,2,3], [4,5,6], "[3,8,9]")
+    # test9([1,2], [4,5,6,7], "[5,7,6,7]")
+    # test9([4,5,6,7], [1,2], "[5,7,6,7]")
+    # test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
+    # test9([9,9], [9,9], "[8,9,1]")
+    test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
+    test10([1, 1], "[1]")
+    test10([1, 1, 2, 2, 2], "[1,2]")
+    test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
+    test10([1, 2, 2, 2, 3], "[1,2,3]")
     # test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
     # test11([1, 1], "[]")
     # test11([1, 1, 2, 2, 2], "[]")
