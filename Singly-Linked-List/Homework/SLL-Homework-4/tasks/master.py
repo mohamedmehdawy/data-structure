@@ -563,6 +563,10 @@ class LinkedList:
         self._debug_verify_data_integrity()
     def delete_all_repeated_from_sorted(self):
         """
+            ######################
+            Time: O(n)
+            Memoery: O(1)
+            ######################
             this function remove any nodes with value that appear in dublicate
         """
         # check if has value
@@ -575,27 +579,30 @@ class LinkedList:
             
             # status of will remove current or not
             status = False
-            while current:
-                while current.next and current.next.data == current.data:
+            while current and current.next:
+                if current.data == current.next.data:
                     self.delete_next(current)
                     if not status:
                         status = True
-                
-                if status:
-                    # reset status
-                    status = False
-                    
-                    # check prev
-                    if not prev:
-                        self.delete_front()
-                        current = self.head
-                    else:
-                        next = current.next
-                        self.delete_next(prev)
-                        current = next
                 else:
-                    prev = current
-                    current = current.next
+                    if status:
+                        # reset status
+                        status = False
+                        
+                        # check prev
+                        if not prev:
+                            self.delete_front()
+                            current = self.head
+                        else:
+                            next = current.next
+                            self.delete_next(prev)
+                            current = next
+                    else:
+                        prev = current
+                        current = current.next
+
+            if status:
+                self.delete_front()
         self._debug_verify_data_integrity()
         
     
@@ -899,16 +906,16 @@ if __name__ == "__main__":
     # test9([4,5,6,7], [1,2], "[5,7,6,7]")
     # test9([9, 6, 5], [8, 7, 6, 4, 5, 7, 8, 9], "[7,4,2,5,5,7,8,9]")
     # test9([9,9], [9,9], "[8,9,1]")
-    test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
-    test10([1, 1], "[1]")
-    test10([1, 1, 2, 2, 2], "[1,2]")
-    test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
-    test10([1, 2, 2, 2, 3], "[1,2,3]")
-    # test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
-    # test11([1, 1], "[]")
-    # test11([1, 1, 2, 2, 2], "[]")
-    # test11([1, 1, 2, 2, 2, 5], "[5]")
-    # test11([1, 2, 2, 2, 3], "[1,3]")
+    # test10([1, 1, 2, 2, 2, 3, 5], "[1,2,3,5]")
+    # test10([1, 1], "[1]")
+    # test10([1, 1, 2, 2, 2], "[1,2]")
+    # test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
+    # test10([1, 2, 2, 2, 3], "[1,2,3]")
+    test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
+    test11([1, 1], "[]")
+    test11([1, 1, 2, 2, 2], "[]")
+    test11([1, 1, 2, 2, 2, 5], "[5]")
+    test11([1, 2, 2, 2, 3], "[1,3]")
     # test12([1,2,3,4], 2, "[2,1,4,3]")
     # test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
     # test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
