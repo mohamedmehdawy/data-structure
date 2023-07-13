@@ -573,36 +573,37 @@ class LinkedList:
         if self.length < 2:
             return
         else:
-            # prev of each current
-            prev = None
-            current = self.head
+            # create dummy nodes
+            self.insert_front(self.head.data - 1)
+            self.insert_end(self.tail.data + 1)
             
-            # status of will remove current or not
-            status = False
+            # prev of each current
+            prev = self.head
+            
+            # current element
+            current = prev.next
+            
+
+            
+            # last removed
+            last_removed = prev.data
             while current and current.next:
                 if current.data == current.next.data:
+                    last_removed = current.next.data
                     self.delete_next(current)
-                    if not status:
-                        status = True
+                    
                 else:
-                    if status:
-                        # reset status
-                        status = False
+                    if last_removed == current.data:
+                        self.delete_next(prev)
+                        current = prev
                         
-                        # check prev
-                        if not prev:
-                            self.delete_front()
-                            current = self.head
-                        else:
-                            next = current.next
-                            self.delete_next(prev)
-                            current = next
-                    else:
-                        prev = current
-                        current = current.next
-
-            if status:
-                self.delete_front()
+                    prev, current = current, current.next
+                    
+                    
+            # delete dummy data
+            self.delete_front()
+            self.delete_back()
+            
         self._debug_verify_data_integrity()
         
     
