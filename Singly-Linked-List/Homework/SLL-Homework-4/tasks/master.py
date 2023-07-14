@@ -616,44 +616,57 @@ class LinkedList:
         if self.length < 2:
             return
         else:
-            # init pointers
-            counter = 0
-            p1 = None
-            p2 = self.head
-            p3 = p2.next
-            first_time = True
-            current_link = self.head
-            
-            while p2:
-                # set tail last element of each chain
-                self.tail = p2
-                
-                # reset p1
-                p1 = None
-                
-                # each chain
-                while p2 and counter < k:
-                    # reverse
-                    p2.next = p1
-                    p1 = p2
-                    p2 = p3
-                    
-                    if p3:
-                        p3 = p3.next
-                    
-                    counter += 1
-                
-                # reset counter
+            def _reverse_subchain(current, k):
+                """
+                    this function reverse sub chain untill arrive to the k of number
+                    parameters:
+                        current: current element
+                        k: number of each chain
+                    returns:
+                        tail: the chain tail
+                        prev: chain head
+                        current: next chain head
+                """
+                # init
                 counter = 0
+                tail = current
+                prev = current
+                current = current.next
                 
-                # check for first chain and set flag false
-                if first_time:
-                    self.head = p1
-                    first_time = False
-                else:
-                    current_link.next = p1
-                    current_link = self.tail
+                while current and counter < k:
+                    
+                    # increase counter
+                    counter += 1
+                    
+                    next = current.next
+                    
+                    # reverse
+                    current.next = prev
+                    
+                    # move pointers
+                    prev = current
+                    current = next
+                return tail, prev, current
             
+            # init
+            last_tail = None
+            next_chain_head = self.head
+            self.head = None
+            
+            while next_chain_head:
+                # get chain_tail, chain_head, next_chain_head
+                chain_tail, chain_head, next_chain_head = _reverse_subchain(next_chain_head, k)
+                
+                # if this first chain
+                if not self.head:
+                    self.head = chain_head
+                else:
+                    last_tail.next = chain_head
+                last_tail = chain_tail
+                
+            # fix tail
+            self.tail = last_tail
+            self.tail.next = None
         self._debug_verify_data_integrity()
     def _debug_verify_data_integrity(self):
         if self.length == 0:
@@ -912,14 +925,14 @@ if __name__ == "__main__":
     # test10([1, 1, 2, 2, 2], "[1,2]")
     # test10([1, 1, 2, 2, 2, 5], "[1,2,5]")
     # test10([1, 2, 2, 2, 3], "[1,2,3]")
-    test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
-    test11([1, 1], "[]")
-    test11([1, 1, 2, 2, 2], "[]")
-    test11([1, 1, 2, 2, 2, 5], "[5]")
-    test11([1, 2, 2, 2, 3], "[1,3]")
-    # test12([1,2,3,4], 2, "[2,1,4,3]")
-    # test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
-    # test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
-    # test12([1,2,3,4,5,6], 3, "[3,2,1,6,5,4]")
-    # test12([1,2,3,4,5,6,7], 2, "[2,1,4,3,6,5,7]")
+    # test11([1, 1, 2, 2, 2, 3, 5], "[3,5]")
+    # test11([1, 1], "[]")
+    # test11([1, 1, 2, 2, 2], "[]")
+    # test11([1, 1, 2, 2, 2, 5], "[5]")
+    # test11([1, 2, 2, 2, 3], "[1,3]")
+    test12([1,2,3,4], 2, "[2,1,4,3]")
+    test12([1,2,3,4,5,6], 2, "[2,1,4,3,6,5]")
+    test12([1,2,3,4,5,6], 6, "[6,5,4,3,2,1]")
+    test12([1,2,3,4,5,6], 3, "[3,2,1,6,5,4]")
+    test12([1,2,3,4,5,6,7], 2, "[2,1,4,3,6,5,7]")
     print("ALL CASES PASSED")
