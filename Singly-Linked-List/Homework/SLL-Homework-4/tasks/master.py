@@ -628,15 +628,14 @@ class LinkedList:
                         current: next chain head
                 """
                 # init
-                counter = 0
                 tail = current
                 prev = current
                 current = current.next
                 
-                while current and counter < k:
+                while current and k > 1:
                     
                     # increase counter
-                    counter += 1
+                    k -= 1
                     
                     next = current.next
                     
@@ -657,10 +656,6 @@ class LinkedList:
                 # get chain_tail, chain_head, next_chain_head
                 chain_tail, chain_head, next_chain_head = _reverse_subchain(next_chain_head, k)
                 
-                # fix it by disconnect each chain and fix chain_head, next_chain_head
-                print(f"chain tail: {chain_tail}")
-                print(f"chain head: {chain_head}")
-                print(f"next chain head: {next_chain_head}")
                 # if this first chain
                 if not self.head:
                     self.head = chain_head
