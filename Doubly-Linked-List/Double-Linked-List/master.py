@@ -79,6 +79,9 @@ class LinkedList:
 
     def debug_print_address(self):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
             this function print nodes with address
         """
         cur = self.head
@@ -91,6 +94,9 @@ class LinkedList:
         
     def debug_print_node(self, node):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function print node with prev and next
             parameters:
                 node: the target node will be print
@@ -103,9 +109,6 @@ class LinkedList:
             # prev and next
             prev_node = node.prev
             next_node = node.next
-            
-            # check if the node is head or tail
-            is_head_tail = True if node == self.head or node == self.tail else False
             
             # print prev
             print(prev_node, end="\t <- \t")
@@ -125,6 +128,9 @@ class LinkedList:
                 
     def debug_print_exiting_nodes(self, msg = None):
             """
+                Time Comlexity: O(n)
+                memory Complexity: O(1)
+                #############################
                 this function print all node of linked list
                 parameters:
                     msg: the msg you want to print in the first of print nodes
