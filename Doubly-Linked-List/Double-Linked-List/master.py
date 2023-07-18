@@ -1,3 +1,5 @@
+import inspect
+
 class Node:
     def __init__(self, data, prev=None, next=None) -> None:
         self.data = data
@@ -23,8 +25,7 @@ class LinkedList:
         # check init values
         if init_values:
             for ele in init_values:
-                # should here inster end of node
-                pass
+                self.insert_end(ele)
     def _add_node(self, node):
         """
             Time Comlexity: O(1)
@@ -55,19 +56,97 @@ class LinkedList:
         if second:
             second.prev = first
             
-    def insert_end(self, node):
+    def insert_end(self, value):
         """
             Time Comlexity: O(1)
             memory Complexity: O(1)
             #############################
             this function inster node to the end of linked list
             parameters:
-                node: the node will inster to the end of linked list
+                value: the value will add in the end of linked list as node
         """
+        # the node
+        node = Node(value)
+        
         # if linked list not have any nodes
         if self.length == 0:
             self.head = self.tail = node
+            
         else:
             self._link(self.tail, node)
             self.tail = node
-            self._add_node(node)
+        self._add_node(node)
+
+    def debug_print_address(self):
+        """
+            this function print nodes with address
+        """
+        cur = self.head
+        
+        while cur:
+            print(f"{cur.data}@{id(cur)}", end="\t->\t")
+            cur = cur.next
+        
+        print('None')
+        
+    def debug_print_node(self, node):
+        """
+            this function print node with prev and next
+            parameters:
+                node: the target node will be print
+        """
+        # handel if node is none
+        if node == None:
+            print("None")
+            return
+        else:
+            # prev and next
+            prev_node = node.prev
+            next_node = node.next
+            
+            # check if the node is head or tail
+            is_head_tail = True if node == self.head or node == self.tail else False
+            
+            # print prev
+            print(prev_node, end="\t <- \t")
+            
+            # print current
+            print(node, end="\t -> \t")
+            
+            # print next
+            print(next_node, end="\t")
+            
+            if node == self.head:
+                print("head")
+            elif node == self.tail:
+                print("tail")
+            else:
+                print("")
+                
+    def debug_print_exiting_nodes(self, msg = None):
+            """
+                this function print all node of linked list
+                parameters:
+                    msg: the msg you want to print in the first of print nodes
+            """
+            # print message if found
+            if msg:
+                print(msg)
+                
+            
+            # pointer
+            cur = self.head
+            while cur:
+                self.debug_print_node(cur)
+                cur = cur.next
+            print("*" * 60)
+def test1(ll):
+    test_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testting: {test_name}")
+    
+    
+
+if __name__ == '__main__':
+    ll = LinkedList([1,2,3,4])
+    ll.debug_print_exiting_nodes()
