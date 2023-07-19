@@ -76,7 +76,9 @@ class LinkedList:
             self._link(self.tail, node)
             self.tail = node
         self._add_node(node)
-
+        
+        # debug verify data
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -146,6 +148,54 @@ class LinkedList:
                 self.debug_print_node(cur)
                 cur = cur.next
             print("*" * 60)
+    def debug_verify_data_integrity(self):
+        """
+            this function check the data integrity is correct or not
+        """
+        # if linked list is empty
+        if self.length == 0:
+            assert self.head is None
+            assert self.tail is None
+            return
+        # check head and tail
+        assert self.head is not None
+        assert self.head.prev is None
+        assert self.tail is not None
+        assert self.tail.next is None
+        
+        # if has one node
+        if self.length == 1:
+            assert self.head is self.tail
+            
+        # if has two nodes
+        elif self.length == 2:
+            assert self.head.next is self.tail
+            
+        else:
+            assert self.length == len(self.debug_data)
+            
+            # verify forward pass
+            actual_lst_len = 0
+            cur = self.head
+            while cur:
+                cur = cur.next
+                actual_lst_len += 1
+                assert actual_lst_len < 1000
+            
+            # check actual length
+            assert self.length == actual_lst_len
+            
+            # verify backword pass
+            actual_lst_len = 0
+            cur = self.tail
+            while cur:
+                cur = cur.prev
+                actual_lst_len += 1
+                assert actual_lst_len < 1000
+                
+            # check actual length
+            assert self.length == actual_lst_len
+            
 def test1(ll):
     test_name = inspect.currentframe().f_code.co_name
     
