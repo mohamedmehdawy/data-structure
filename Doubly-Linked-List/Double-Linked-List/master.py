@@ -196,6 +196,54 @@ class LinkedList:
             # check actual length
             assert self.length == actual_lst_len
             
+    def __repr__(self):
+        """
+            function repr to print nodes when print linked list
+        """
+        result = "["
+        
+        cur = self.head
+        
+        while cur:
+            result += f"{str(cur) + ',' if cur.next else str(cur)}"
+            cur = cur.next
+        result += "]"
+        
+        return result
+    def print(self):
+        """
+            this function print nodes and start from head
+        """
+        cur = self.head
+        
+        while cur:
+            print(f"{str(cur)} -> ", end="")
+            cur = cur.next
+        
+        print("None")
+    def print_reversed(self):
+        """
+            this functoin print node but start from tail
+        """
+        
+        
+        cur = self.tail
+        
+        while cur:
+            print(f"{str(cur)} -> ", end="")
+            cur = cur.prev
+        
+        print("None")
+        
+    def __iter__(self):
+        """
+            make linked list iterable
+        """
+
+        cur = self.head
+        while cur:
+            yield cur
+            cur = cur.next
 def test1(ll):
     test_name = inspect.currentframe().f_code.co_name
     
@@ -205,4 +253,3 @@ def test1(ll):
 
 if __name__ == '__main__':
     ll = LinkedList([1,2,3,4])
-    ll.debug_print_exiting_nodes()
