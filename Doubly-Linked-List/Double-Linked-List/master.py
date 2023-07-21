@@ -61,7 +61,7 @@ class LinkedList:
             Time Comlexity: O(1)
             memory Complexity: O(1)
             #############################
-            this function inster node to the end of linked list
+            this function insert node to the end of linked list
             parameters:
                 value: the value will add in the end of linked list as node
         """
@@ -79,6 +79,28 @@ class LinkedList:
         
         # debug verify data
         self.debug_verify_data_integrity()
+    def insert__front(self, value):
+        """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
+            this function insert node to the front of linked list
+            parameters:
+                value: the value will add in the front of linked list as npde
+        """
+        # create node
+        node = Node(value)
+        self._add_node(node)
+        
+        # if linked list is empity
+        if self.length == 0:
+            self.head = self.tail = node
+        else:
+            self._link(node, self.head)
+            self.head = node
+        
+        self.debug_verify_data_integrity()
+        
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -244,12 +266,34 @@ class LinkedList:
         while cur:
             yield cur
             cur = cur.next
-def test1(ll):
-    test_name = inspect.currentframe().f_code.co_name
+def test1(data, value, expected):
+    fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {test_name}")
+    print(f"testting: {fun_name}")
     
+    ll = LinkedList(data)
+    ll.insert_end(value)
     
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
+
+def test2(data, value, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testting: {fun_name}")
+    
+    ll = LinkedList(data)
+    ll.insert__front(value)
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
 if __name__ == '__main__':
-    ll = LinkedList([1,2,3,4])
+    
+    test1([], 1, "[1]")
+    test1([1,2,3,4], 5, "[1,2,3,4,5]")
+    
+    test2([], 1, "[1]")
+    test2([1,2,3,4], 5, "[5,1,2,3,4]")
+
+    # all passed
+    print("all tests passed")
