@@ -55,7 +55,28 @@ class LinkedList:
         
         if second:
             second.prev = first
-            
+        
+    def _embed_after(self, target, value):
+        """
+            this function instert new node with value after target node
+            parameters:
+                target: the target node will insert the new node after it
+                value: the value of node will add after target
+        """
+        # new node
+        node = Node(value)
+        
+        # after target
+        after = target.next
+        
+        # link node with after
+        self._link(node, after)
+        
+        # link target with node
+        self._link(target, node)
+        
+        # add node
+        self._add_node(node)
     def insert_end(self, value):
         """
             Time Comlexity: O(1)
@@ -79,7 +100,7 @@ class LinkedList:
         
         # debug verify data
         self.debug_verify_data_integrity()
-    def insert__front(self, value):
+    def insert_front(self, value):
         """
             Time Comlexity: O(1)
             memory Complexity: O(1)
@@ -90,7 +111,6 @@ class LinkedList:
         """
         # create node
         node = Node(value)
-        self._add_node(node)
         
         # if linked list is empity
         if self.length == 0:
@@ -98,9 +118,36 @@ class LinkedList:
         else:
             self._link(node, self.head)
             self.head = node
+        # add node
+        self._add_node(node)
         
         self.debug_verify_data_integrity()
+    
+    def insert_sorted(self, value):
+        """
+            this function insert node with sorted
+            paramerts:
+                value: the value will add to linked list with sorted as node
+        """
         
+        # if linked list is empty or the value is less than head
+        if not self.length or value <= self.head.data :
+            self.insert_front(value)
+        
+        # if the value is greater than the tail data
+        elif value >= self.tail.data:
+            self.insert_end(value)
+            
+        # search for the node is less than 
+        else:
+            cur = self.head.next
+            
+            while cur:
+                if cur.data <= value:
+                    self._embed_after(cur, value)
+                    break
+                cur = cur.next
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -283,17 +330,33 @@ def test2(data, value, expected):
     print(f"testting: {fun_name}")
     
     ll = LinkedList(data)
-    ll.insert__front(value)
+    ll.insert_front(value)
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
+def test3(data, value, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testting: {fun_name}")
+    
+    ll = LinkedList(data)
+    ll.insert_sorted(value)
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
 if __name__ == '__main__':
     
+    # test 1
     test1([], 1, "[1]")
     test1([1,2,3,4], 5, "[1,2,3,4,5]")
     
+    # test 2
     test2([], 1, "[1]")
     test2([1,2,3,4], 5, "[5,1,2,3,4]")
+
+    # # test 3
+    test3([], 1, "[1]")
+    test2([10,20,30,40], 25, "[10,20,25,30,40]")
 
     # all passed
     print("all tests passed")
