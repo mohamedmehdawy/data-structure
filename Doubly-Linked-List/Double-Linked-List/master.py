@@ -138,13 +138,13 @@ class LinkedList:
         elif value >= self.tail.data:
             self.insert_end(value)
             
-        # search for the node is less than 
+        # search for the node is less than the value
         else:
             cur = self.head.next
-            
+
             while cur:
-                if cur.data <= value:
-                    self._embed_after(cur, value)
+                if cur.data >= value:
+                    self._embed_after(cur.prev, value)
                     break
                 cur = cur.next
         self.debug_verify_data_integrity()
@@ -316,7 +316,7 @@ class LinkedList:
 def test1(data, value, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name}")
+    print(f"testting: {fun_name} -> insert_end")
     
     ll = LinkedList(data)
     ll.insert_end(value)
@@ -327,7 +327,7 @@ def test1(data, value, expected):
 def test2(data, value, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name}")
+    print(f"testting: {fun_name} -> insert_front")
     
     ll = LinkedList(data)
     ll.insert_front(value)
@@ -337,7 +337,7 @@ def test2(data, value, expected):
 def test3(data, value, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name}")
+    print(f"testting: {fun_name} -> insert_sorted")
     
     ll = LinkedList(data)
     ll.insert_sorted(value)
@@ -354,9 +354,12 @@ if __name__ == '__main__':
     test2([], 1, "[1]")
     test2([1,2,3,4], 5, "[5,1,2,3,4]")
 
-    # # test 3
+    # test 3
     test3([], 1, "[1]")
-    test2([10,20,30,40], 25, "[10,20,25,30,40]")
+    test3([10,10.5,15], 11, "[10,10.5,11,15]")
+    test3([10,20,30,40], 5, "[5,10,20,30,40]")
+    test3([10,20,30,40], 35, "[10,20,30,35,40]")
+    test3([10,20,30,40], 50, "[10,20,30,40,50]")
 
     # all passed
     print("all tests passed")
