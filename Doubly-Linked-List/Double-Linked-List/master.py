@@ -188,6 +188,31 @@ class LinkedList:
             else:
                 self.head.prev = None
         self.debug_verify_data_integrity()
+    
+    def delete_back(self):
+        """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
+            this function delete last node (tail)
+        """
+        if self.length <= 1:
+            self.delete_front()
+            return
+        else:
+            # get new tail
+            new_tail = self.tail.prev
+            
+            # remove tail
+            self._delete_node(self.tail)
+            
+            # set tail
+            self.tail = new_tail
+            
+            # fix next of tail
+            self.tail.next = None
+            
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -394,6 +419,16 @@ def test4(data, expected):
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
+def test5(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testting: {fun_name} -> delete_back")
+    
+    ll = LinkedList(data)
+    ll.delete_back()
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -411,10 +446,16 @@ if __name__ == '__main__':
     # test3([10,20,30,40], 35, "[10,20,30,35,40]")
     # test3([10,20,30,40], 50, "[10,20,30,40,50]")
 
-    # test 4
-    test4([], "[]")
-    test4([1], "[]")
-    test4([1,2,3,4], "[2,3,4]")
+    # # test 4
+    # test4([], "[]")
+    # test4([1], "[]")
+    # test4([1,2,3,4], "[2,3,4]")
+
+    # test 5
+    test5([], "[]")
+    test5([1], "[]")
+    test5([1,2], "[1]")
+    test5([1,2,3,4,5,6], "[1,2,3,4,5]")
 
     # all passed
     print("all tests passed")
