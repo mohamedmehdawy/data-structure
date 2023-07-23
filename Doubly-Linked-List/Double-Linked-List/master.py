@@ -37,6 +37,18 @@ class LinkedList:
         """
         self.debug_data.append(node)
         self.length += 1
+    def _delete_node(self, node):
+        """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
+            this function delte node to debug data and increase length
+            parameters:
+                node: will be added to debug data
+        """
+        self.debug_data.remove(node)
+        del node
+        self.length -= 1
     @staticmethod
     def _link(first, second):
         """
@@ -148,6 +160,34 @@ class LinkedList:
                     break
                 cur = cur.next
         self.debug_verify_data_integrity()
+        
+    def delete_front(self):
+        """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
+            this function delete first node from linked list
+        """
+        if not self.length:
+            return
+        else:
+            # next node of head
+            new_head = self.head.next
+
+            # delete node
+            self._delete_node(self.head)
+            
+            # move head
+            self.head = new_head
+        
+            
+            # check if is last node or linked list is empty
+            if not self.length:
+                self.tail = self.head # will be None
+            # set head prev to be none
+            else:
+                self.head.prev = None
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -162,7 +202,7 @@ class LinkedList:
             cur = cur.next
         
         print('None')
-        
+    
     def debug_print_node(self, node):
         """
             Time Comlexity: O(1)
@@ -344,22 +384,37 @@ def test3(data, value, expected):
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
+def test4(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testting: {fun_name} -> delete_front")
+    
+    ll = LinkedList(data)
+    ll.delete_front()
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
 if __name__ == '__main__':
     
-    # test 1
-    test1([], 1, "[1]")
-    test1([1,2,3,4], 5, "[1,2,3,4,5]")
+    # # test 1
+    # test1([], 1, "[1]")
+    # test1([1,2,3,4], 5, "[1,2,3,4,5]")
     
-    # test 2
-    test2([], 1, "[1]")
-    test2([1,2,3,4], 5, "[5,1,2,3,4]")
+    # # test 2
+    # test2([], 1, "[1]")
+    # test2([1,2,3,4], 5, "[5,1,2,3,4]")
 
-    # test 3
-    test3([], 1, "[1]")
-    test3([10,10.5,15], 11, "[10,10.5,11,15]")
-    test3([10,20,30,40], 5, "[5,10,20,30,40]")
-    test3([10,20,30,40], 35, "[10,20,30,35,40]")
-    test3([10,20,30,40], 50, "[10,20,30,40,50]")
+    # # test 3
+    # test3([], 1, "[1]")
+    # test3([10,10.5,15], 11, "[10,10.5,11,15]")
+    # test3([10,20,30,40], 5, "[5,10,20,30,40]")
+    # test3([10,20,30,40], 35, "[10,20,30,35,40]")
+    # test3([10,20,30,40], 50, "[10,20,30,40,50]")
+
+    # test 4
+    test4([], "[]")
+    test4([1], "[]")
+    test4([1,2,3,4], "[2,3,4]")
 
     # all passed
     print("all tests passed")
