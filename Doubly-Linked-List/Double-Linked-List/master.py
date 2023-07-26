@@ -67,7 +67,34 @@ class LinkedList:
         
         if second:
             second.prev = first
+    def _delete_link_node(self, node):
+        """
+            this function delete delete given node from the linked list
+            parameters:
+                node: the node will be delete
+        """
+        # check if no node
+        if not node:
+            return
         
+        # check node is tail or node
+        is_tail = node == self.tail
+        
+        # get previous of node
+        prev = node.prev
+        
+        # link prev of next of node
+        self._link(prev, node.next)
+        
+        # delete node for debug and decrease length
+        self._delete_node(node)
+        
+        # check if node is tail
+        if is_tail:
+            self.tail = prev
+        
+        # return the prev
+        return prev
     def _embed_after(self, target, value):
         """
             this function instert new node with value after target node
@@ -212,6 +239,31 @@ class LinkedList:
             # fix next of tail
             self.tail.next = None
             
+        self.debug_verify_data_integrity()
+    
+    def delete_node_with_key(self, key):
+        """
+            this function delete node with key, it search for node has a same key and delete it
+            parameters:
+                key: the key will search until found node has same key
+        """
+        # if linked list empty
+        if not self.length:
+            return
+        else:
+            # if the first node has the same key
+            if self.head.data == key:
+                self.delete_front()
+                
+            else:
+                # search for node
+                cur = self.head.next
+                
+                while cur:
+                    if cur.data == key:
+                        # delete link node
+                        self._delete_link_node(cur)
+                    cur = cur.next
         self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
@@ -429,6 +481,16 @@ def test5(data, expected):
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
+def test6(data, key, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testting: {fun_name} -> delete_node_with_key")
+    
+    ll = LinkedList(data)
+    ll.delete_node_with_key(key)
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -451,11 +513,17 @@ if __name__ == '__main__':
     # test4([1], "[]")
     # test4([1,2,3,4], "[2,3,4]")
 
-    # test 5
-    test5([], "[]")
-    test5([1], "[]")
-    test5([1,2], "[1]")
-    test5([1,2,3,4,5,6], "[1,2,3,4,5]")
+    # # test 5
+    # test5([], "[]")
+    # test5([1], "[]")
+    # test5([1,2], "[1]")
+    # test5([1,2,3,4,5,6], "[1,2,3,4,5]")
 
+    # test 6
+    test6([], 1, "[]")
+    test6([1,2,3], 1, "[2,3]")
+    test6([1,2,3,4], 2, "[1,3,4]")
+    test6([1,2,3,4], 4, "[1,2,3]")
+    
     # all passed
     print("all tests passed")
