@@ -525,5 +525,9 @@ if __name__ == '__main__':
     test6([1,2,3,4], 2, "[1,3,4]")
     test6([1,2,3,4], 4, "[1,2,3]")
     
+    """
+        note:
+            handel check for tail in data verify
+    """
     # all passed
     print("all tests passed")
