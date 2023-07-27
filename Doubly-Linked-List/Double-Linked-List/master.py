@@ -263,6 +263,7 @@ class LinkedList:
                     if cur.data == key:
                         # delete link node
                         self._delete_link_node(cur)
+                        return
                     cur = cur.next
         self.debug_verify_data_integrity()
     def debug_print_address(self):
