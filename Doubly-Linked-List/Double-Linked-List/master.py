@@ -263,9 +263,20 @@ class LinkedList:
                     if cur.data == key:
                         # delete link node
                         self._delete_link_node(cur)
-                        return
                     cur = cur.next
         self.debug_verify_data_integrity()
+        
+    def delete_all_nodes_with_key(self, key):
+        """
+            this function delete all node with key, it search for all node with key and delete it
+            parameters:
+                key: the key will search until found node has same key
+        """
+        # if emtpy
+        if not self.length:
+            return
+        else:
+            pass
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
