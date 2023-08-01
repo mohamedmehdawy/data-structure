@@ -462,7 +462,7 @@ class LinkedList:
 def test1(data, value, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name} -> insert_end")
+    print(f"testing: {fun_name} -> insert_end")
     
     ll = LinkedList(data)
     ll.insert_end(value)
@@ -473,7 +473,7 @@ def test1(data, value, expected):
 def test2(data, value, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name} -> insert_front")
+    print(f"testing: {fun_name} -> insert_front")
     
     ll = LinkedList(data)
     ll.insert_front(value)
@@ -483,7 +483,7 @@ def test2(data, value, expected):
 def test3(data, value, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name} -> insert_sorted")
+    print(f"testing: {fun_name} -> insert_sorted")
     
     ll = LinkedList(data)
     ll.insert_sorted(value)
@@ -493,7 +493,7 @@ def test3(data, value, expected):
 def test4(data, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name} -> delete_front")
+    print(f"testing: {fun_name} -> delete_front")
     
     ll = LinkedList(data)
     ll.delete_front()
@@ -503,7 +503,7 @@ def test4(data, expected):
 def test5(data, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name} -> delete_back")
+    print(f"testing: {fun_name} -> delete_back")
     
     ll = LinkedList(data)
     ll.delete_back()
@@ -513,10 +513,21 @@ def test5(data, expected):
 def test6(data, key, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testting: {fun_name} -> delete_node_with_key")
+    print(f"testing: {fun_name} -> delete_node_with_key")
     
     ll = LinkedList(data)
     ll.delete_node_with_key(key)
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
+
+def test7(data, key, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> delete_all_nodes_with_key")
+    
+    ll = LinkedList(data)
+    ll.delete_all_nodes_with_key(key)
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
@@ -548,11 +559,22 @@ if __name__ == '__main__':
     # test5([1,2], "[1]")
     # test5([1,2,3,4,5,6], "[1,2,3,4,5]")
 
-    # test 6
-    test6([], 1, "[]")
-    test6([1,2,3], 1, "[2,3]")
-    test6([1,2,3,4], 2, "[1,3,4]")
-    test6([1,2,3,4], 4, "[1,2,3]")
+    # # test 6
+    # test6([], 1, "[]")
+    # test6([1,2,3], 1, "[2,3]")
+    # test6([1,2,3,4], 2, "[1,3,4]")
+    # test6([1,2,3,4], 4, "[1,2,3]")
+    
+    
+    # test 7
+    test7([], 1, "[]")
+    test7([1,2,3], 1, "[2,3]")
+    test7([1,2,3], 2, "[1,3]")
+    test7([1,2,3], 3, "[1,2]")
+    test7([1,1,1,1,2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    test7([2,3,4,5,1], 1, "[2,3,4,5]")
+
     
     # all passed
     print("all tests passed")
