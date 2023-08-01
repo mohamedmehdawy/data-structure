@@ -276,7 +276,24 @@ class LinkedList:
         if not self.length:
             return
         else:
-            pass
+            # cur element
+            cur = self.head
+            
+            while cur:
+                # check if cur = the key
+                if cur.data == key:
+                    # check if cur is the head, if true remove first element
+                    if cur == self.head:
+                        self.delete_front()
+                        cur = self.head
+                    # if the cur is not the head
+                    else:
+                        prev = self._delete_link_node(cur)
+                        cur = prev.next
+                        
+                else:
+                    cur = cur.next
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
