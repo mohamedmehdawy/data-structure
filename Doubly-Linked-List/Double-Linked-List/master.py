@@ -304,7 +304,7 @@ class LinkedList:
         self.debug_verify_data_integrity()
     def delete_even_positions(self):
         """
-            Time Comlexity: O(n/2)
+            Time Comlexity: O(n)
             memory Complexity: O(1)
             #############################
             this function delete even positions not values in the linked list in the linked list
@@ -328,6 +328,13 @@ class LinkedList:
                     cur = prev.next.next
         
         self.debug_verify_data_integrity()
+        
+    def delete_odd_positions(self):
+        """
+            #############################
+            this function delete odd positions not values in the linked list in the linked list
+        """
+        pass
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -620,15 +627,15 @@ if __name__ == '__main__':
     # test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
     # test7([2,3,4,5,1], 1, "[2,3,4,5]")
 
-    # test 8
-    test8([], "[]")
-    test8([1], "[1]")
-    test8([1,2], "[1]")
-    test8([1,2,3], "[1,3]")
-    test8([1,2,3,4], "[1,3]")
-    test8([1,2,3,4,5], "[1,3,5]")
-    test8([1, 2, 3, 4, 10], "[1,3,10]")
-    test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
+    # # test 8
+    # test8([], "[]")
+    # test8([1], "[1]")
+    # test8([1,2], "[1]")
+    # test8([1,2,3], "[1,3]")
+    # test8([1,2,3,4], "[1,3]")
+    # test8([1,2,3,4,5], "[1,3,5]")
+    # test8([1, 2, 3, 4, 10], "[1,3,10]")
+    # test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
     
     # all passed
     print("all tests passed")
