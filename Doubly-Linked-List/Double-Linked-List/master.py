@@ -72,6 +72,8 @@ class LinkedList:
             this function delete delete given node from the linked list
             parameters:
                 node: the node will be delete
+            return:
+                prev: previous of the node
         """
         # check if no node
         if not node:
@@ -243,6 +245,9 @@ class LinkedList:
     
     def delete_node_with_key(self, key):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
             this function delete node with key, it search for node has a same key and delete it
             parameters:
                 key: the key will search until found node has same key
@@ -268,6 +273,9 @@ class LinkedList:
         
     def delete_all_nodes_with_key(self, key):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
             this function delete all node with key, it search for all node with key and delete it
             parameters:
                 key: the key will search until found node has same key
@@ -293,6 +301,32 @@ class LinkedList:
                         
                 else:
                     cur = cur.next
+        self.debug_verify_data_integrity()
+    def delete_even_positions(self):
+        """
+            Time Comlexity: O(n/2)
+            memory Complexity: O(1)
+            #############################
+            this function delete even positions not values in the linked list in the linked list
+        """
+        
+        if self.length < 2:
+            return
+        else:
+            # create cur element
+            cur = self.head.next
+            
+            while cur:
+                # remove cur element
+                prev = self._delete_link_node(cur)
+                
+                # check if cur was the tail by prev, break the loop
+                if prev == self.tail:
+                    break
+                else:
+                    # make cur the the second next of the prev
+                    cur = prev.next.next
+        
         self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
@@ -531,6 +565,17 @@ def test7(data, key, expected):
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
+
+def test8(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> delete_even_positions")
+    
+    ll = LinkedList(data)
+    ll.delete_even_positions()
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -566,15 +611,24 @@ if __name__ == '__main__':
     # test6([1,2,3,4], 4, "[1,2,3]")
     
     
-    # test 7
-    test7([], 1, "[]")
-    test7([1,2,3], 1, "[2,3]")
-    test7([1,2,3], 2, "[1,3]")
-    test7([1,2,3], 3, "[1,2]")
-    test7([1,1,1,1,2,3,4,1,1,5,1], 1, "[2,3,4,5]")
-    test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
-    test7([2,3,4,5,1], 1, "[2,3,4,5]")
+    # # test 7
+    # test7([], 1, "[]")
+    # test7([1,2,3], 1, "[2,3]")
+    # test7([1,2,3], 2, "[1,3]")
+    # test7([1,2,3], 3, "[1,2]")
+    # test7([1,1,1,1,2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    # test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    # test7([2,3,4,5,1], 1, "[2,3,4,5]")
 
+    # test 8
+    test8([], "[]")
+    test8([1], "[1]")
+    test8([1,2], "[1]")
+    test8([1,2,3], "[1,3]")
+    test8([1,2,3,4], "[1,3]")
+    test8([1,2,3,4,5], "[1,3,5]")
+    test8([1, 2, 3, 4, 10], "[1,3,10]")
+    test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
     
     # all passed
     print("all tests passed")
