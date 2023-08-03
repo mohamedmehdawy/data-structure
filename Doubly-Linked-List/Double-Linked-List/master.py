@@ -97,8 +97,36 @@ class LinkedList:
         
         # return the prev
         return prev
+    
+    def _delete_each_two_steps(self, cur):
+        """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
+            this finction delete nodes from the cur to after two steps of the cur until end the linked list
+            parameters:
+                cur: the current node will start from it
+        """
+        if cur == self.head:
+            self.delete_front()
+            
+            # set cur next to new head
+            cur = self.head.next
+        while cur:
+            # remove cur element
+            prev = self._delete_link_node(cur)
+            
+            # check if cur was the tail by prev, break the loop
+            if prev == self.tail:
+                break
+            else:
+                # make cur the the second next of the prev
+                cur = prev.next.next
     def _embed_after(self, target, value):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function instert new node with value after target node
             parameters:
                 target: the target node will insert the new node after it
@@ -199,23 +227,24 @@ class LinkedList:
         """
         if not self.length:
             return
-        else:
-            # next node of head
-            new_head = self.head.next
-
-            # delete node
-            self._delete_node(self.head)
-            
-            # move head
-            self.head = new_head
         
-            
-            # check if is last node or linked list is empty
-            if not self.length:
-                self.tail = self.head # will be None
-            # set head prev to be none
-            else:
-                self.head.prev = None
+        # next node of head
+        new_head = self.head.next
+
+        # delete node
+        self._delete_node(self.head)
+        
+        # move head
+        self.head = new_head
+    
+        
+        # check if is last node or linked list is empty
+        if not self.length:
+            self.tail = self.head # will be None
+        # set head prev to be none
+        else:
+            self.head.prev = None
+
         self.debug_verify_data_integrity()
     
     def delete_back(self):
@@ -312,29 +341,33 @@ class LinkedList:
         
         if self.length < 2:
             return
-        else:
-            # create cur element
-            cur = self.head.next
-            
-            while cur:
-                # remove cur element
-                prev = self._delete_link_node(cur)
-                
-                # check if cur was the tail by prev, break the loop
-                if prev == self.tail:
-                    break
-                else:
-                    # make cur the the second next of the prev
-                    cur = prev.next.next
+        
+        # create cur element
+        cur = self.head.next
+        
+        # delete even node start from cur
+        self._delete_each_two_steps(cur)
         
         self.debug_verify_data_integrity()
         
     def delete_odd_positions(self):
         """
-            #############################
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            ##############################
+            
             this function delete odd positions not values in the linked list in the linked list
         """
-        pass
+        if self.length < 2:
+            return
+        
+        # set cur first element
+        cur = self.head
+        
+        # delete odd node start from cur
+        self._delete_each_two_steps(cur)
+        
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -583,6 +616,16 @@ def test8(data, expected):
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
+def test9(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> delete_odd_positions")
+    
+    ll = LinkedList(data)
+    ll.delete_odd_positions()
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -636,6 +679,16 @@ if __name__ == '__main__':
     # test8([1,2,3,4,5], "[1,3,5]")
     # test8([1, 2, 3, 4, 10], "[1,3,10]")
     # test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
+    
+    # test 9
+    test9([], "[]")
+    test9([1], "[1]")
+    test9([1,2], "[2]")
+    test9([1,2,3], "[2]")
+    test9([1,2,3,4], "[2,4]")
+    test9([1, 2, 3, 4, 10], "[2,4]")
+    test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
+    
     
     # all passed
     print("all tests passed")
