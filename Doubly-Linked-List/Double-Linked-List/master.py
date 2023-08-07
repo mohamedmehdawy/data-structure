@@ -368,6 +368,30 @@ class LinkedList:
         self._delete_each_two_steps(cur)
         
         self.debug_verify_data_integrity()
+        
+    def is_palindrome(self):
+        """
+            this function check if the linked list is palindrome or not
+        """
+        # check if the length is less than 2 return true
+        if self.length < 2:
+            return True
+        
+        # set forward and backword
+        forward = self.head
+        backword = self.tail
+        
+        while forward is not backword and forward.prev is not backword:
+            # check if forward and backward not have the same value, if true 
+            if forward.data != backword.data:
+                return False
+            
+            # move forward and backword
+            forward = forward.next
+            backword = backword.prev
+        # if leave loop this mean the linked list is palindrome
+        return True
+    
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -626,6 +650,16 @@ def test9(data, expected):
     
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {fun_name}"
 
+def test10(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> is_palindrome")
+    
+    ll = LinkedList(data)
+    result = ll.is_palindrome()
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -680,15 +714,22 @@ if __name__ == '__main__':
     # test8([1, 2, 3, 4, 10], "[1,3,10]")
     # test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
     
-    # test 9
-    test9([], "[]")
-    test9([1], "[1]")
-    test9([1,2], "[2]")
-    test9([1,2,3], "[2]")
-    test9([1,2,3,4], "[2,4]")
-    test9([1, 2, 3, 4, 10], "[2,4]")
-    test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
+    # # test 9
+    # test9([], "[]")
+    # test9([1], "[1]")
+    # test9([1,2], "[2]")
+    # test9([1,2,3], "[2]")
+    # test9([1,2,3,4], "[2,4]")
+    # test9([1, 2, 3, 4, 10], "[2,4]")
+    # test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
     
+    # test 10
+    test10([], True)
+    test10([1], True)
+    test10([1,1], True)
+    test10([1,2,1], True)
+    test10([1,2], False)
+    test10([1,2,3,1], False)
     
     # all passed
     print("all tests passed")
