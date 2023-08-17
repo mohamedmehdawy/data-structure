@@ -338,13 +338,12 @@ class LinkedList:
             return
         
         # create cur element
-        cur = self.head.next
+        cur = self.head
         
-        # delete even node start from cur
-        self._delete_each_two_steps(cur)
-        
-        self.debug_verify_data_integrity()
-        
+        while cur:
+            prev = self._delete_link_node(cur.next)
+            print(f"prev is: {prev}, cur is: {cur}")
+            cur = cur.next
     def delete_odd_positions(self):
         """
             Time Comlexity: O(n)
@@ -691,23 +690,23 @@ if __name__ == '__main__':
     
     
     # test 7
-    test7([], 1, "[]")
-    test7([1,2,3], 1, "[2,3]")
-    test7([1,2,3], 2, "[1,3]")
-    test7([1,2,3], 3, "[1,2]")
-    test7([1,1,1,1,2,3,4,1,1,5,1], 1, "[2,3,4,5]")
-    test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
-    test7([2,3,4,5,1], 1, "[2,3,4,5]")
+    # test7([], 1, "[]")
+    # test7([1,2,3], 1, "[2,3]")
+    # test7([1,2,3], 2, "[1,3]")
+    # test7([1,2,3], 3, "[1,2]")
+    # test7([1,1,1,1,2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    # test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    # test7([2,3,4,5,1], 1, "[2,3,4,5]")
 
-    # # test 8
-    # test8([], "[]")
-    # test8([1], "[1]")
-    # test8([1,2], "[1]")
-    # test8([1,2,3], "[1,3]")
-    # test8([1,2,3,4], "[1,3]")
-    # test8([1,2,3,4,5], "[1,3,5]")
-    # test8([1, 2, 3, 4, 10], "[1,3,10]")
-    # test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
+    # test 8
+    test8([], "[]")
+    test8([1], "[1]")
+    test8([1,2], "[1]")
+    test8([1,2,3], "[1,3]")
+    test8([1,2,3,4], "[1,3]")
+    test8([1,2,3,4,5], "[1,3,5]")
+    test8([1, 2, 3, 4, 10], "[1,3,10]")
+    test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
     
     # # test 9
     # test9([], "[]")
