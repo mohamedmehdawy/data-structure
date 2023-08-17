@@ -312,24 +312,19 @@ class LinkedList:
         # if emtpy
         if not self.length:
             return
-        else:
-            # cur element
-            cur = self.head
-            
-            while cur:
-                # check if cur = the key
-                if cur.data == key:
-                    # check if cur is the head, if true remove first element
-                    if cur == self.head:
-                        self.delete_front()
-                        cur = self.head
-                    # if the cur is not the head
-                    else:
-                        prev = self._delete_link_node(cur)
-                        cur = prev.next
-                        
-                else:
-                    cur = cur.next
+        
+        # insert dummy
+        self.insert_front(key-1)
+        
+        # set current the next element of dummy
+        cur = self.head.next
+        
+        while cur:
+            if cur.data == key:
+                cur = self._delete_link_node(cur)
+            cur = cur.next
+        # delete dummy node
+        self.delete_front()
         self.debug_verify_data_integrity()
     def delete_even_positions(self):
         """
@@ -695,14 +690,14 @@ if __name__ == '__main__':
     # test6([1,2,3,4], 4, "[1,2,3]")
     
     
-    # # test 7
-    # test7([], 1, "[]")
-    # test7([1,2,3], 1, "[2,3]")
-    # test7([1,2,3], 2, "[1,3]")
-    # test7([1,2,3], 3, "[1,2]")
-    # test7([1,1,1,1,2,3,4,1,1,5,1], 1, "[2,3,4,5]")
-    # test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
-    # test7([2,3,4,5,1], 1, "[2,3,4,5]")
+    # test 7
+    test7([], 1, "[]")
+    test7([1,2,3], 1, "[2,3]")
+    test7([1,2,3], 2, "[1,3]")
+    test7([1,2,3], 3, "[1,2]")
+    test7([1,1,1,1,2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    test7([2,3,4,1,1,5,1], 1, "[2,3,4,5]")
+    test7([2,3,4,5,1], 1, "[2,3,4,5]")
 
     # # test 8
     # test8([], "[]")
@@ -724,12 +719,12 @@ if __name__ == '__main__':
     # test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
     
     # test 10
-    test10([], True)
-    test10([1], True)
-    test10([1,1], True)
-    test10([1,2,1], True)
-    test10([1,2], False)
-    test10([1,2,3,1], False)
+    # test10([], True)
+    # test10([1], True)
+    # test10([1,1], True)
+    # test10([1,2,1], True)
+    # test10([1,2], False)
+    # test10([1,2,3,1], False)
     
     # all passed
     print("all tests passed")
