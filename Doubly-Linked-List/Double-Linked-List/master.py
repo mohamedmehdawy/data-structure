@@ -352,18 +352,23 @@ class LinkedList:
         if self.length < 2:
             return True
         
+        # set the half len to divid the list
+        half_len = self.length // 2
+        
         # set forward and backword
         forward = self.head
         backword = self.tail
         
-        while forward is not backword and forward.prev is not backword:
+        while half_len:
+            half_len -= 1
+            
             # check if forward and backward not have the same value, if true 
             if forward.data != backword.data:
                 return False
             
             # move forward and backword
-            forward = forward.next
-            backword = backword.prev
+            forward, backword = forward.next, backword.prev
+            
         # if leave loop this mean the linked list is palindrome
         return True
     
@@ -690,21 +695,22 @@ if __name__ == '__main__':
     # test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
     
     # test 9
-    test9([], "[]")
-    test9([1], "[1]")
-    test9([1,2], "[2]")
-    test9([1,2,3], "[2]")
-    test9([1,2,3,4], "[2,4]")
-    test9([1, 2, 3, 4, 10], "[2,4]")
-    test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
+    # test9([], "[]")
+    # test9([1], "[1]")
+    # test9([1,2], "[2]")
+    # test9([1,2,3], "[2]")
+    # test9([1,2,3,4], "[2,4]")
+    # test9([1, 2, 3, 4, 10], "[2,4]")
+    # test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
     
     # test 10
-    # test10([], True)
-    # test10([1], True)
-    # test10([1,1], True)
-    # test10([1,2,1], True)
-    # test10([1,2], False)
-    # test10([1,2,3,1], False)
+    test10([], True)
+    test10([1], True)
+    test10([1,1], True)
+    test10([1,2,3,2,1], True)
+    test10([1,2,1], True)
+    test10([1,2], False)
+    test10([1,2,3,1], False)
     
     # all passed
     print("all tests passed")
