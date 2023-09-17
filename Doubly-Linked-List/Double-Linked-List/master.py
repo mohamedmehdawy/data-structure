@@ -98,30 +98,7 @@ class LinkedList:
         # return the prev
         return prev
     
-    def _delete_each_two_steps(self, cur):
-        """
-            Time Comlexity: O(1)
-            memory Complexity: O(1)
-            #############################
-            this finction delete nodes from the cur to after two steps of the cur until end the linked list
-            parameters:
-                cur: the current node will start from it
-        """
-        if cur == self.head:
-            self.delete_front()
-            
-            # set cur next to new head
-            cur = self.head.next
-        while cur:
-            # remove cur element
-            prev = self._delete_link_node(cur)
-            
-            # check if cur was the tail by prev, break the loop
-            if prev == self.tail:
-                break
-            else:
-                # make cur the the second next of the prev
-                cur = prev.next.next
+
     def _embed_after(self, target, value):
         """
             Time Comlexity: O(1)
@@ -341,9 +318,10 @@ class LinkedList:
         cur = self.head
         
         while cur:
-            prev = self._delete_link_node(cur.next)
-            print(f"prev is: {prev}, cur is: {cur}")
+            self._delete_link_node(cur.next)
             cur = cur.next
+            
+        self.debug_verify_data_integrity()
     def delete_odd_positions(self):
         """
             Time Comlexity: O(n)
@@ -355,11 +333,14 @@ class LinkedList:
         if self.length < 2:
             return
         
-        # set cur first element
-        cur = self.head
+        # append dummy node to call delete even function
+        self.insert_front(-1)
         
-        # delete odd node start from cur
-        self._delete_each_two_steps(cur)
+        # delete even will work well because i add dummy node
+        self.delete_even_positions()
+        
+        # delete the dummy node
+        self.delete_front()
         
         self.debug_verify_data_integrity()
         
@@ -699,23 +680,23 @@ if __name__ == '__main__':
     # test7([2,3,4,5,1], 1, "[2,3,4,5]")
 
     # test 8
-    test8([], "[]")
-    test8([1], "[1]")
-    test8([1,2], "[1]")
-    test8([1,2,3], "[1,3]")
-    test8([1,2,3,4], "[1,3]")
-    test8([1,2,3,4,5], "[1,3,5]")
-    test8([1, 2, 3, 4, 10], "[1,3,10]")
-    test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
+    # test8([], "[]")
+    # test8([1], "[1]")
+    # test8([1,2], "[1]")
+    # test8([1,2,3], "[1,3]")
+    # test8([1,2,3,4], "[1,3]")
+    # test8([1,2,3,4,5], "[1,3,5]")
+    # test8([1, 2, 3, 4, 10], "[1,3,10]")
+    # test8([1, 2, 3, 4, 5, 6], "[1,3,5]")
     
-    # # test 9
-    # test9([], "[]")
-    # test9([1], "[1]")
-    # test9([1,2], "[2]")
-    # test9([1,2,3], "[2]")
-    # test9([1,2,3,4], "[2,4]")
-    # test9([1, 2, 3, 4, 10], "[2,4]")
-    # test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
+    # test 9
+    test9([], "[]")
+    test9([1], "[1]")
+    test9([1,2], "[2]")
+    test9([1,2,3], "[2]")
+    test9([1,2,3,4], "[2,4]")
+    test9([1, 2, 3, 4, 10], "[2,4]")
+    test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
     
     # test 10
     # test10([], True)
