@@ -372,6 +372,25 @@ class LinkedList:
         # if leave loop this mean the linked list is palindrome
         return True
     
+    def find_the_middle(self):
+        """
+            this function return the middle of list
+            return: value of the middle node
+        """
+        
+        # check if empty
+        if not self.head:
+            return None
+        
+        # set forward and backword
+        forward, backword = self.head, self.tail
+        
+        while forward != backword and forward.prev != backword:
+            forward, backword = forward.next, backword.prev
+        
+        
+        # the middle is the forward
+        return forward.data
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -640,6 +659,16 @@ def test10(data, expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
 
+def test11(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> find_the_middle")
+    
+    ll = LinkedList(data)
+    result = ll.find_the_middle()
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -704,13 +733,21 @@ if __name__ == '__main__':
     # test9([1, 2, 3, 4, 5, 7], "[2,4,7]")
     
     # test 10
-    test10([], True)
-    test10([1], True)
-    test10([1,1], True)
-    test10([1,2,3,2,1], True)
-    test10([1,2,1], True)
-    test10([1,2], False)
-    test10([1,2,3,1], False)
+    # test10([], True)
+    # test10([1], True)
+    # test10([1,1], True)
+    # test10([1,2,3,2,1], True)
+    # test10([1,2,1], True)
+    # test10([1,2], False)
+    # test10([1,2,3,1], False)
+    
+    # test 11
+    test11([], None)
+    test11([1], 1)
+    test11([1,2], 2)
+    test11([1,2,3], 2)
+    test11([1,2,3,4,5], 3)
+    test11([1,2,3,4,5,6], 4)
     
     # all passed
     print("all tests passed")
