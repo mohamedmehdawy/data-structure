@@ -372,7 +372,7 @@ class LinkedList:
         # if leave loop this mean the linked list is palindrome
         return True
     
-    def find_the_middle(self):
+    def find_the_middle_v1(self):
         """
             this function return the middle of list
             return: value of the middle node
@@ -385,12 +385,36 @@ class LinkedList:
         # set forward and backword
         forward, backword = self.head, self.tail
         
-        while forward != backword and forward.prev != backword:
+        while forward != backword and forward.next != backword:
             forward, backword = forward.next, backword.prev
         
         
-        # the middle is the forward
-        return forward.data
+        # the middle is the backword
+        return backword.data
+    
+    def find_the_middle_v2(self):
+        """
+            this function return the middle of list just using SLL
+            return: value of the middle node
+        """
+        
+        # check if empty
+        if not self.head:
+            return None
+        
+        # we will use Tortoise and the Hare algorithm
+        # slow will walk step by step
+        # fast will walk 2 step every once
+        slow = fast = self.head
+        
+        # stop if the fast arraive to the end
+        while fast and fast.next:
+            
+            slow = slow.next # tortoise
+            fast = fast.next.next # Hare jump 2 steps
+        
+        # the middle of the list
+        return slow.data
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -662,10 +686,20 @@ def test10(data, expected):
 def test11(data, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"testing: {fun_name} -> find_the_middle")
+    print(f"testing: {fun_name} -> find_the_middle_v1")
     
     ll = LinkedList(data)
-    result = ll.find_the_middle()
+    result = ll.find_the_middle_v1()
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
+
+def test12(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> find_the_middle_v2")
+    
+    ll = LinkedList(data)
+    result = ll.find_the_middle_v2()
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
 
@@ -742,12 +776,20 @@ if __name__ == '__main__':
     # test10([1,2,3,1], False)
     
     # test 11
-    test11([], None)
-    test11([1], 1)
-    test11([1,2], 2)
-    test11([1,2,3], 2)
-    test11([1,2,3,4,5], 3)
-    test11([1,2,3,4,5,6], 4)
+    # test11([], None)
+    # test11([1], 1)
+    # test11([1,2], 2)
+    # test11([1,2,3], 2)
+    # test11([1,2,3,4,5], 3)
+    # test11([1,2,3,4,5,6], 4)
+    
+    # test 12
+    test12([], None)
+    test12([1], 1)
+    test12([1,2], 2)
+    test12([1,2,3], 2)
+    test12([1,2,3,4,5], 3)
+    test12([1,2,3,4,5,6], 4)
     
     # all passed
     print("all tests passed")
