@@ -392,7 +392,7 @@ class LinkedList:
         # the middle is the backword
         return backword.data
     
-    def find_the_middle_v2(self):
+    def find_the_middle_v2(self):   
         """
             this function return the middle of list just using SLL
             return: value of the middle node
@@ -415,6 +415,56 @@ class LinkedList:
         
         # the middle of the list
         return slow.data
+    
+    def swap_kth(self, k):
+        """
+            this function Swap forward with backward
+            parameters:
+                k: kth node from the front and back of the list
+        """
+        
+        # check if the list is more than one or the k i greater than the length or the list is even and the k is the middle
+        is_even = self.length % 2 == 0
+        if self.length < 2 or k > self.length or (is_even and k == self.length / 2 and self.length != 2):
+            return 
+        
+        if self.length == 2:
+            # change pointers
+            self.head.next = None
+            self.tail.next = self.head
+            self.head.prev = self.tail
+            self.tail.prev = None
+            
+            # reset head and tail
+            self.head, self.tail = self.tail, self.head
+            
+        else:
+            # set first and second
+            first, second = self.head, self.tail
+            
+            # get first and second insted of k
+            for _ in range(k-1):
+                first, second = first.next, second.prev
+            
+            # set next and prev of first and second
+            n1,p1,n2,p2 = first.next, first.prev, second.next, second.prev
+            
+            # swap first and second
+            first.next = n2
+            first.prev = p2
+            second.next = n1
+            second.prev = p1
+            
+            # reset prev of n1 and next of p2
+            n1.prev = second
+            p2.next = first
+            
+            # check if the first and second are head and tail, if true reset head and tail
+            if first == self.head or first == self.tail:
+                # reset head and tail
+                self.head, self.tail = self.tail, self.head
+                
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -703,6 +753,17 @@ def test12(data, expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
 
+def test13(data, k,expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> swap_kth")
+    
+    ll = LinkedList(data)
+    ll.swap_kth(k)
+    result = str(ll)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -784,12 +845,19 @@ if __name__ == '__main__':
     # test11([1,2,3,4,5,6], 4)
     
     # test 12
-    test12([], None)
-    test12([1], 1)
-    test12([1,2], 2)
-    test12([1,2,3], 2)
-    test12([1,2,3,4,5], 3)
-    test12([1,2,3,4,5,6], 4)
+    # test12([], None)
+    # test12([1], 1)
+    # test12([1,2], 2)
+    # test12([1,2,3], 2)
+    # test12([1,2,3,4,5], 3)
+    # test12([1,2,3,4,5,6], 4)
     
+    # test 13
+    test13([], 1, "[]")
+    test13([1,2,3,4,5,6], 20, "[1,2,3,4,5,6]")
+    test13([1,2], 1, "[2,1]")
+    test13([1,2,3], 1, "[3,2,1]")
+    test13([1,2,3,4,5,6], 2, "[1,5,3,4,2,6]")
+
     # all passed
     print("all tests passed")

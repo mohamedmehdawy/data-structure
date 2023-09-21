@@ -1,1 +1,1 @@
-is_palindrome
+first
