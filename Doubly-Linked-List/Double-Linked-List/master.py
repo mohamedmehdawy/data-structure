@@ -446,16 +446,23 @@ class LinkedList:
             for _ in range(k-1):
                 first, second = first.next, second.prev
             
+            # if the first and the second are the same return nothing
+            if first == second:
+                return
+            
             # set next and prev of first and second
             n1,p1,n2,p2 = first.next, first.prev, second.next, second.prev
             
             # swap first and second
-            first.next = n2
             first.prev = p2
-            second.next = n1
             second.prev = p1
+            second.next = n1
+            first.next = n2
             
-            # reset prev of n1 and next of p2
+            # reset prev and next of n1, p1, n2, p2
+            if p1 and n2:
+                p1.next = second
+                n2.prev = first
             n1.prev = second
             p2.next = first
             
@@ -463,7 +470,7 @@ class LinkedList:
             if first == self.head or first == self.tail:
                 # reset head and tail
                 self.head, self.tail = self.tail, self.head
-                
+
         self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
@@ -569,7 +576,7 @@ class LinkedList:
                 assert actual_lst_len < 1000
             
             # check actual length
-            assert self.length == actual_lst_len
+            assert self.length == actual_lst_len, f"from head, lenght: {self.length}, actual: {actual_lst_len}"
             
             # verify backword pass
             actual_lst_len = 0
@@ -580,7 +587,7 @@ class LinkedList:
                 assert actual_lst_len < 1000
                 
             # check actual length
-            assert self.length == actual_lst_len
+            assert self.length == actual_lst_len, f"from tail, lenght: {self.length}, actual: {actual_lst_len}"
             
     def __repr__(self):
         """
@@ -857,7 +864,11 @@ if __name__ == '__main__':
     test13([1,2,3,4,5,6], 20, "[1,2,3,4,5,6]")
     test13([1,2], 1, "[2,1]")
     test13([1,2,3], 1, "[3,2,1]")
+    test13([1,2,3], 2, "[1,2,3]")
+
+    test13([1,2,3,4,5,6], 1, "[6,2,3,4,5,1]")
     test13([1,2,3,4,5,6], 2, "[1,5,3,4,2,6]")
+    # test13([1,2,3,4,5,6], 3, "[1,2,4,3,5,6]")
 
     # all passed
     print("all tests passed")
