@@ -423,9 +423,9 @@ class LinkedList:
                 k: kth node from the front and back of the list
         """
         
-        # check if the list is more than one or the k i greater than the length or the list is even and the k is the middle
-        is_even = self.length % 2 == 0
-        if self.length < 2 or k > self.length or (is_even and k == self.length / 2 and self.length != 2):
+        # check if the list is more than one or the k i greater than the length or the list is odd and the k is the middle
+        is_odd = self.length % 2 != 0
+        if self.length < 2 or k > self.length or (is_odd and k == (self.length // 2) + 1):
             return 
         
         if self.length == 2:
@@ -447,24 +447,33 @@ class LinkedList:
                 first, second = first.next, second.prev
             
             # if the first and the second are the same return nothing
-            if first == second:
+            if first is second:
                 return
             
             # set next and prev of first and second
             n1,p1,n2,p2 = first.next, first.prev, second.next, second.prev
             
             # swap first and second
-            first.prev = p2
+            # check if first is next to of second, if true make prev of first is second and the next of second is first
+            if first.next is second:
+                first.prev = second
+                second.next = first
+            else:
+                first.prev = p2
+                second.next = n1
+
             second.prev = p1
-            second.next = n1
             first.next = n2
             
             # reset prev and next of n1, p1, n2, p2
             if p1 and n2:
                 p1.next = second
                 n2.prev = first
-            n1.prev = second
-            p2.next = first
+                
+            # check if the next of second is first, if true dont do any thing
+            if second.next is not first:
+                n1.prev = second
+                p2.next = first
             
             # check if the first and second are head and tail, if true reset head and tail
             if first == self.head or first == self.tail:
@@ -868,7 +877,7 @@ if __name__ == '__main__':
 
     test13([1,2,3,4,5,6], 1, "[6,2,3,4,5,1]")
     test13([1,2,3,4,5,6], 2, "[1,5,3,4,2,6]")
-    # test13([1,2,3,4,5,6], 3, "[1,2,4,3,5,6]")
-
+    test13([1,2,3,4,5,6], 3, "[1,2,4,3,5,6]")
+    test13([1,2,3,4], 2, "[1,3,2,4]")
     # all passed
     print("all tests passed")
