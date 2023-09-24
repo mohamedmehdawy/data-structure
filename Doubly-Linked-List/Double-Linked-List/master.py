@@ -481,6 +481,34 @@ class LinkedList:
                 self.head, self.tail = self.tail, self.head
 
         self.debug_verify_data_integrity()
+        
+    def reverse(self):
+        """
+            this function reverse the list by addresses
+        """
+        # check if the list is less than 2 elements
+        if self.length < 2:
+            return
+        
+        # set current element is the head
+        current = self.head
+        
+        while current:
+            # set the next of the current
+            next = current.next
+            
+            # reset next and prev of the current element
+            current.next = current.prev
+            current.prev = next
+            
+            # set current is the next element
+            current = next
+        
+        # reset head and tail
+        self.head, self.tail = self.tail, self.head
+        
+        self.debug_verify_data_integrity()
+        
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -780,6 +808,17 @@ def test13(data, k,expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
 
+def test14(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> reverse")
+    
+    ll = LinkedList(data)
+    ll.reverse()
+    result = str(ll)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -869,15 +908,23 @@ if __name__ == '__main__':
     # test12([1,2,3,4,5,6], 4)
     
     # test 13
-    test13([], 1, "[]")
-    test13([1,2,3,4,5,6], 20, "[1,2,3,4,5,6]")
-    test13([1,2], 1, "[2,1]")
-    test13([1,2,3], 1, "[3,2,1]")
-    test13([1,2,3], 2, "[1,2,3]")
+    # test13([], 1, "[]")
+    # test13([1,2,3,4,5,6], 20, "[1,2,3,4,5,6]")
+    # test13([1,2], 1, "[2,1]")
+    # test13([1,2,3], 1, "[3,2,1]")
+    # test13([1,2,3], 2, "[1,2,3]")
 
-    test13([1,2,3,4,5,6], 1, "[6,2,3,4,5,1]")
-    test13([1,2,3,4,5,6], 2, "[1,5,3,4,2,6]")
-    test13([1,2,3,4,5,6], 3, "[1,2,4,3,5,6]")
-    test13([1,2,3,4], 2, "[1,3,2,4]")
+    # test13([1,2,3,4,5,6], 1, "[6,2,3,4,5,1]")
+    # test13([1,2,3,4,5,6], 2, "[1,5,3,4,2,6]")
+    # test13([1,2,3,4,5,6], 3, "[1,2,4,3,5,6]")
+    # test13([1,2,3,4], 2, "[1,3,2,4]")
+    
+    # test 14 => reverse
+    test14([], "[]")
+    test14([1], "[1]")
+    test14([1,2], "[2,1]")
+    test14([1,2,3], "[3,2,1]")
+    test14([1,2,3,4,5,6], "[6,5,4,3,2,1]")
+    
     # all passed
     print("all tests passed")
