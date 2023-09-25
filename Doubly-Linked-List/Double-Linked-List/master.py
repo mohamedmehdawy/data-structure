@@ -508,7 +508,52 @@ class LinkedList:
         self.head, self.tail = self.tail, self.head
         
         self.debug_verify_data_integrity()
+    
+    def merge_2sorted_list(self, other):
+        """
+            this function merge 2 sorted list in the current list
+            parameters:
+                other: the other list will merge with the current list
+        """
         
+        # set actual length of two lists
+        acutal_first_length = self.length
+        acutal_second_length = other.length
+        
+        # check if the second list is empty return nothing
+        if not other.length:
+            return
+        
+        # set current of two lists
+        first_current = self.head
+        second_current = other.head
+        
+        # loop until arrive to the last element in first list or second current
+        while first_current and second_current:
+            # check if the first current is bigger than the second current
+            # if true put the second current in the prev of first current
+            # but first set new head of second list
+            if first_current.data >= second_current.data:
+                # set new head for second list
+                other.head = second_current.next
+                
+                # put second current in the first list
+                self._link(first_current.prev, second_current)
+                self._link(second_current, first_current)
+                
+                # check if the first current is the head set the new head
+                if first_current == self.head:
+                    self.head = second_current # prev of first current
+            else:
+                # move the first current
+                first_current = first_current.next
+            # reset second current
+            second_current = other.head
+            
+        # check if we have some elements in the second list
+        if not other.length:
+            # append each element of second list to the first one
+            pass
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
