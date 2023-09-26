@@ -516,10 +516,6 @@ class LinkedList:
                 other: the other list will merge with the current list
         """
         
-        # set actual length of two lists
-        acutal_first_length = self.length
-        acutal_second_length = other.length
-        
         # check if the second list is empty return nothing
         if not other.length:
             return
@@ -551,9 +547,38 @@ class LinkedList:
             second_current = other.head
             
         # check if we have some elements in the second list
-        if not other.length:
+        if other.length:
             # append each element of second list to the first one
-            pass
+            while second_current:
+                # set new value of second list head
+                other.head = second_current.next
+
+                # append the second current in the end of first list
+                if self.tail:
+                    self._link(second_current, self.tail.next)
+                    self._link(self.tail, second_current)
+                else:
+                    # link second current with None
+                    self._link(second_current, None)
+                    self._link(None, second_current)
+
+                    # reset head and tail of first node
+                    self.head = self.tail = second_current
+                    
+                # increase length
+                self._add_node(second_current)
+                
+                # move the tail
+                self.tail = second_current
+                
+                # move the second current
+                second_current = other.head
+                
+
+        # reset second list tail
+        other.tail = None
+        
+        self.debug_verify_data_integrity()
     def debug_print_address(self):
         """
             Time Comlexity: O(n)
@@ -864,6 +889,18 @@ def test14(data, expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
 
+def test15(l1, l2, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> merge_2sorted_list")
+    
+    ll = LinkedList(l1)
+    l2 = LinkedList(l2)
+    ll.merge_2sorted_list(l2)
+    result = str(ll)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
+
 if __name__ == '__main__':
     
     # # test 1
@@ -965,11 +1002,16 @@ if __name__ == '__main__':
     # test13([1,2,3,4], 2, "[1,3,2,4]")
     
     # test 14 => reverse
-    test14([], "[]")
-    test14([1], "[1]")
-    test14([1,2], "[2,1]")
-    test14([1,2,3], "[3,2,1]")
-    test14([1,2,3,4,5,6], "[6,5,4,3,2,1]")
+    # test14([], "[]")
+    # test14([1], "[1]")
+    # test14([1,2], "[2,1]")
+    # test14([1,2,3], "[3,2,1]")
+    # test14([1,2,3,4,5,6], "[6,5,4,3,2,1]")
     
+    # test 15 => merge_2sorted_list
+    test15([1,2], [], "[1,2]")
+    test15([], [1], "[1]")
+    test15([], [1,2,3], "[1,2,3]")
+
     # all passed
     print("all tests passed")
