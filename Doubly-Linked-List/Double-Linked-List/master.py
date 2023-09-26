@@ -537,6 +537,9 @@ class LinkedList:
                 self._link(first_current.prev, second_current)
                 self._link(second_current, first_current)
                 
+                # increase length
+                self._add_node(second_current)
+                
                 # check if the first current is the head set the new head
                 if first_current == self.head:
                     self.head = second_current # prev of first current
@@ -1012,6 +1015,10 @@ if __name__ == '__main__':
     test15([1,2], [], "[1,2]")
     test15([], [1], "[1]")
     test15([], [1,2,3], "[1,2,3]")
+    test15([1,4,7], [2,5], "[1,2,4,5,7]")
+    test15([1,4,7], [2,5,10], "[1,2,4,5,7,10]")
+    test15([10,15,20], [1,12], "[1,10,12,15,20]")
+    test15([10,15,20], [1,12,50,60,70,80], "[1,10,12,15,20,50,60,70,80]")
 
     # all passed
     print("all tests passed")
