@@ -132,8 +132,13 @@ class LinkedList:
             parameters:
                 value: the value will add in the end of linked list as node
         """
-        # the node
-        node = Node(value)
+        # check if the value is node or not
+        if str(type(value)) == "<class '__main__.Node'>":
+            node = value
+            node.next = None
+            
+        else:
+            node = Node(value)
         
         # if linked list not have any nodes
         if self.length == 0:
@@ -557,23 +562,8 @@ class LinkedList:
                 other.head = second_current.next
 
                 # append the second current in the end of first list
-                if self.tail:
-                    self._link(second_current, self.tail.next)
-                    self._link(self.tail, second_current)
-                else:
-                    # link second current with None
-                    self._link(second_current, None)
-                    self._link(None, second_current)
+                self.insert_end(second_current)
 
-                    # reset head and tail of first node
-                    self.head = self.tail = second_current
-                    
-                # increase length
-                self._add_node(second_current)
-                
-                # move the tail
-                self.tail = second_current
-                
                 # move the second current
                 second_current = other.head
                 
@@ -1019,6 +1009,7 @@ if __name__ == '__main__':
     test15([1,4,7], [2,5,10], "[1,2,4,5,7,10]")
     test15([10,15,20], [1,12], "[1,10,12,15,20]")
     test15([10,15,20], [1,12,50,60,70,80], "[1,10,12,15,20,50,60,70,80]")
+
 
     # all passed
     print("all tests passed")
