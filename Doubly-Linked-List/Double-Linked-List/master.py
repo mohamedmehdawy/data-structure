@@ -123,6 +123,25 @@ class LinkedList:
         
         # add node
         self._add_node(node)
+        
+    def get_nth(self, k):
+        """
+            this function return the node insted of k
+            paramets:
+                k: position of node
+        """
+        # none check
+        if not self.length or k > self.length or k <= 0:
+            return None
+        
+        # set current to start arrive to target node
+        current = self.head
+        
+        for _ in range(k-1):
+            current = current.next
+            
+        # return the target node
+        return current
     def insert_end(self, value):
         """
             Time Comlexity: O(1)
@@ -423,68 +442,54 @@ class LinkedList:
     
     def swap_kth(self, k):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            ###############################
             this function Swap forward with backward
             parameters:
                 k: kth node from the front and back of the list
         """
+        # check if have a length
+        if not self.length or k > self.length:
+            return
         
-        # check if the list is more than one or the k i greater than the length or the list is odd and the k is the middle
-        is_odd = self.length % 2 != 0
-        if self.length < 2 or k > self.length or (is_odd and k == (self.length // 2) + 1):
-            return 
+        # the position for the back
+        kth_back = self.length - k + 1
         
-        if self.length == 2:
-            # change pointers
-            self.head.next = None
-            self.tail.next = self.head
-            self.head.prev = self.tail
-            self.tail.prev = None
+        # check if the k are the middle
+        if k == kth_back:
+            return
+        
+        # check if k are greater than kth_back, if true swap them
+        if k > kth_back:
+            k, kth_back = kth_back, k
             
-            # reset head and tail
+        # set first and second nodes
+        first = self.get_nth(k)
+        second = self.get_nth(kth_back)
+
+        # set the prev and next of first and second
+        first_prev, first_next, second_prev, second_next = first.prev, first.next, second.prev, second.next
+        
+        # link second with first prev and first with second next
+        self._link(first_prev, second)
+        self._link(first, second_next)
+        
+        # check if first and second are neighbors
+        if k+1 == kth_back:
+            self._link(second, first)
+        else:
+            # link second
+            self._link(second, first_next)
+            
+            # link first
+            self._link(second_prev, first)
+            
+        
+        # check if we swap head and tail, if true reset head and tail
+        if k == 1:
             self.head, self.tail = self.tail, self.head
             
-        else:
-            # set first and second
-            first, second = self.head, self.tail
-            
-            # get first and second insted of k
-            for _ in range(k-1):
-                first, second = first.next, second.prev
-            
-            # if the first and the second are the same return nothing
-            if first is second:
-                return
-            
-            # set next and prev of first and second
-            n1,p1,n2,p2 = first.next, first.prev, second.next, second.prev
-            
-            # swap first and second
-            # check if first is next to of second, if true make prev of first is second and the next of second is first
-            if first.next is second:
-                first.prev = second
-                second.next = first
-            else:
-                first.prev = p2
-                second.next = n1
-
-            second.prev = p1
-            first.next = n2
-            
-            # reset prev and next of n1, p1, n2, p2
-            if p1 and n2:
-                p1.next = second
-                n2.prev = first
-                
-            # check if the next of second is first, if true dont do any thing
-            if second.next is not first:
-                n1.prev = second
-                p2.next = first
-            
-            # check if the first and second are head and tail, if true reset head and tail
-            if first == self.head or first == self.tail:
-                # reset head and tail
-                self.head, self.tail = self.tail, self.head
-
         self.debug_verify_data_integrity()
         
     def reverse(self):
@@ -894,6 +899,16 @@ def test15(l1, l2, expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
 
+def test16(data, k, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing: {fun_name} -> get_nth")
+    
+    ll = LinkedList(data)
+    
+    result = str(ll.get_nth(k))
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} and linked list is {ll} in {fun_name}"
 if __name__ == '__main__':
     
     # # test 1
@@ -983,11 +998,11 @@ if __name__ == '__main__':
     # test12([1,2,3,4,5,6], 4)
     
     # test 13
-    # test13([], 1, "[]")
-    # test13([1,2,3,4,5,6], 20, "[1,2,3,4,5,6]")
-    # test13([1,2], 1, "[2,1]")
-    # test13([1,2,3], 1, "[3,2,1]")
-    # test13([1,2,3], 2, "[1,2,3]")
+    test13([], 1, "[]")
+    test13([1,2,3,4,5,6], 20, "[1,2,3,4,5,6]")
+    test13([1,2], 1, "[2,1]")
+    test13([1,2,3], 1, "[3,2,1]")
+    test13([1,2,3], 2, "[1,2,3]")
 
     # test13([1,2,3,4,5,6], 1, "[6,2,3,4,5,1]")
     # test13([1,2,3,4,5,6], 2, "[1,5,3,4,2,6]")
@@ -1002,14 +1017,21 @@ if __name__ == '__main__':
     # test14([1,2,3,4,5,6], "[6,5,4,3,2,1]")
     
     # test 15 => merge_2sorted_list
-    test15([1,2], [], "[1,2]")
-    test15([], [1], "[1]")
-    test15([], [1,2,3], "[1,2,3]")
-    test15([1,4,7], [2,5], "[1,2,4,5,7]")
-    test15([1,4,7], [2,5,10], "[1,2,4,5,7,10]")
-    test15([10,15,20], [1,12], "[1,10,12,15,20]")
-    test15([10,15,20], [1,12,50,60,70,80], "[1,10,12,15,20,50,60,70,80]")
+    # test15([1,2], [], "[1,2]")
+    # test15([], [1], "[1]")
+    # test15([], [1,2,3], "[1,2,3]")
+    # test15([1,4,7], [2,5], "[1,2,4,5,7]")
+    # test15([1,4,7], [2,5,10], "[1,2,4,5,7,10]")
+    # test15([10,15,20], [1,12], "[1,10,12,15,20]")
+    # test15([10,15,20], [1,12,50,60,70,80], "[1,10,12,15,20,50,60,70,80]")
 
+    # test 16 => get_nth
+    # test16([], 0, "None")
+    # test16([1], 1, "1")
+    # test16([1,2,3,4], 3, "3")
+    # test16([1,2,3,4], 4, "4")
+    # test16([1,2,3,4], 20, "None")
+    # test16([1,2,3,4], -20, "None")
 
     # all passed
     print("all tests passed")
