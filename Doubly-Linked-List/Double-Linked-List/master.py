@@ -508,7 +508,7 @@ class LinkedList:
             next = current.next
             
             # reset next and prev of the current element
-            current.next = current.prev
+            self._link(current, current.prev)
             current.prev = next
             
             # set current is the next element
@@ -1010,11 +1010,11 @@ if __name__ == '__main__':
     # test13([1,2,3,4], 2, "[1,3,2,4]")
     
     # test 14 => reverse
-    # test14([], "[]")
-    # test14([1], "[1]")
-    # test14([1,2], "[2,1]")
-    # test14([1,2,3], "[3,2,1]")
-    # test14([1,2,3,4,5,6], "[6,5,4,3,2,1]")
+    test14([], "[]")
+    test14([1], "[1]")
+    test14([1,2], "[2,1]")
+    test14([1,2,3], "[3,2,1]")
+    test14([1,2,3,4,5,6], "[6,5,4,3,2,1]")
     
     # test 15 => merge_2sorted_list
     # test15([1,2], [], "[1,2]")
