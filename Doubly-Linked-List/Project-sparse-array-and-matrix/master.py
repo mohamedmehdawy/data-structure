@@ -5,7 +5,7 @@ class Node:
             the init of node object
             parameters:
                 idx: the index
-                the value of node
+                value: the value of node
         """
         # create and set index and value
         self.idx = idx
@@ -32,6 +32,98 @@ class SparseArray:
         
         # debug data
         self.debug_data = []
+        
+    
+    def _add_node(self, node):
+        """
+            this function add the node to debug data and increase the actual length
+            parameters:
+                node: the node will add to debug data
+        """
+        # add the node to the debug data
+        self.debug_data.append(node)
+        
+        # increase the actual length
+        self.acutal_length += 1
+        
+    def _link(self, first, second):
+        """
+            this function link two node together
+            parameters:
+                first: the first node, the next will link with second
+                second: the second node, the prev will link with first
+        """
+        if first:
+            first.next = second
+        
+        if second:
+            second.prev = first
+    def insert_front(self, node):
+        """
+            this function insert the node in the head
+            paramerts:
+                node: the node will be in the head
+        """
+        # check if empty
+        if self.acutal_length == 0:
+            self.head = self.tail = node
+        else:
+            # link new head with current head
+            self._link(node, self.head)
+            
+            # set new head
+            self.head = node
+        # increase the actual length
+        self._add_node(node)
+        
+        self.debug_verify_data_integrity()
+    def insert_end(self, node):
+        """
+            this function insert the node in the tail
+            parameters:
+                node: the node will be the new tail
+        """
+        if self.acutal_length == 0:
+            self.insert_front(node)
+        else:
+            # link new head with current tail
+            self._link(self.tail, node)
+            
+            # set new tail
+            self.tail = node
+        # increase the actual length
+        self._add_node(node)
+    def set_value(self, idx, value):
+        """
+            this function set value inside the list insted of the index
+            parameters:
+                idx: the index you will add node in it
+                value: the value of the node
+        """
+        # check idx range
+        if idx < 0 or idx > self.length:
+            print(f"the index: {idx}, is out of range: {self.length}")
+            return
+        
+        
+        # set current to get idx
+        current = self.head
+        
+        # get the valid position
+        while current and current.idx < idx:
+            current = current.next
+        
+        # create new node
+        node = Node(idx, value)
+        
+        # check if we are in the first node
+        if current == self.head or self.head is None:
+            self.insert_front(node)
+        
+        # check if the new node will be the new tail
+        elif current is None and self.acutal_length < self.length:
+            self.insert_end(node)
+        
         
     def debug_verify_data_integrity(self):
         """
