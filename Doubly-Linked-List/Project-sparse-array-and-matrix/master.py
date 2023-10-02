@@ -69,6 +69,7 @@ class SparseArray:
                 counter += 1
                 current = current.next
                 
+                assert counter <= self.length
             
             assert counter == self.acutal_length
             assert self.acutal_length <= self.length
@@ -83,6 +84,8 @@ class SparseArray:
                 assert current.idx.next > current.idx
                 counter += 1
                 current = current.prev
+                assert counter <= self.length
+
             
             assert counter == self.acutal_length
             assert self.acutal_length <= self.length
