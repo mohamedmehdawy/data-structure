@@ -1,4 +1,7 @@
 # the node
+import inspect
+
+
 class Node:
     def __init__(self, idx, value) -> None:
         """
@@ -36,6 +39,9 @@ class SparseArray:
     
     def _add_node(self, node):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function add the node to debug data and increase the actual length
             parameters:
                 node: the node will add to debug data
@@ -48,6 +54,9 @@ class SparseArray:
         
     def _link(self, first, second):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function link two node together
             parameters:
                 first: the first node, the next will link with second
@@ -60,6 +69,9 @@ class SparseArray:
             second.prev = first
     def insert_front(self, node):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function insert the node in the head
             paramerts:
                 node: the node will be in the head
@@ -79,6 +91,9 @@ class SparseArray:
         self.debug_verify_data_integrity()
     def insert_end(self, node):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function insert the node in the tail
             parameters:
                 node: the node will be the new tail
@@ -95,6 +110,9 @@ class SparseArray:
         self._add_node(node)
     def set_value(self, idx, value):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
             this function set value inside the list insted of the index
             parameters:
                 idx: the index you will add node in it
@@ -105,28 +123,50 @@ class SparseArray:
             print(f"the index: {idx}, is out of range: {self.length}")
             return
         
-        
-        # set current to get idx
-        current = self.head
-        
-        # get the valid position
-        while current and current.idx < idx:
-            current = current.next
-        
         # create new node
         node = Node(idx, value)
         
-        # check if we are in the first node
-        if current == self.head or self.head is None:
+        # if no element insert the node or the node will be the head
+        if self.acutal_length == 0:
             self.insert_front(node)
+
+        else:
+            # set current to get idx
+            current = self.head
+            
+            # get the valid position
+            while current and current.idx < idx:
+                current = current.next
+            
+            # first check if it the tail
+            if current is None:
+                self.insert_end(node)
+            else:
+                if self.acutal_length < self.length and (current.idx != idx):
+                    # check if new node will be the new head
+                    if current is self.head:
+                        print(f"new head: {node.value}")
+                        self.insert_front(node)
+                    # insert node before the current
+                    else:
+                        self._link(current.prev, node)
+                        self._link(node, current)
+                        
+                        # increase actual length
+                        self._add_node(node)
+                
+                # override current value
+                elif current.idx == idx:
+                    current.value = value
+                else:
+                    print(f"the list is full, cant add: {value}")
         
-        # check if the new node will be the new tail
-        elif current is None and self.acutal_length < self.length:
-            self.insert_end(node)
-        
-        
+        self.debug_verify_data_integrity()
     def debug_verify_data_integrity(self):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
             this function check the data integrity is correct or not
         """
         # if the linked list is empty
@@ -148,12 +188,12 @@ class SparseArray:
             assert self.head.next is self.tail
         else:
             # check length and debug data length
-            assert self.length == len(self.debug_data)
+            assert self.acutal_length == len(self.debug_data)
             
             # check forward
             # check elements length and the sorted if them
             current = self.head.next
-            counter = 0
+            counter = 1
             
             while current:
                 # the idx should be sorted
@@ -163,17 +203,17 @@ class SparseArray:
                 
                 assert counter <= self.length
             
-            assert counter == self.acutal_length
+            assert counter == self.acutal_length, f"the counter is: {counter}, the acutal_length is: {self.acutal_length}"
             assert self.acutal_length <= self.length
             
             # check backword
             # check elements length and the sorted if them
             current = self.tail.prev
-            counter = 0
+            counter = 1
             
             while current:
                 # the idx should be sorted
-                assert current.idx.next > current.idx
+                assert current.next.idx > current.idx
                 counter += 1
                 current = current.prev
                 assert counter <= self.length
@@ -181,3 +221,44 @@ class SparseArray:
             
             assert counter == self.acutal_length
             assert self.acutal_length <= self.length
+            
+    
+    def __repr__(self) -> str:
+        """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
+            this function print the list
+        """
+        result = ""
+        current = self.head
+        for _ in range(self.acutal_length):
+            result += f"{current.value}@{current.idx}{', ' if current is not self.tail else ''}"
+            current = current.next
+        return result
+def test1(data, length, expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => set value")
+    
+    ll = SparseArray(length)
+    
+    # set the data
+    for ele in data:
+        ll.set_value(ele[0], ele[1])
+    
+        
+    print(f"the list {ll}")
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {func_name}"
+    
+    
+if __name__ == "__main__":
+    # test 1 => set value
+    # test1([], 15,"")
+    # test1([[1,10]], 2, "10@1")
+    # test1([[1,10], [2, 12]], 2,"10@1, 12@2")
+    # test1([[1,10], [2, 12]], 1,"10@1")
+    test1([[1,10], [5,12], [0, 5]], 4, "5@0, 10@1, 12@5")
+    
+    # all tests passed
+    print("all tests passed")
