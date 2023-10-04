@@ -145,7 +145,6 @@ class SparseArray:
                 if self.acutal_length < self.length and (current.idx != idx):
                     # check if new node will be the new head
                     if current is self.head:
-                        print(f"new head: {node.value}")
                         self.insert_front(node)
                     # insert node before the current
                     else:
@@ -162,6 +161,28 @@ class SparseArray:
                     print(f"the list is full, cant add: {value}")
         
         self.debug_verify_data_integrity()
+    
+    def __getitem__(self, idx):
+        """
+            this function the node by the idx
+            parameters:
+                idx: the index of the list
+            return:
+                the node have the current idx
+        """
+        
+        # check if the list is empty
+        if self.length == 0 or idx < 0 or idx > self.length:
+            return None
+        
+        # set current
+        current = self.head
+        
+        while current and current.idx != idx:
+            current = current.next
+        
+        # return the value
+        return current
     def debug_verify_data_integrity(self):
         """
             Time Comlexity: O(n)
@@ -248,17 +269,38 @@ def test1(data, length, expected):
         ll.set_value(ele[0], ele[1])
     
         
-    print(f"the list {ll}")
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {func_name}"
     
+def test2(data, length, idx,expected):
+    func_name = inspect.currentframe().f_code.co_name
     
+    print(f"testing => get value")
+    
+    ll = SparseArray(length)
+    
+    # set the data
+    for ele in data:
+        ll.set_value(ele[0], ele[1])
+    
+    result = ll[idx]
+    assert str(result) == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+    
+
 if __name__ == "__main__":
     # test 1 => set value
     # test1([], 15,"")
     # test1([[1,10]], 2, "10@1")
     # test1([[1,10], [2, 12]], 2,"10@1, 12@2")
     # test1([[1,10], [2, 12]], 1,"10@1")
-    test1([[1,10], [5,12], [0, 5]], 4, "5@0, 10@1, 12@5")
+    # test1([[1,10], [5,12], [0, 5]], 5, "5@0, 10@1, 12@5")
     
+    # test 2 => get value
+    test2([], 10, 0, "None")
+    test2([[0,20]], 10, 0, "20@0")
+    test2([[1,10], [5,12], [0, 5]], 5, 0,"5@0")
+    test2([[1,10], [5,12], [0, 5], [10,5]], 10, 10,"5@10")
+    test2([[1,10], [5,12], [0, 5], [10,5]], 10, 50,"None")
+    test2([[1,10], [5,12], [0, 5], [10,5]], 10, -1,"None")
+
     # all tests passed
     print("all tests passed")
