@@ -182,7 +182,7 @@ class SparseArray:
             current = current.next
         
         # return the value
-        return current
+        return current.value if current else None
     def debug_verify_data_integrity(self):
         """
             Time Comlexity: O(n)
@@ -244,6 +244,46 @@ class SparseArray:
             assert self.acutal_length <= self.length
             
     
+    def print_as_array(self):
+        """
+            this function print the list like array with empty places
+        """
+        
+        # check if empty, return no thing
+        if self.length == 0:
+            return ""
+        
+        # set current and prev index and result
+        current = self.head
+        prev_idx = -1 if current.idx != 0 else 0 # if the first index found start with him else start from -1
+        result_parts = []
+        
+        # loop until arrive to the tail
+        while current:
+            # add the diffrence between prev index and current index
+            for _ in range(current.idx - prev_idx - 1):
+                result_parts.append("0")
+            
+            # add the current value
+            result_parts.append(str(current.value))
+            
+            # reset prev index and move current
+            prev_idx = current.idx
+            current = current.next
+        
+        # check if found difference between prev idx and length, if true fill empty data in result
+        
+        if self.length > prev_idx + 1:
+            diff = self.length - prev_idx - 1 # difference between length and prev idx, so dont need to add
+            for _ in range(diff):
+                result_parts.append("0")
+        
+        # the result
+        result = " ".join(result_parts)
+        
+        # return the result
+        return result
+    
     def __repr__(self) -> str:
         """
             Time Comlexity: O(n)
@@ -285,6 +325,20 @@ def test2(data, length, idx,expected):
     result = ll[idx]
     assert str(result) == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
     
+def test3(data, length,expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => print as array")
+    
+    ll = SparseArray(length)
+    
+    # set the data
+    for ele in data:
+        ll.set_value(ele[0], ele[1])
+    
+    result = ll.print_as_array()
+    assert str(result) == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+    
 
 if __name__ == "__main__":
     # test 1 => set value
@@ -293,14 +347,23 @@ if __name__ == "__main__":
     # test1([[1,10], [2, 12]], 2,"10@1, 12@2")
     # test1([[1,10], [2, 12]], 1,"10@1")
     # test1([[1,10], [5,12], [0, 5]], 5, "5@0, 10@1, 12@5")
+    test1([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, "20@2, 40@4, 50@5, 80@8")
     
     # test 2 => get value
-    test2([], 10, 0, "None")
-    test2([[0,20]], 10, 0, "20@0")
-    test2([[1,10], [5,12], [0, 5]], 5, 0,"5@0")
-    test2([[1,10], [5,12], [0, 5], [10,5]], 10, 10,"5@10")
-    test2([[1,10], [5,12], [0, 5], [10,5]], 10, 50,"None")
-    test2([[1,10], [5,12], [0, 5], [10,5]], 10, -1,"None")
-
+    # test2([], 10, 0, "None")
+    # test2([[0,20]], 10, 0, "20@0")
+    # test2([[1,10], [5,12], [0, 5]], 5, 0,"5@0")
+    # test2([[1,10], [5,12], [0, 5], [10,5]], 10, 10,"5@10")
+    # test2([[1,10], [5,12], [0, 5], [10,5]], 10, 50,"None")
+    # test2([[1,10], [5,12], [0, 5], [10,5]], 10, -1,"None")
+    test2([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, 8, "80")
+    test2([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, 9, "None")
+    
+    # test 3 => print as array
+    test3([], 0, "")
+    test3([[0,1]], 1, "1")
+    test3([[0,1],[5,2],[3,4],], 6, "1 0 0 4 0 2")
+    test3([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, "0 0 20 0 40 50 0 0 80 0 0 0 0 0 0")
+    
     # all tests passed
     print("all tests passed")
