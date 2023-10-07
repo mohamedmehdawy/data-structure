@@ -67,6 +67,16 @@ class SparseArray:
         
         if second:
             second.prev = first
+    
+    def _clone(self, target):
+        """
+            this function clone the target and return new node of it
+            parameters:
+                target: the node you want to clone it
+        """
+        node = Node(target.idx, target.value)
+        
+        return node
     def insert_front(self, node):
         """
             Time Comlexity: O(1)
@@ -108,6 +118,24 @@ class SparseArray:
             self.tail = node
         # increase the actual length
         self._add_node(node)
+    
+    def insert_before(self, node, current):
+        """
+            this function link two nodes with us
+            parameters:
+                node: the node will insert before the current
+                current: the next of node
+        """
+        # if we need to insert the node before the head, use insert front
+        if current == self.head:
+            self.insert_front(node)
+        else:
+            # link nodes
+            self._link(current.prev, node)
+            self._link(node, current)
+            
+            # increase length
+            self._add_node(node)
     def set_value(self, idx, value):
         """
             Time Comlexity: O(n)
@@ -119,7 +147,7 @@ class SparseArray:
                 value: the value of the node
         """
         # check idx range
-        if idx < 0 or idx > self.length:
+        if idx < 0 or idx >= self.length:
             print(f"the index: {idx}, is out of range: {self.length}")
             return
         
@@ -148,11 +176,7 @@ class SparseArray:
                         self.insert_front(node)
                     # insert node before the current
                     else:
-                        self._link(current.prev, node)
-                        self._link(node, current)
-                        
-                        # increase actual length
-                        self._add_node(node)
+                        self.insert_before(node, current)
                 
                 # override current value
                 elif current.idx == idx:
@@ -162,6 +186,63 @@ class SparseArray:
         
         self.debug_verify_data_integrity()
     
+    def add(self, other):
+        """
+            this function add other array to the current array
+            parameters:
+                other: the other array will link with current array
+        """
+        # check if two lists dont have the same length
+        if self.length != other.length:
+            print("the two lists dont have the same length")
+            return
+        
+        # check if the other doesnt have any nodes, 
+        if not other.acutal_length:
+            return
+        
+        # set first current and second current
+        first_current = self.head
+        second_current = other.head
+        
+        while first_current and second_current:
+            # check if the second current is less the the first current
+            if second_current.idx < first_current.idx:
+                # clone second current
+                node = self._clone(second_current)
+                
+                # insert the node before first current
+                self.insert_before(node, first_current)
+                
+                # move second current
+                second_current = second_current.next
+                
+            # check if the two nodes are the same 
+            elif second_current.idx == first_current.idx:
+                # override the first current value
+                first_current.value = second_current.value
+                
+                # move the two nodes
+                first_current = first_current.next
+                second_current = second_current.next
+            else:
+                # move first current
+                first_current = first_current.next
+        
+        # check if we have another values in second list
+        if second_current:
+            # append it in first list
+            while second_current:
+                # clone second current
+                node = self._clone(second_current)
+                
+                # append it
+                self.insert_end(node)
+                
+                # move second current
+                second_current = second_current.next
+        
+        self.debug_verify_data_integrity()
     def __getitem__(self, idx):
         """
             this function the node by the idx
@@ -182,7 +263,7 @@ class SparseArray:
             current = current.next
         
         # return the value
-        return current.value if current else None
+        return current if current else None
     def debug_verify_data_integrity(self):
         """
             Time Comlexity: O(n)
@@ -340,23 +421,43 @@ def test3(data, length,expected):
     assert str(result) == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
     
 
+def test4(data, length, other_data, other_length, expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => add")
+    
+    ll = SparseArray(length)
+    other_list = SparseArray(other_length)
+    
+    # set the data
+    for ele in data:
+        ll.set_value(ele[0], ele[1])
+    
+    
+    for ele in other_data:
+        other_list.set_value(ele[0], ele[1])
+    
+    ll.add(other_list)
+    
+    assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {func_name}"
+    
 if __name__ == "__main__":
     # test 1 => set value
-    # test1([], 15,"")
-    # test1([[1,10]], 2, "10@1")
-    # test1([[1,10], [2, 12]], 2,"10@1, 12@2")
-    # test1([[1,10], [2, 12]], 1,"10@1")
-    # test1([[1,10], [5,12], [0, 5]], 5, "5@0, 10@1, 12@5")
+    test1([], 15,"")
+    test1([[1,10]], 2, "10@1")
+    test1([[1,10], [2, 12]], 2,"10@1, 12@2")
+    test1([[1,10], [2, 12]], 1,"10@1")
+    test1([[1,10], [5,12], [0, 5]], 5, "5@0, 10@1, 12@5")
     test1([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, "20@2, 40@4, 50@5, 80@8")
     
     # test 2 => get value
-    # test2([], 10, 0, "None")
-    # test2([[0,20]], 10, 0, "20@0")
-    # test2([[1,10], [5,12], [0, 5]], 5, 0,"5@0")
-    # test2([[1,10], [5,12], [0, 5], [10,5]], 10, 10,"5@10")
-    # test2([[1,10], [5,12], [0, 5], [10,5]], 10, 50,"None")
-    # test2([[1,10], [5,12], [0, 5], [10,5]], 10, -1,"None")
-    test2([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, 8, "80")
+    test2([], 10, 0, "None")
+    test2([[0,20]], 10, 0, "20@0")
+    test2([[1,10], [5,12], [0, 5]], 5, 0,"5@0")
+    test2([[1,10], [5,12], [0, 5], [10,5]], 10, 10,"5@10")
+    test2([[1,10], [5,12], [0, 5], [10,5]], 10, 50,"None")
+    test2([[1,10], [5,12], [0, 5], [10,5]], 10, -1,"None")
+    test2([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, 8, "80@8")
     test2([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, 9, "None")
     
     # test 3 => print as array
@@ -365,5 +466,12 @@ if __name__ == "__main__":
     test3([[0,1],[5,2],[3,4],], 6, "1 0 0 4 0 2")
     test3([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, "0 0 20 0 40 50 0 0 80 0 0 0 0 0 0")
     
+    # test 4 => add
+    test4([[0,1],[5,2],[3,4]], 6, [[1,1],[2,2],[4,4]], 4, "1@0, 4@3, 2@5")
+    test4([[0,1],[5,2],[3,4]], 6, [], 6, "1@0, 4@3, 2@5")
+    test4([[0,1],[5,2],[3,4]], 6, [[2,10]], 6, "1@0, 10@2, 4@3, 2@5")
+    test4([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, [[0, 50]], 15, "50@0, 20@2, 40@4, 50@5, 80@8")
+    test4([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, [[0, 50], [3,60], [15, 100]], 15, "50@0, 20@2, 60@3, 40@4, 50@5, 80@8, 100@15")
+
     # all tests passed
     print("all tests passed")
