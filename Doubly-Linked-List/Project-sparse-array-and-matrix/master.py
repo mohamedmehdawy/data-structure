@@ -3,7 +3,7 @@ import inspect
 
 
 class Node:
-    def __init__(self, idx, value) -> None:
+    def __init__(self, idx, value=None, prev=None, next=None) -> None:
         """
             the init of node object
             parameters:
@@ -12,13 +12,14 @@ class Node:
         """
         # create and set index and value
         self.idx = idx
-        self.value = value
+        self.data = value
         
         # create next and prev pointers and set both = none
-        self.prev = self.next = None
+        self.prev = prev
+        self.next = next
         
     def __repr__(self) -> str:
-        return f"{self.value}@{self.idx}"
+        return f"{self.data}@{self.idx}"
     
 
 # SparseArray
@@ -74,9 +75,38 @@ class SparseArray:
             parameters:
                 target: the node you want to clone it
         """
-        node = Node(target.idx, target.value)
+        node = Node(target.idx, target.data)
         
         return node
+    
+    def get_node(self, idx, create_if_missing=True):
+        """
+            this function the node by the index,
+            and if not found create new one if create if missing is true
+            parameters:
+                idx: the index of the node
+                create_if_missing: the boolean value if this is true, create the new node
+            return: the node
+        """
+        
+        # current
+        current = self.head
+        
+        while current and current.idx > idx:
+            current = current.idx
+        
+        # if we have the node and is the same with the idx
+        if current and current.idx == idx:
+            return current
+        
+        # if create if missage false return none
+        if not create_if_missing:
+            return None
+        
+        # if the node not found create new one
+        node = Node(idx)
+        return self.insert_before(node, current)
+    
     def insert_front(self, node):
         """
             Time Comlexity: O(1)
@@ -125,10 +155,13 @@ class SparseArray:
             parameters:
                 node: the node will insert before the current
                 current: the next of node
+            return: the node
         """
         # if we need to insert the node before the head, use insert front
         if current == self.head:
             self.insert_front(node)
+        elif current == None:
+            self.insert_end(node)
         else:
             # link nodes
             self._link(current.prev, node)
@@ -136,6 +169,7 @@ class SparseArray:
             
             # increase length
             self._add_node(node)
+        return Node
     def set_value(self, idx, value):
         """
             Time Comlexity: O(n)
@@ -151,39 +185,7 @@ class SparseArray:
             print(f"the index: {idx}, is out of range: {self.length}")
             return
         
-        # create new node
-        node = Node(idx, value)
-        
-        # if no element insert the node or the node will be the head
-        if self.acutal_length == 0:
-            self.insert_front(node)
-
-        else:
-            # set current to get idx
-            current = self.head
-            
-            # get the valid position
-            while current and current.idx < idx:
-                current = current.next
-            
-            # first check if it the tail
-            if current is None:
-                self.insert_end(node)
-            else:
-                if self.acutal_length < self.length and (current.idx != idx):
-                    # check if new node will be the new head
-                    if current is self.head:
-                        self.insert_front(node)
-                    # insert node before the current
-                    else:
-                        self.insert_before(node, current)
-                
-                # override current value
-                elif current.idx == idx:
-                    current.value = value
-                else:
-                    print(f"the list is full, cant add: {value}")
-        
+        self.get_node(idx).value = value
         self.debug_verify_data_integrity()
     
     def add(self, other):
@@ -205,9 +207,9 @@ class SparseArray:
         first_current = self.head
         second_current = other.head
         
-        while first_current and second_current:
+        while second_current:
             # check if the second current is less the the first current
-            if second_current.idx < first_current.idx:
+            if first_current and second_current.idx < first_current.idx:
                 # clone second current
                 node = self._clone(second_current)
                 
@@ -218,21 +220,15 @@ class SparseArray:
                 second_current = second_current.next
                 
             # check if the two nodes are the same 
-            elif second_current.idx == first_current.idx:
+            elif first_current and second_current.idx == first_current.idx:
                 # override the first current value
-                first_current.value = second_current.value
+                first_current.data = second_current.data
                 
                 # move the two nodes
                 first_current = first_current.next
                 second_current = second_current.next
-            else:
-                # move first current
-                first_current = first_current.next
-        
-        # check if we have another values in second list
-        if second_current:
-            # append it in first list
-            while second_current:
+                
+            elif not first_current:
                 # clone second current
                 node = self._clone(second_current)
                 
@@ -241,6 +237,10 @@ class SparseArray:
                 
                 # move second current
                 second_current = second_current.next
+            else:
+                # move first current
+                first_current = first_current.next
+        
         
         self.debug_verify_data_integrity()
     def __getitem__(self, idx):
@@ -346,7 +346,7 @@ class SparseArray:
                 result_parts.append("0")
             
             # add the current value
-            result_parts.append(str(current.value))
+            result_parts.append(str(current.data))
             
             # reset prev index and move current
             prev_idx = current.idx
@@ -375,7 +375,7 @@ class SparseArray:
         result = ""
         current = self.head
         for _ in range(self.acutal_length):
-            result += f"{current.value}@{current.idx}{', ' if current is not self.tail else ''}"
+            result += f"{current.data}@{current.idx}{', ' if current is not self.tail else ''}"
             current = current.next
         return result
 def test1(data, length, expected):
