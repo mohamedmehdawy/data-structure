@@ -3,7 +3,7 @@ import inspect
 
 
 class Node:
-    def __init__(self, idx, value=None, prev=None, next=None) -> None:
+    def __init__(self, idx, data=None, prev=None, next=None) -> None:
         """
             the init of node object
             parameters:
@@ -12,7 +12,7 @@ class Node:
         """
         # create and set index and value
         self.idx = idx
-        self.data = value
+        self.data = data
         
         # create next and prev pointers and set both = none
         self.prev = prev
@@ -92,8 +92,8 @@ class SparseArray:
         # current
         current = self.head
         
-        while current and current.idx > idx:
-            current = current.idx
+        while current and current.idx < idx:
+            current = current.next
         
         # if we have the node and is the same with the idx
         if current and current.idx == idx:
@@ -158,9 +158,9 @@ class SparseArray:
             return: the node
         """
         # if we need to insert the node before the head, use insert front
-        if current == self.head:
+        if current is self.head:
             self.insert_front(node)
-        elif current == None:
+        elif current is None:
             self.insert_end(node)
         else:
             # link nodes
@@ -169,7 +169,7 @@ class SparseArray:
             
             # increase length
             self._add_node(node)
-        return Node
+        return node
     def set_value(self, idx, value):
         """
             Time Comlexity: O(n)
@@ -185,7 +185,7 @@ class SparseArray:
             print(f"the index: {idx}, is out of range: {self.length}")
             return
         
-        self.get_node(idx).value = value
+        self.get_node(idx).data = value
         self.debug_verify_data_integrity()
     
     def add(self, other):
@@ -203,45 +203,21 @@ class SparseArray:
         if not other.acutal_length:
             return
         
-        # set first current and second current
-        first_current = self.head
+        # set second current
         second_current = other.head
         
         while second_current:
-            # check if the second current is less the the first current
-            if first_current and second_current.idx < first_current.idx:
-                # clone second current
-                node = self._clone(second_current)
-                
-                # insert the node before first current
-                self.insert_before(node, first_current)
-                
-                # move second current
-                second_current = second_current.next
-                
-            # check if the two nodes are the same 
-            elif first_current and second_current.idx == first_current.idx:
-                # override the first current value
-                first_current.data = second_current.data
-                
-                # move the two nodes
-                first_current = first_current.next
-                second_current = second_current.next
-                
-            elif not first_current:
-                # clone second current
-                node = self._clone(second_current)
-                
-                # append it
-                self.insert_end(node)
-                
-                # move second current
-                second_current = second_current.next
+            # get the node insted of the second current index
+            node = self.get_node(second_current.idx)
+            
+            # if empty, set value, if not add other value
+            if node.data is None:
+                node.data = second_current.data
             else:
-                # move first current
-                first_current = first_current.next
-        
-        
+                node.data += second_current.data
+            
+            # move second current
+            second_current = second_current.next
         self.debug_verify_data_integrity()
     def __getitem__(self, idx):
         """
@@ -256,14 +232,7 @@ class SparseArray:
         if self.length == 0 or idx < 0 or idx > self.length:
             return None
         
-        # set current
-        current = self.head
-        
-        while current and current.idx != idx:
-            current = current.next
-        
-        # return the value
-        return current if current else None
+        return self.get_node(idx, False)
     def debug_verify_data_integrity(self):
         """
             Time Comlexity: O(n)
@@ -472,6 +441,7 @@ if __name__ == "__main__":
     test4([[0,1],[5,2],[3,4]], 6, [[2,10]], 6, "1@0, 10@2, 4@3, 2@5")
     test4([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, [[0, 50]], 15, "50@0, 20@2, 40@4, 50@5, 80@8")
     test4([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, [[0, 50], [3,60], [14, 100]], 15, "50@0, 20@2, 60@3, 40@4, 50@5, 80@8, 100@14")
+    test4([[5,50], [2,20], [8,80], [4,4000], [4,40]], 15, [[0, 50], [3,60], [14, 100], [2,5]], 15, "50@0, 25@2, 60@3, 40@4, 50@5, 80@8, 100@14")
 
     # all tests passed
     print("all tests passed")
