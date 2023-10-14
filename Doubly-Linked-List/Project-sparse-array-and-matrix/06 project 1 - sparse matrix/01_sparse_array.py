@@ -256,6 +256,7 @@ if __name__ == '__main__':
     test5()
     test6()
 
+    driver()
     # Must see to insure no RTE
     print('ALL CASES PASSED')
 

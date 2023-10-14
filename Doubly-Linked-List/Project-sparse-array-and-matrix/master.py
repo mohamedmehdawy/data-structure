@@ -19,6 +19,11 @@ class Node:
         self.next = next
         
     def __repr__(self) -> str:
+        """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
+        """
         return f"{self.data}@{self.idx}"
     
 
@@ -71,6 +76,9 @@ class SparseArray:
     
     def _clone(self, target):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function clone the target and return new node of it
             parameters:
                 target: the node you want to clone it
@@ -81,6 +89,9 @@ class SparseArray:
     
     def get_node(self, idx, create_if_missing=True):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
             this function the node by the index,
             and if not found create new one if create if missing is true
             parameters:
@@ -131,6 +142,7 @@ class SparseArray:
         self.debug_verify_data_integrity()
     def insert_end(self, node):
         """
+        
             Time Comlexity: O(1)
             memory Complexity: O(1)
             #############################
@@ -151,6 +163,9 @@ class SparseArray:
     
     def insert_before(self, node, current):
         """
+            Time Comlexity: O(1)
+            memory Complexity: O(1)
+            #############################
             this function link two nodes with us
             parameters:
                 node: the node will insert before the current
@@ -190,6 +205,9 @@ class SparseArray:
     
     def add(self, other):
         """
+            Time Comlexity: O(n * other.actual_length)
+            memory Complexity: O(1)
+            #############################
             this function add other array to the current array
             parameters:
                 other: the other array will link with current array
@@ -219,8 +237,12 @@ class SparseArray:
             # move second current
             second_current = second_current.next
         self.debug_verify_data_integrity()
+    
     def __getitem__(self, idx):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(1)
+            #############################
             this function the node by the idx
             parameters:
                 idx: the index of the list
@@ -296,6 +318,9 @@ class SparseArray:
     
     def print_as_array(self):
         """
+            Time Comlexity: O(n)
+            memory Complexity: O(self.length)
+            #############################
             this function print the list like array with empty places
         """
         
@@ -303,29 +328,16 @@ class SparseArray:
         if self.length == 0:
             return ""
         
-        # set current and prev index and result
+        # set current and result
         current = self.head
-        prev_idx = -1 if current.idx != 0 else 0 # if the first index found start with him else start from -1
         result_parts = []
         
-        # loop until arrive to the tail
-        while current:
-            # add the diffrence between prev index and current index
-            for _ in range(current.idx - prev_idx - 1):
-                result_parts.append("0")
-            
-            # add the current value
-            result_parts.append(str(current.data))
-            
-            # reset prev index and move current
-            prev_idx = current.idx
-            current = current.next
-        
-        # check if found difference between prev idx and length, if true fill empty data in result
-        
-        if self.length > prev_idx + 1:
-            diff = self.length - prev_idx - 1 # difference between length and prev idx, so dont need to add
-            for _ in range(diff):
+        # loop insted of length
+        for index in range(self.length):
+            if current and current.idx == index:
+                result_parts.append(f"{current.data}")
+                current = current.next
+            else:
                 result_parts.append("0")
         
         # the result
@@ -341,12 +353,12 @@ class SparseArray:
             #############################
             this function print the list
         """
-        result = ""
+        result = []
         current = self.head
         for _ in range(self.acutal_length):
-            result += f"{current.data}@{current.idx}{', ' if current is not self.tail else ''}"
+            result.append(f"{current.data}@{current.idx}")
             current = current.next
-        return result
+        return ", ".join(result)
 def test1(data, length, expected):
     func_name = inspect.currentframe().f_code.co_name
     
