@@ -32,7 +32,33 @@ class SparseMatrix:
 
         # set value to the node insted of row and col
         current_row.data.set_value(col, value)
+    
+    
+    def add(self, second):
+        """
+            this function add the second sparse matrix to the first one
+            parameters:
+                second: the second matrix
+        """
+        # check first if have the same row and column
+        if not (self.row == second.row and self.column == second.column):
+            print("the two sparse matrix dont have the same row and column")
+            return
         
+        # set current start from the first element in second
+        second_current = second.row_array.head
+        
+        while second_current:
+            # get the node of first matrix
+            row_node = self.row_array.get_node(second_current.idx)
+            
+            # if not have any data, set the same data of second current
+            if not row_node.data:
+                row_node.data = second_current.data
+            else:
+                row_node.data.add(second_current.data)
+                
+            second_current = second_current.next
     def __repr__(self) -> str:
         # current row
         current_row = self.row_array.head
@@ -89,6 +115,21 @@ def test1(data, row, column, expected):
     assert str(ll) == expected, f"Mismatch between expected={expected}, and result={ll} in {func_name}"
 
 def test2(data, row, column, expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => print as 2d array")
+    
+    ll = SparseMatrix(row, column)
+    
+
+    for ele in data:
+        for row in range(1, len(ele)):
+            ll.set_value(ele[0], ele[row][0], ele[row][1])
+    
+    result = ll.print_as_2d_array()
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={ll.print_as_2d_array()} in {func_name}"
+def test3(data, row, column, expected):
     func_name = inspect.currentframe().f_code.co_name
     
     print(f"testing => print as 2d array")
