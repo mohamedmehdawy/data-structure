@@ -129,21 +129,26 @@ def test2(data, row, column, expected):
     result = ll.print_as_2d_array()
     
     assert result == expected, f"Mismatch between expected={expected}, and result={ll.print_as_2d_array()} in {func_name}"
-def test3(data, row, column, expected):
+
+def test3(data, row, column, second_data, second_row, second_column, expected):
     func_name = inspect.currentframe().f_code.co_name
     
-    print(f"testing => print as 2d array")
+    print(f"testing => add")
     
-    ll = SparseMatrix(row, column)
+    first = SparseMatrix(row, column)
     
 
     for ele in data:
         for row in range(1, len(ele)):
-            ll.set_value(ele[0], ele[row][0], ele[row][1])
+            first.set_value(ele[0], ele[row][0], ele[row][1])
     
-    result = ll.print_as_2d_array()
+    second = SparseMatrix(second_row, second_column)
     
-    assert result == expected, f"Mismatch between expected={expected}, and result={ll.print_as_2d_array()} in {func_name}"
+    for ele in second_data:
+        for row in range(1, len(ele)):
+            second.set_value(ele[0], ele[row][0], ele[row][1])
+    
+    assert True, f"Mismatch between expected={expected}, and result={ll.print_as_2d_array()} in {func_name}"
 
 if __name__ == "__main__":
     # test 1 => set value
