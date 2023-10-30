@@ -148,7 +148,10 @@ def test3(data, row, column, second_data, second_row, second_column, expected):
         for row in range(1, len(ele)):
             second.set_value(ele[0], ele[row][0], ele[row][1])
     
-    assert True, f"Mismatch between expected={expected}, and result={ll.print_as_2d_array()} in {func_name}"
+    first.add(second)
+    
+    result = str(first)
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
 
 if __name__ == "__main__":
     # test 1 => set value
@@ -157,5 +160,10 @@ if __name__ == "__main__":
     
     # test 2 => print as 2d array 
     test2([[1,[1,5], [2,10]], [3, [1,50]]],7,7, "0 0 0 0 0 0 0\n0 5 10 0 0 0 0\n0 0 0 0 0 0 0\n0 50 0 0 0 0 0\n0 0 0 0 0 0 0\n0 0 0 0 0 0 0\n0 0 0 0 0 0 0")
+
+    # test 3 => add
+    test3([[1,[1,5], [2,10]], [3, [1,50]]],7,7, [], 7,7, "Row 1: 5@1, 10@2\nRow 3: 50@1")
+    test3([[1,[1,5], [2,10]], [3, [1,50]]],7,7, [[2, [1,5]]], 1,7, "Row 1: 5@1, 10@2\nRow 3: 50@1")
+    test3([[1,[1,5], [2,10]], [3, [1,50]]],7,7, [], 7,2, "Row 1: 5@1, 10@2\nRow 3: 50@1")
 
     print("all tests passed")
