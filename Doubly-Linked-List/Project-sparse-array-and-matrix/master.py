@@ -54,10 +54,10 @@ class SparseMatrix:
             
             # if not have any data, set the same data of second current
             if not row_node.data:
-                row_node.data = second_current.data
-            else:
-                row_node.data.add(second_current.data)
-                
+                row_node.data = SparseArray(self.column)
+            
+            
+            row_node.data.add(second_current.data)
             second_current = second_current.next
     def __repr__(self) -> str:
         # current row
