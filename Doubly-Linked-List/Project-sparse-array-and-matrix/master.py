@@ -59,6 +59,19 @@ class SparseMatrix:
             
             row_node.data.add(second_current.data)
             second_current = second_current.next
+    def __getitem__(self, indexs):
+        """
+            this this function get the row of the sparse matrix
+        """
+        # check first the idx of row
+        row_node = self.row_array[indexs[0]]
+        if not (row_node and row_node.data):
+            return None
+        
+        # get the column node
+        column_node = row_node.data[indexs[1]]
+        
+        return column_node
     def __repr__(self) -> str:
         # current row
         current_row = self.row_array.head
@@ -153,6 +166,25 @@ def test3(data, row, column, second_data, second_row, second_column, expected):
     result = str(first)
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
 
+
+def test4(data, row, column, idx_row, idx_column, expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => get item")
+    
+    ll = SparseMatrix(row, column)
+    
+
+    for ele in data:
+        for row in range(1, len(ele)):
+            ll.set_value(ele[0], ele[row][0], ele[row][1])
+    
+    
+    result = ll[idx_row, idx_column]
+    
+    
+    assert str(result) == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+
 if __name__ == "__main__":
     # test 1 => set value
     test1([[1,[1,5], [2,10]], [3, [1,50]]],7,7, "Row 1: 5@1, 10@2\nRow 3: 50@1")
@@ -170,4 +202,8 @@ if __name__ == "__main__":
     test3([[1,[1,5], [2,10]], [3, [1,50]]],7,7, [[1, [1,6]], [6, [1,20], [5, 50]], [5, [4, 30]]], 7,7, "Row 1: 11@1, 10@2\nRow 3: 50@1\nRow 5: 30@4\nRow 6: 20@1, 50@5")
     test3([[1,[1,5], [2,10]], [3, [1,50]]],7,7, [[1, [1,6], [3, 100], [2,12]], [6, [1,20], [5, 50]], [5, [4, 30]]], 7,7, "Row 1: 11@1, 22@2, 100@3\nRow 3: 50@1\nRow 5: 30@4\nRow 6: 20@1, 50@5")
 
+    # test 4 => get item
+    test4([[1,[1,5], [2,10]], [3, [1,50]]], 7, 7, 1, 1, "5@1")
+    test4([[1,[1,5], [2,10]], [3, [1,50]]], 7, 7, 1, 3, "None")
+    
     print("all tests passed")
