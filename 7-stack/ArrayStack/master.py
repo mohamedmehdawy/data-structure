@@ -38,7 +38,10 @@ class Stack:
     def __repr__(self) -> str:
         
         # convert each element in array to string to convert the array to a one string
-        return ", ".join(str(item) for item in self.array)
+        reversed_array = self.array.copy()
+        reversed_array.reverse()
+        
+        return ", ".join(str(item) for item in reversed_array)
         
 
 def test1(data, expected):
@@ -84,12 +87,12 @@ if __name__ == "__main__":
     # test 1 => push
     test1([], "")
     test1([1], "1")
-    test1([1,2,3,4,5], "1, 2, 3, 4, 5")
+    test1([1,2,3,4,5], "5, 4, 3, 2, 1")
     
     # test 2 => pop
     test2([], 1, "")
     test2([1], 1, "")
-    test2([1,2,3,4,5], 1, "1, 2, 3, 4")
-    test2([1,2,3,4,5], 2, "1, 2, 3")
+    test2([1,2,3,4,5], 1, "4, 3, 2, 1")
+    test2([1,2,3,4,5], 2, "3, 2, 1")
 
     print("all tests passed")
