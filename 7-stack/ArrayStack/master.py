@@ -17,6 +17,9 @@ class Stack:
     
     def pop(self):
         """
+            Time Complexity: O(1)
+            Memory Complexity: O(1)
+            ########################
             this function remove the last item from the array
         """
         if len(self.array):
@@ -24,7 +27,13 @@ class Stack:
 
         return None
     def peek(self):
-        pass
+        # if array is empty return none
+        if not len(self.array):
+            return None
+        
+        # return last element
+        return self.array[len(self.array) - 1]
+        
     
     def isEmpty(self):
         pass
@@ -82,6 +91,23 @@ def test2(data, pop_count,expected):
     result = str(stk)
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+
+def test3(data, expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => peek")
+    
+    # stack
+    stk = Stack()
+    
+    # push data
+    for ele in data:
+        stk.push(ele)
+        
+    # result
+    result = str(stk.peek())
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
     
 if __name__ == "__main__":
     # test 1 => push
@@ -94,5 +120,10 @@ if __name__ == "__main__":
     test2([1], 1, "")
     test2([1,2,3,4,5], 1, "4, 3, 2, 1")
     test2([1,2,3,4,5], 2, "3, 2, 1")
+    
+    # test 3 => peek
+    test3([], "None")
+    test3([1], "1")
+    test3([1,2,3,4,5], "5")
 
     print("all tests passed")
