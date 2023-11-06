@@ -3,7 +3,7 @@ import inspect
 
 class Stack:
     
-    def __init__(self, length) -> None:
+    def __init__(self, length=16) -> None:
         self.array = []
         self.length = length
     def push(self, value):
@@ -62,9 +62,16 @@ class Stack:
             this function check if the array is full or not
         """  
         return self.length == len(self.array)
-  
+
     def clearContent(self):
-        pass
+        """
+            Time Complexity: O(1)
+            Memory Complexity: O(1)
+            ########################
+            this function clear the stack
+        """  
+        for _ in range(len(self.array)):
+            self.pop()
     def __repr__(self) -> str:
         
         # convert each element in array to string to convert the array to a one string
@@ -80,7 +87,7 @@ def test1(data, expected):
     print(f"testing => push")
     
     # stack
-    stk = Stack(10)
+    stk = Stack()
     
     # push data
     for ele in data:
@@ -98,7 +105,7 @@ def test2(data, pop_count,expected):
     print(f"testing => pop")
     
     # stack
-    stk = Stack(10)
+    stk = Stack()
     
     # push data
     for ele in data:
@@ -119,7 +126,7 @@ def test3(data, expected):
     print(f"testing => peek")
     
     # stack
-    stk = Stack(10)
+    stk = Stack()
     
     # push data
     for ele in data:
@@ -136,7 +143,7 @@ def test4(data, expected):
     print(f"testing => is empty")
     
     # stack
-    stk = Stack(10)
+    stk = Stack()
     
     # push data
     for ele in data:
@@ -163,6 +170,26 @@ def test5(data, length,expected):
     result = stk.isFull()
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+
+def test6(data,expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => clear content")
+    
+    # stack
+    stk = Stack()
+    
+    # push data
+    for ele in data:
+        stk.push(ele)
+    
+    # clear content
+    stk.clearContent()
+    
+    # result
+    result = str(stk)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
     
 if __name__ == "__main__":
     # test 1 => push
@@ -170,7 +197,7 @@ if __name__ == "__main__":
     test1([1], "1")
     test1([1,2,3,4,5], "5, 4, 3, 2, 1")
     test1([1,2,3,4,5,6,7,8,9,10], "10, 9, 8, 7, 6, 5, 4, 3, 2, 1")
-    test1([1,2,3,4,5,6,7,8,9,10,11], "10, 9, 8, 7, 6, 5, 4, 3, 2, 1")
+    test1([1,2,3,4,5,6,7,8,9,10,11], "11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1")
 
     # test 2 => pop
     test2([], 1, "")
@@ -193,6 +220,13 @@ if __name__ == "__main__":
     test5([1,2,3], 2, True)
     test5([1,2,3], 3, True)
     test5([1,2,3,4], 5, False)
+    
+    # test 6 => clear content
+    test6([], "")
+    test6([1], "")
+    test6([1,2,3,4,5], "")
+    test6([1,2,3,4,5,6,7,8,9,10], "")
+    test6([1,2,3,4,5,6,7,8,9,10,11], "")
 
 
 
