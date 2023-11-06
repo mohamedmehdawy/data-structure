@@ -16,8 +16,8 @@ class Stack:
         if not self.length == len(self.array):
             
             self.array.append(value)
-        
-        assert "the stack is full"
+        else:
+            print(f"the stack is full, cant add: {value}")
     
     def pop(self):
         """
@@ -55,11 +55,16 @@ class Stack:
         return not len(self.array)
     
     def isFull(self):
-        pass
-    
+        """
+            Time Complexity: O(1)
+            Memory Complexity: O(1)
+            ########################
+            this function check if the array is full or not
+        """  
+        return self.length == len(self.array)
+  
     def clearContent(self):
         pass
-    
     def __repr__(self) -> str:
         
         # convert each element in array to string to convert the array to a one string
@@ -142,12 +147,31 @@ def test4(data, expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
     
+def test5(data, length,expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => is full")
+    
+    # stack
+    stk = Stack(length)
+    
+    # push data
+    for ele in data:
+        stk.push(ele)
+        
+    # result
+    result = stk.isFull()
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+    
 if __name__ == "__main__":
     # test 1 => push
     test1([], "")
     test1([1], "1")
     test1([1,2,3,4,5], "5, 4, 3, 2, 1")
-    
+    test1([1,2,3,4,5,6,7,8,9,10], "10, 9, 8, 7, 6, 5, 4, 3, 2, 1")
+    test1([1,2,3,4,5,6,7,8,9,10,11], "10, 9, 8, 7, 6, 5, 4, 3, 2, 1")
+
     # test 2 => pop
     test2([], 1, "")
     test2([1], 1, "")
@@ -163,6 +187,13 @@ if __name__ == "__main__":
     test4([], True)
     test4([1], False)
     test4([1,2,3,4,5], False)
+    
+    # test 5 => is full
+    test5([], 0, True)
+    test5([1,2,3], 2, True)
+    test5([1,2,3], 3, True)
+    test5([1,2,3,4], 5, False)
+
 
 
     print("all tests passed")
