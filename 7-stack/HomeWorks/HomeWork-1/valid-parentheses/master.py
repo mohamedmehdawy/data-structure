@@ -1,21 +1,20 @@
 class Solution(object):
     def __init__(self):
-        self.open = ["[", "(", "{"]
-        self.close = ["]", ")", "}"]
+        self.open_symbols = ["[", "(", "{"]
+        self.close_symbols = ["]", ")", "}"]
         
-    def get_pos(self, currentType, char):
+    def get_position(self, currentType, char):
         """
             this function return the position of char insted of the type is open or close
             parameters:
                 currentType: use open or close elements
                 char: the char will search
             returns:
-                the pos or false if not found
+                the position or -1 if not found
         """
-        try:
-            return currentType.index(char) + 1
-        except:
-            return False
+        
+        return currentType.index(char) if char in currentType else -1
+
     def isValid(self, s):
         """
         :type s: str
@@ -30,17 +29,14 @@ class Solution(object):
         
         for char in s:
             # if the current char is in open append it to the stack
-            if self.get_pos(self.open, char):
+            if char in self.open_symbols:
                 stack.append(char)
             # if the current char is close, should be the last element in stack is the open of it
-            elif len(stack) and  self.get_pos(self.close, char) == self.get_pos(self.open, stack[-1]):
+            elif stack and self.get_position(self.close_symbols, char) == self.get_position(self.open_symbols, stack[-1]):
                 stack.pop()
             # return false because this is not valid
             else:
                 return False
         
         # if have elments in stack, this is valid and return false
-        if len(stack):
-            return False
-        
-        return True
+        return not stack
