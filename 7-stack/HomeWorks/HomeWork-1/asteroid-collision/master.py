@@ -35,12 +35,17 @@ class Solution(object):
                     add_status = True
                     
                     for index in range(len(stack) - 1, -1, -1):
+                        # if asteroid and last element have same sign get out the loop
                         if stack[index] > 0 and asteroid > 0 or stack[index] < 0 and asteroid < 0:
                             break
+                        # if the positive_asteroid less than the last element, dont append positive_asteroid
                         elif positive_asteroid < stack[index]: 
                             add_status = False
                             break
+                        
+                        # if the last element and asteroid not same, and the positive_asteroid is greater than last element
                         elif stack[index] != asteroid and positive_asteroid >= stack[index]:
+                            # check first if there are same, remove last element and dont push positive_asteroid
                             if positive_asteroid == stack[index]:
                                 add_status = False
                                 stack.pop()
