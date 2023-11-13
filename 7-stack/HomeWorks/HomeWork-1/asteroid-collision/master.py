@@ -23,11 +23,9 @@ class Solution(object):
             else:
                 
                 # convert the asteriod and last element to positive
-                last_asteroid = stack[-1]
-                positive_asteroid = asteroid
+                last_asteroid = abs(stack[-1])
+                positive_asteroid = abs(asteroid)
                 
-                if positive_asteroid < 0: positive_asteroid *= -1
-                if last_asteroid < 0 : last_asteroid *= -1
                 
                 # check if the last element is greater than last asteroid
                 if positive_asteroid >= last_asteroid:
