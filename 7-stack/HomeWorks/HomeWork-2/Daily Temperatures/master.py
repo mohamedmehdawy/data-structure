@@ -14,21 +14,25 @@ class Solution(object):
         
         # create answers and stack
         answers = []
+        stack = []
         
-        for i in range(len(temperatures)):
-            status = False
-            for j in range(i+1, len(temperatures)):
-                if(temperatures[i] < temperatures[j]):
-                    status = True
-                    break
+        for index in range(1, len(temperatures)):
+            # append answer
+            answers.append(0)
             
-            # check status, if true apppend the difference if not, append 0
-            if status:
-                answers.append(j - i)
-            else:
-                answers.append(0)
+            # check if the current element is less than the next one  1
+            if temperatures[index-1] < temperatures[index]:
+                answers[index - 1] = 1
                 
-        return answers
-    
-    
-print(Solution().dailyTemperatures([89,62,70,58,47,47,46,76,100,70]))
+            else:
+                stack.append(index-1)
+                
+            # check stack
+            while stack and temperatures[stack[-1]] < temperatures[index]:
+                answers[stack[-1]] = index - stack[-1]
+                stack.pop()
+                
+                
+        # append 0 for last element
+        answers.append(0)      
+        return answers              
