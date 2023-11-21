@@ -11,35 +11,37 @@ def infix_to_postfix(infix):
     """
     # set order for each operator
     operators_order = {
+        '#': 0,
         '+': 1,
         '-': 1,
         '*': 2,
         '/': 2
     }
     
+    
     # create postfix list and operators stack
     postfix_list = []
     operators_stack = []
+    
+    # remove empty
+    operators_stack.append("#")
+    
+    # for make in the end operator stack empty with real operators, what ever lowest priority
+    infix += '-'
     
     for token in infix:
         # if not operator append to postfix list
         if token not in operators_order:
             postfix_list.append(token)
         else:
-            # if stack is empty or the current token is more than the last element in stack, append operator
-            if not operators_stack or operators_order[operators_stack[-1]] < operators_order[token]:
-                operators_stack.append(token)
-            else:
+
                 # pop operators from stack and append to list until the condition return false
-                while operators_stack and not(operators_order[operators_stack[-1]] < operators_order[token]):
+                while not(operators_order[operators_stack[-1]] < operators_order[token]):
                     postfix_list.append(operators_stack.pop())
-                else:
-                    operators_stack.append(token)
-    # check if we have operators in stack
-    if operators_stack:
-        for _ in range(len(operators_stack)):
-            postfix_list.append(operators_stack.pop())
-    
+                # if stack is empty or the current token is more than the last element in stack
+                # or iteration end, append operator
+                operators_stack.append(token)
+                
     # convert list to string and return the value
     return "".join(postfix_list)
 
