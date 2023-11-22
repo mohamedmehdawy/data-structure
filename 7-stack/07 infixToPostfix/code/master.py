@@ -50,7 +50,7 @@ def infix_to_postfix(infix):
                     operators_stack.pop()
                 else:
                     # pop operators from stack and append to list until the condition return false
-                    while token != '(' and operators_stack[-1] != '(' and not(precedence(operators_stack[-1]) < precedence(token)):
+                    while token != '(' and not(precedence(operators_stack[-1]) < precedence(token)):
                         postfix_list.append(operators_stack.pop())
                     # if stack is empty or the current token is more than the last element in stack
                     # or iteration end, append operator
