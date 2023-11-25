@@ -41,8 +41,7 @@ def infix_to_postfix(infix):
         if precedence(token) == 0 and (token != '(' and token != ')'):
             postfix_list.append(token)
         else:
-                # power check
-                power_check = True if token != "^" or (token == "^" and operators_stack[-1]) != "^" else False
+
                 
                 # if the operator is ) pop last element until arraive to (
                 if token == ")":
@@ -53,6 +52,9 @@ def infix_to_postfix(infix):
                     # remove (
                     operators_stack.pop()
                 else:
+                    # power check
+                    power_check = True if token != "^" or (token == "^" and operators_stack[-1]) != "^" else False
+                    
                     # pop operators from stack and append to list until the condition return false
                     while token != '(' and power_check and not(precedence(operators_stack[-1]) < precedence(token)):
                         postfix_list.append(operators_stack.pop())
