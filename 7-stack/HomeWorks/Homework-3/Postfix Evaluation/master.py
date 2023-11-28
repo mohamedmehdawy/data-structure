@@ -41,15 +41,14 @@ def evalaute_postfix(postfix):
     eval_stack = []
     
     for token in postfix:
-
         # if token not operator just append to eval stack
         if not token in operators:
             eval_stack.append(token)
         else:
             try:
                 # get last 2 elements and pop from the stack, and do the current operation in it
-                right_number = int(eval_stack.pop())
-                left_number = int(eval_stack.pop())
+                right_number = float(eval_stack.pop())
+                left_number = float(eval_stack.pop())
             except:
                 return "invalid postfix"
 
@@ -60,10 +59,9 @@ def evalaute_postfix(postfix):
             
             # append the result after evalaution
             eval_stack.append(result)
-    
+
     # the result will be the last and its the only element in the eval stack
     result = eval_stack.pop()
-    
     return result
     
 def test1(postfix, expected):
