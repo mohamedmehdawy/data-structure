@@ -34,15 +34,12 @@ def evalaute_postfix(postfix):
     if len(postfix) < 3:
         return postfix
     
-    # operators
-    operators = ["^", "*", "/", "+", "-"]
-    
     # eval_stack
     eval_stack = []
     
     for token in postfix:
         # if token not operator just append to eval stack
-        if not token in operators:
+        if token.isdigit():
             eval_stack.append(token)
         else:
             try:
