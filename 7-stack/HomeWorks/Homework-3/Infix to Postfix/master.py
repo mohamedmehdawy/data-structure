@@ -38,7 +38,7 @@ def infix_to_postfix(infix):
     
     for token in infix:
         # if not operator append to postfix list
-        if precedence(token) == 0 and (token != '(' and token != ')'):
+        if token.isdigit() or token.islower() or token.isupper():
             postfix_list.append(token)
         else:
 
