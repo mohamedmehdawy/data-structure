@@ -1,0 +1,9 @@
+first if the length of the infix is zero return empty string
+reverse the infix input
+init  operator stack, and result stack
+for each token
+-- if the token is digit or is a char append append to the result
+-- else, while the current token is  ^ and the last one is ^ or the token equal the last stack operator in level or the token is more than the last one, empty the until the condition return false, and append the current token
+if found elements in operator stack, empty it
+reverse the result 
+convert to string
