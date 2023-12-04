@@ -3,6 +3,6 @@ init result list and operator stack
 for each char
 -- if its a number append to result list
 -- else, if the stack is empty append the operator and if its ( append also and if the last element is the stack not ( and append the operator to the result if its not ( or ).
----- if the last element is (, if the prev is - and char is -, convert the current to + and if the current is + convert current to -, and append the + to the result
+---- if the last element is (, if the prev is - and char is -, convert the current to + and if the current is + convert current to - (build convert function to handle swap from + to - or - to +), and append the + to the result
 ----- else, append the char to the stack
 convert the stack to string and result the result
