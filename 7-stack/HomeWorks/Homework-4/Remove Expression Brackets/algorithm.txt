@@ -2,7 +2,7 @@ if the string is less than or equal 3, return the string
 init result list and operator stack
 for each char
 -- if its a number append to result list
--- else, if the stack is empty append the operator and if its ( append also and if the last element is the stack not ( and append the operator to the result if its not ( or ).
----- if the last element is (, if the prev is - and char is -, convert the current to + and if the current is + convert current to - (build convert function to handle swap from + to - or - to +), and append the + to the result
------ else, append the char to the stack
+-- else, if the operator is (, append the last element added to result to operator stack
+---- elif the opeator is ), remove last element in operator stack
+---- else, if we have value in operator stack and the last element in the stack is -, check if its (-) call reverse_operator function and append to the result, else append to the result
 convert the stack to string and result the result
