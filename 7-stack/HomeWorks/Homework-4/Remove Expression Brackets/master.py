@@ -1,3 +1,6 @@
+import inspect
+
+
 def remove_brackets(expression):
     """
         this function remove all brackets from the expression and simplify it
@@ -19,7 +22,7 @@ def remove_brackets(expression):
             return '+'
         return '-'
     # if less than or equal 3 return the expression
-    if len(expression) >= 3:
+    if len(expression) <= 3:
         return expression
     
     # init result list and operation stack
@@ -28,7 +31,7 @@ def remove_brackets(expression):
     
     for char in expression:
         # if char not operator, append to the result
-        if char.isdigit() or char.islower() or char.isupper():
+        if char.isdigit():
             result.append(char)
         # if the the char is opeator
         else:
@@ -49,3 +52,25 @@ def remove_brackets(expression):
     
     # return the result
     return "".join(result)
+
+
+def test1(data, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"{fun_name} => remove_brackets")
+    
+    result = remove_brackets(data)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
+    
+if __name__ == "__main__":
+    # test 1 => remove_brackets
+    test1("9-(2-3)", "9-2+3")
+    test1("1+2-3-4+5-6-7+8", "1+2-3-4+5-6-7+8")
+    test1("9+(2-3)", "9+2-3")
+    test1("1-(2-3-(4+5))-6-(7-8)", "1-2+3+4+5-6-7+8")
+    test1("1-(2-3-(4+5)+6-7)", "1-2+3+4+5-6+7")
+    test1("1-(2-3-(4+5-(6-7)))", "1-2+3+4+5-6+7")
+    
+    # all tests passed
+    print("all tests passed")
