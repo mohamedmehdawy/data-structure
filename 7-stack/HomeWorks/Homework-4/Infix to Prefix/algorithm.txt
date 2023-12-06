@@ -8,5 +8,5 @@ reverse the infix input and handle () after reverse the input, and pass it to re
     ---- if the token is ), remvoe opearotr until arraive to (
     ---- else, while the operator stack is not empty and the current token is  ^ and the last one is ^ or the token equal the last stack operator in level or the token is less than the last one, empty the until the condition return false, and append the current token
     if found elements in operator stack, empty it
-    reverse the result 
-    convert to string
+    return the result
+reverse the result 
