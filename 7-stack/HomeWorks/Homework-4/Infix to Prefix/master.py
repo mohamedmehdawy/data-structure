@@ -42,7 +42,7 @@ def infix_to_prefix(infix):
                     postfix_stack.append(operators_stack.pop())
                     
                 # pop the (
-                postfix_stack.pop()
+                operators_stack.pop()
             else:
                 # pop the operator stack unit the the condition return false
                 while token != '(' and operators_stack and (precedence(token) < precedence(operators_stack[-1]) or (operators_stack[-1] == token and token == '^')):
@@ -58,7 +58,6 @@ def infix_to_prefix(infix):
     
     # reverse the infix
     reversed_infix = infix[::-1].replace('(', '$').replace(')', '(').replace('$', ')')
-    print(reversed_infix)
     reversed_postfix = reversedPostfix(reversed_infix)
     
     return reversed_postfix[::-1]
