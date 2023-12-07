@@ -41,7 +41,8 @@ def remove_brackets(expression):
             
             # pop if is )
             elif char == ')':
-                operators_stack.pop()
+                if operators_stack:
+                    operators_stack.pop()
                 
             else:
                 # if we have operators in the stack and the last element is -, reverse the char
@@ -65,12 +66,18 @@ def test1(data, expected):
     
 if __name__ == "__main__":
     # test 1 => remove_brackets
-    test1("9-(2-3)", "9-2+3")
     test1("1+2-3-4+5-6-7+8", "1+2-3-4+5-6-7+8")
+    test1("9-(2+3)", "9-2-3")
+    test1("9-(2-3)", "9-2+3")
     test1("9+(2-3)", "9+2-3")
     test1("1-(2-3-(4+5))-6-(7-8)", "1-2+3+4+5-6-7+8")
     test1("1-(2-3-(4+5)+6-7)", "1-2+3+4+5-6+7")
     test1("1-(2-3-(4+5-(6-7)))", "1-2+3+4+5-6+7")
+    test1("1-((4+5)-(6-7)))", "1-4-5+6-7")
+    test1("1-(((4-5)-(6-7))))", "1-4+5+6-7")
+    test1("1-(2-3-((4+5)-(6-7)))", "1-2+3+4+5-6+7")
+    test1("1-(2-3-((4-5)-(6-7)))", "1-2+3+4-5-6+7")
+    test1("1-(2-3+((4-5)-(6-7)))", "1-2+3-4+5+6-7")
     
     # all tests passed
     print("all tests passed")
