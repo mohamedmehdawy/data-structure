@@ -3,6 +3,6 @@ init result list and operator stack
 for each char
 -- if its a number append to result list
 -- else, if the operator is (, append the last element added to result to operator stack
----- elif the opeator is ), remove last element in operator stack
+---- elif the opeator is ) and inside condation scope check if the operator stack not empty, remove last element in operator stack
 ---- else, if we have value in operator stack and the last element in the stack is -, check if its (-) call reverse_operator function and append to the result, else append to the result
 convert the stack to string and result the result
