@@ -21,7 +21,7 @@ methods:
 - deque => this function remove the front element and move the front 1 step, until it will be empty 
 #
 - if the array is empty, tell the user
-- else, set the current front = -1
+- else, set the current front = None
 -- get the next pos for the front and set it
 -- decrease the added_elements
 #
@@ -32,4 +32,13 @@ methods:
 - isEmpty => this function check if the queue is empty or not using added_elements
 #
 - retrun true if the added_elements == 0
+#
+
+- repr => this function print the queue
+#
+if the queue is empty return empty string
+set result = [], current_position = the front
+loop added_elements time
+-- each one append current element to the result
+covert the result to string, and return it
 #
