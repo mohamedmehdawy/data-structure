@@ -49,6 +49,25 @@ class Queue:
         self.added_elements += 1
         
 
+    def deque(self):
+        """
+            this function remove the front of the queue
+            returns: None
+        """
+        # check if empty, cant remove the front
+        if self.isEmpty():
+            print("the queue is empty, not elements to remove")
+            return
+        
+        # set the current front = None
+        self.array[self.front] = None
+        
+        # move the front
+        self.front = self._next(self.front)
+        
+        # deccrease added elements
+        self.added_elements -= 1
+        
     def isFull(self):
         """
             this function check if the queue is full or not
@@ -60,6 +79,15 @@ class Queue:
 
         return False
 
+    def isEmpty(self):
+        """
+            this function check if the queue is empty or not
+            returns:
+                the boolean value for the queue is empty
+        """
+        if self.added_elements == 0:
+            return True
+        return False
     def __repr__(self) -> str:
         return str(self.array)
 
