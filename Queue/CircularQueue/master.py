@@ -1,3 +1,6 @@
+import inspect
+
+
 class Queue:
     def __init__(self, size) -> None:
         # init proerties
@@ -57,4 +60,29 @@ class Queue:
 
         return False
 
+    def __repr__(self) -> str:
+        return str(self.array)
 
+def test1(data, size,expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"{fun_name} => enque")
+    
+    queue = Queue(size)
+    
+    for ele in data:
+        queue.enque(ele)
+
+    
+    result = str(queue)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"    
+
+if __name__ == "__main__":
+    
+    # test 1 enque
+    test1([1,2,3,4,5], 5, "[1, 2, 3, 4, 5]")
+    test1([1,2,3,4,5,6], 5, "[1, 2, 3, 4, 5]")
+    
+    # all tests passed
+    print("all tests passed")
