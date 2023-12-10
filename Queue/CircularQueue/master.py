@@ -89,8 +89,19 @@ class Queue:
             return True
         return False
     def __repr__(self) -> str:
-        return str(self.array)
 
+        
+        if self.added_elements:
+            # init result and current
+            result = []
+            current = self.front
+            for _ in range(self.added_elements):
+                result.append(self.array[current])
+                current = self._next(current)
+                
+            return str(result)
+    
+        return str([])
 def test1(data, size,expected):
     fun_name = inspect.currentframe().f_code.co_name
     

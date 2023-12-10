@@ -37,6 +37,7 @@ methods:
 - repr => this function print the queue
 #
 if the queue is empty return empty string
+check first if we have elements or not, if not retur empty string
 set result = [], current_position = the front
 loop added_elements time
 -- each one append current element to the result
