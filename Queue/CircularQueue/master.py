@@ -74,10 +74,7 @@ class Queue:
             returns:
                 the boolean value for the queue is full
         """
-        if self.added_elements == self.size:
-            return True
-
-        return False
+        return self.added_elements == self.size
 
     def isEmpty(self):
         """
@@ -85,12 +82,8 @@ class Queue:
             returns:
                 the boolean value for the queue is empty
         """
-        if self.added_elements == 0:
-            return True
-        return False
+        return self.added_elements == 0
     def __repr__(self) -> str:
-
-        
         if self.added_elements:
             # init result and current
             result = []
