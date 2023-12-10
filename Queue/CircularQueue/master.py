@@ -117,11 +117,35 @@ def test1(data, size,expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"    
 
+def test2(data, size, deque_count,expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"{fun_name} => deque")
+    
+    queue = Queue(size)
+    
+    for ele in data:
+        queue.enque(ele)
+
+    # deque counter
+    for _ in range(deque_count):
+        queue.deque()
+        
+    result = str(queue)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"    
+
 if __name__ == "__main__":
     
     # test 1 enque
     test1([1,2,3,4,5], 5, "[1, 2, 3, 4, 5]")
     test1([1,2,3,4,5,6], 5, "[1, 2, 3, 4, 5]")
+    
+    # test 2 deque
+    test2([1,2,3,4,5], 5, 1,"[2, 3, 4, 5]")
+    test2([1,2,3,4,5,6], 7, 1,"[2, 3, 4, 5, 6]")
+    test2([1,2,3,4,5,6], 7, 7,"[]")
+    test2([1,2,3,4,5,6], 7, 8,"[]")
     
     # all tests passed
     print("all tests passed")
