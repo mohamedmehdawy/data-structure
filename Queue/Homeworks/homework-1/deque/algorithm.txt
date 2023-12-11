@@ -1,0 +1,24 @@
+the deque class will use the same methods from double linked list
+
+$ properties:
+-- front: will be the updated head, and it will be property function
+-- rear: will be updated rear, and it will be property function
+-- dobule_linked_list: the double linked list handle deque
+
+$ methods:
+-- enqueue_rear: append the new node to the end of linked list
+#
+insert end function from dobule_linked_list
+#
+-- enqueue_front: append the new node to the front of linked list
+#
+insert front function from dobule_linked_list
+#
+-- dequeue_front: remove the front node from the likned list
+#
+delete front function from dobule_linked_list
+#
+-- dequeue_rear: remove the end node from the likned list
+#
+delete end function from dobule_linked_list
+#
