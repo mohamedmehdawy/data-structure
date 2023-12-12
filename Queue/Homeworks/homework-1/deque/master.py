@@ -1,6 +1,5 @@
 import inspect
 from packages.doubleLinkedList import DoubleLinkedList
-
 class Deque:
     # init properties
     def __init__(self, size) -> None:
@@ -8,7 +7,7 @@ class Deque:
         self.added_elements = 0
         self.double_linked_list = DoubleLinkedList()
     
-    
+    # front and rear not change, and should simulate like array
     @property
     def front(self):
         return self.double_linked_list.head.data
