@@ -40,6 +40,13 @@ delete front function from dobule_linked_list
 update front with next
 
 #
+-- enqueue_rear: append the new node to the rear of linked list
+#
+add check full decorator
+insert end function from dobule_linked_list
+update rear with next
+
+#
 -- dequeue_rear: remove the end node from the likned list
 #
 add check empty decorator

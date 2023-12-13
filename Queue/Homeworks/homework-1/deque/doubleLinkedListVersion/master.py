@@ -50,6 +50,7 @@ class Deque:
             self.added_elements += 1
         
         return wrapper
+    
     def is_empty(self):
         """
             this functoin return the boolean value of the deque if empty or not
@@ -57,6 +58,22 @@ class Deque:
                 the deque is empty or not
         """
         return self.added_elements == 0
+    
+    def check_empty(func):
+        """
+            this decorator handle check empty of removing functions
+        """
+        def wrapper(self, value):
+            # check if deque is empty return no thing, else call the function
+            if self.is_empty():
+                print(f"cant remove the element the deque is empty")
+                return
+            func(self)
+            
+            # increase added elements
+            self.added_elements -= 1
+        
+        return wrapper
     
     @check_full
     def enque_front(self, value):
@@ -68,6 +85,18 @@ class Deque:
         """
         self.double_linked_list.insert_front(value)
         self.front = self._prev(self.front)
+    
+    @check_full
+    def enque_rear(self, value):
+        """
+            this function add the value in end of deque
+            parameters:
+                value: the value will added in the end of deque
+            returns: None
+        """
+        self.double_linked_list.insert_end(value)
+        self.rear = self._next(self.rear)
+        
     def __repr__(self) -> str:
         return str(self.double_linked_list)
 def test1(data, size, front, rear, expected):
@@ -86,11 +115,32 @@ def test1(data, size, front, rear, expected):
     assert deque.front == front, f"Mismatch between expected front={front}, and result front={deque.front} in {fun_name}"
     assert deque.rear == rear, f"Mismatch between expected rear={rear}, and result rear={deque.rear} in {fun_name}"
 
+def test2(data, size, front, rear, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"{fun_name} => enque_rear")
+    
+    deque = Deque(size)
+    
+    for ele in data:
+        deque.enque_rear(ele)
+        
+    result = str(deque)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
+    assert deque.front == front, f"Mismatch between expected front={front}, and result front={deque.front} in {fun_name}"
+    assert deque.rear == rear, f"Mismatch between expected rear={rear}, and result rear={deque.rear} in {fun_name}"
+
 
 if __name__ == "__main__":
     
     # test 1 => enque front
     test1([1,2,3], 6, 3, 0, "[3,2,1]")
+    test1([1,2,3,4,5,6], 6, 0, 0, "[6,5,4,3,2,1]")
     
+    # test 1 => enque rear
+    test2([1,2,3], 6, 0, 3, "[1,2,3]")
+    test2([1,2,3,4,5,6], 6, 0, 0, "[1,2,3,4,5,6]")
+
     # all tests passed
     print("all tests passed")
