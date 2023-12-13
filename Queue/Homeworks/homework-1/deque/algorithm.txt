@@ -1,32 +1,51 @@
 the deque class will use the same methods from double linked list
 
 $ properties:
--- front: will be the updated head, and it will be property function
--- rear: will be updated rear, and it will be property function
+-- front: init with 0
+-- rear: init with 0
 -- added_elements: the number of elements added
 -- size: the size of deque
 -- dobule_linked_list: the double linked list handle deque
 
 $ methods:
+-- _next(pos): get the next of position
+#
+increase pos by 1
+if the pos is greater than or = size, return 0,
+else return the pos
+#
+-- _prev(pos): get the prev of position
+#
+increase pos by 1
+if the pos is less than 0, return the last position (size - 1),
+else return the pos
+#
 -- enqueue_rear: append the new node to the end of linked list
 #
 add check full decorator
 insert end function from dobule_linked_list
+update rear with next
 #
 -- enqueue_front: append the new node to the front of linked list
 #
 add check full decorator
 insert front function from dobule_linked_list
+update front with prev
+
 #
 -- dequeue_front: remove the front node from the likned list
 #
 add check empty decorator
 delete front function from dobule_linked_list
+update front with next
+
 #
 -- dequeue_rear: remove the end node from the likned list
 #
 add check empty decorator
 delete end function from dobule_linked_list
+update rear with prev
+
 #
 -- isFull: check if the deque is full or not
 #
