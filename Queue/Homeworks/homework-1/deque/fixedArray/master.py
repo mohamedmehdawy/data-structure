@@ -67,15 +67,18 @@ class Deque:
             if self.is_empty():
                 print(f"cant remove the element the deque is empty")
                 return
-            func(self)
+            
             
             # increase added elements
             self.added_elements -= 1
+            
+            # call and return the removed value
+            return func(self)
         
         return wrapper
     
     @check_full
-    def enque_front(self, value):
+    def enqueue_front(self, value):
         """
             this function add the value in front of deque
             parameters:
@@ -86,7 +89,7 @@ class Deque:
         self.array[self.front] = value
     
     @check_full
-    def enque_rear(self, value):
+    def enqueue_rear(self, value):
         """
             this function add the value in end of deque
             parameters:
@@ -113,6 +116,7 @@ class Deque:
             this function remove the last element in the list
             returns: removed value
         """
+        # move first to get the target position
         self.rear = self._prev(self.rear)
         deleted_value = self.array[self.rear] 
         self.array[self.rear] = None
@@ -120,6 +124,16 @@ class Deque:
         return deleted_value
     
     def __repr__(self) -> str:
+        
+        # print front and rear
+        print(f"front: {self.front}, rear: {self.rear}")
+        
+        # handle full and empty status
+        if self.is_full():
+            print(f"the deque is FULL")
+        elif self.is_empty():
+            print(f"the deque is empty")
+            return "[]"
         
         # set current position, and will start with front
         current = self.front
@@ -133,12 +147,12 @@ class Deque:
 def test1(data, size, front, rear, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"{fun_name} => enque_front")
+    print(f"{fun_name} => enqueue_front")
     
     deque = Deque(size)
     
     for ele in data:
-        deque.enque_front(ele)
+        deque.enqueue_front(ele)
         
     result = str(deque)
     
@@ -149,12 +163,12 @@ def test1(data, size, front, rear, expected):
 def test2(data, size, front, rear, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"{fun_name} => enque_rear")
+    print(f"{fun_name} => enqueue_rear")
     
     deque = Deque(size)
     
     for ele in data:
-        deque.enque_rear(ele)
+        deque.enqueue_rear(ele)
         
     result = str(deque)
     
@@ -171,7 +185,7 @@ def test3(data, size, front, rear, count,expected):
     
     # add data
     for ele in data:
-        deque.enque_rear(ele)
+        deque.enqueue_rear(ele)
     
     # remove elements from front insted of count
     for _ in range(count):
@@ -192,7 +206,7 @@ def test4(data, size, front, rear, count,expected):
     
     # add data
     for ele in data:
-        deque.enque_rear(ele)
+        deque.enqueue_rear(ele)
     
     # remove elements from back insted of count
     for _ in range(count):
@@ -204,7 +218,32 @@ def test4(data, size, front, rear, count,expected):
     assert deque.front == front, f"Mismatch between expected front={front}, and result front={deque.front} in {fun_name}"
     assert deque.rear == rear, f"Mismatch between expected rear={rear}, and result rear={deque.rear} in {fun_name}"
 
+def test5():    # tutorial tests
+    dq = Deque(6)
+    dq.enqueue_front(3)
+    print(dq)
+    dq.enqueue_front(2)
+    dq.enqueue_rear(4)
+    dq.enqueue_front(1)
+    dq.enqueue_front(5)
+    dq.enqueue_front(6)
 
+    print(dq) # 1 2 3 4
+    print(dq.dequeue_rear())    # 4
+    print(dq) # 1 2 3
+    print(dq.dequeue_front())   # 1
+    print(dq) # 2 3
+
+    print(dq.dequeue_rear())    # 3
+    print(dq.dequeue_front())   # 2
+
+    while not dq.is_empty():
+        dq.dequeue_rear()
+
+    print(dq)
+    for i in range(0, 6):
+        dq.enqueue_rear(i + 10)
+    print(dq)
 if __name__ == "__main__":
     
     # test 1 => enque front
@@ -228,6 +267,9 @@ if __name__ == "__main__":
     test4([1,2,3,4,5,6], 6, 0, 3, 3,"[1,2,3]")
     test4([1,2,3,4,5,6], 6, 0, 0, 6,"[]")
     test4([1,2,3,4,5,6], 6, 0, 0, 10,"[]")
-
+    
+    # test 5 => tutorial tests
+    test5()
+    
     # all tests passed
     print("all tests passed")
