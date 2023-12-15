@@ -108,6 +108,18 @@ class Deque:
         self.front = self._next(self.front)
         
         return deleted_value
+    
+    @check_empty
+    def dequeue_rear(self):
+        """
+            this function remove the last element in the list
+            returns: removed value
+        """
+        deleted_value = self.double_linked_list.tail.data
+        self.double_linked_list.delete_back()
+        self.rear = self._prev(self.rear)
+        
+        return deleted_value
     def __repr__(self) -> str:
         return str(self.double_linked_list)
 def test1(data, size, front, rear, expected):
@@ -163,13 +175,35 @@ def test3(data, size, front, rear, count,expected):
     assert deque.front == front, f"Mismatch between expected front={front}, and result front={deque.front} in {fun_name}"
     assert deque.rear == rear, f"Mismatch between expected rear={rear}, and result rear={deque.rear} in {fun_name}"
 
+def test4(data, size, front, rear, count,expected):
+    fun_name = inspect.currentframe().f_code.co_name
+    
+    print(f"{fun_name} => deque rear")
+    
+    deque = Deque(size)
+    
+    # add data
+    for ele in data:
+        deque.enque_rear(ele)
+    
+    # remove elements from back insted of count
+    for _ in range(count):
+        deque.dequeue_rear()
+        
+    result = str(deque)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
+    assert deque.front == front, f"Mismatch between expected front={front}, and result front={deque.front} in {fun_name}"
+    assert deque.rear == rear, f"Mismatch between expected rear={rear}, and result rear={deque.rear} in {fun_name}"
+
 
 if __name__ == "__main__":
     
     # test 1 => enque front
     test1([1,2,3], 6, 3, 0, "[3,2,1]")
     test1([1,2,3,4,5,6], 6, 0, 0, "[6,5,4,3,2,1]")
-    
+    test1([1,2,3,4,5,6], 5, 0, 0, "[5,4,3,2,1]")
+
     # test 2 => enque rear
     test2([1,2,3], 6, 0, 3, "[1,2,3]")
     test2([1,2,3,4,5,6], 6, 0, 0, "[1,2,3,4,5,6]")
@@ -179,6 +213,13 @@ if __name__ == "__main__":
     test3([1,2,3], 6, 1, 3, 1,"[2,3]")
     test3([1,2,3,4,5,6], 6, 3, 0, 3,"[4,5,6]")
     test3([1,2,3,4,5,6], 6, 0, 0, 6,"[]")
+
+    # test 4 => deque back
+    test4([1,2,3], 6, 0, 3, 0,"[1,2,3]")
+    test4([1,2,3], 6, 0, 2, 1,"[1,2]")
+    test4([1,2,3,4,5,6], 6, 0, 3, 3,"[1,2,3]")
+    test4([1,2,3,4,5,6], 6, 0, 0, 6,"[]")
+    test4([1,2,3,4,5,6], 6, 0, 0, 10,"[]")
 
     # all tests passed
     print("all tests passed")
