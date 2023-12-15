@@ -1,0 +1,67 @@
+the deque class will use fixed array
+
+$ properties:
+-- front: init with 0
+-- rear: init with 0
+-- added_elements: the number of elements added
+-- size: the size of deque
+-- array: array list handle deque
+
+$ methods:
+-- _next(pos): get the next of position
+#
+increase pos by 1
+if the pos is greater than or = size, return 0,
+else return the pos
+#
+-- _prev(pos): get the prev of position
+#
+increase pos by 1
+if the pos is less than 0, return the last position (size - 1),
+else return the pos
+#
+-- enqueue_rear: append the new node to the end of linked list
+#
+add check full decorator
+append the value to array
+update rear with next
+#
+-- enqueue_front: append the new node to the front of linked list
+#
+add check full decorator
+move front one step in prev
+update the new position of the front by the value
+
+#
+-- dequeue_front: remove the front node from the likned list
+#
+add check empty decorator
+set deledet value with the current front
+set the current front = none
+update front with next
+
+#
+-- dequeue_rear: remove the end node from the likned list
+#
+add check empty decorator
+update rear with prev
+set deledet value with the current rear
+set the current rear = none
+
+#
+-- isFull: check if the deque is full or not
+#
+return the boolean value of added_elements == size or not
+#
+-- isEmpty: check if the deque is empty or not
+#
+return the boolean value of added_elements == 0 or not
+#
+-- checkEmpty: decorator for handel if empty
+#
+if empty return not thing and tell the user, if not continue run function
+#
+-- checkFull: decorator for handel if full
+#
+if full return not thing and tell the user, if not continue run function
+#
