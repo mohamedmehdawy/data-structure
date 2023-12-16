@@ -1,0 +1,14 @@
+build stack using single list queue
+class name: Stack
+- properties:
+-- queue: the linked list queue
+
+methods:
+- push: push the element is the last queue
+#
+call enqeue method of queue linked list 
+#
+- peak: remvoe the last element in the queue
+#
+call delete back from linked list from queue
+#
