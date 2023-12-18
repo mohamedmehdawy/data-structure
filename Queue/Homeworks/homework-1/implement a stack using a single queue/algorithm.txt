@@ -7,7 +7,7 @@ methods:
 - push: push the element is the last queue
 #
 call enqeue method of queue linked list
-loop amount the size of the queue
+loop amount the size of the queue - 1, because when arrive to the list element we dont need to change it to the end agian after arrive to the front
 add the dequeue element(first element) in the last => enqueue(dequeue) 
 #
 - peak: remvoe the last element in the queue
