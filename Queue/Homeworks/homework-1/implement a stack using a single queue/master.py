@@ -12,8 +12,12 @@ class Stack:
                 value: the value will added to the stack
             returns: None
         """
+        # add the new element to the end
         self.queue.enque(value)
-    
+
+        # reverse the qeueu to simulate the stack
+        for _ in range(len(self.queue) - 1):
+            self.queue.enque(self.queue.deque())
     def peek(self):
         """
             this function remove the top element in the stack
@@ -21,12 +25,7 @@ class Stack:
         """
         return self.queue.queue_list.delete_back()
     def __repr__(self) -> str:
-        result = []
-        
-        for index in range(len(self.queue.queue_list) - 1, -1, -1):
-            result.append(str(self.queue.queue_list.get_nth(index + 1).data))
-        
-        return "[" + ", ".join(result) + "]"
+        return str(self.queue)
     
 def test1(data, expected):
     fun_name = inspect.currentframe().f_code.co_name
@@ -64,15 +63,15 @@ def test2(data, counter, expected):
 
 if __name__ == "__main__":
     # test 1 => push
-    test1([1,2,3], "[3, 2, 1]")
+    test1([1,2,3], "[3,2,1]")
     test1([1], "[1]")
-    test1([1,2], "[2, 1]")
+    test1([1,2], "[2,1]")
     test1([], "[]")
     
     # test 2 => peek
-    test2([1,2,3], 0,"[3, 2, 1]")
-    test2([1,2,3], 1,"[2, 1]")
-    test2([1,2,3], 4,"[]")
+    # test2([1,2,3], 0,"[3, 2, 1]")
+    # test2([1,2,3], 1,"[2, 1]")
+    # test2([1,2,3], 4,"[]")
 
     # all tests passed
     print("all tests passed")

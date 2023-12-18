@@ -36,6 +36,9 @@ class Queue:
                 the boolean value for the queue is empty
         """
         return len(self.queue_list) == 0
+    def __len__(self):
+        return len(self.queue_list)
+    
     def __repr__(self) -> str:
         return str(self.queue_list)
     
