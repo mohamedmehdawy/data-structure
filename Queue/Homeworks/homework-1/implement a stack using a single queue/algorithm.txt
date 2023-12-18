@@ -10,7 +10,12 @@ call enqeue method of queue linked list
 loop amount the size of the queue - 1, because when arrive to the list element we dont need to change it to the end agian after arrive to the front
 add the dequeue element(first element) in the last => enqueue(dequeue) 
 #
-- peak: remvoe the last element in the queue
+- peak: return the first element in the qeueu
 #
 return the first element in the qeueu => head.data
+#
+- pop: remove the first element in the stack
+#
+call dequeue function, will remove the first element in the queue,
+(becaue after each add we reverse the qeueue the first element in the queue will be the top in the stack)
 #
