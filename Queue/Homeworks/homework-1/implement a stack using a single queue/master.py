@@ -5,7 +5,7 @@ class Stack:
         self.queue = Queue()
         
         
-    def push(self, value):
+    def push(self, value): # O(n)
         """
             this function the element to the stack
             parameters:
@@ -25,7 +25,7 @@ class Stack:
         """
         return self.queue.front()
 
-    def pop(self):
+    def pop(self): # o(1)
         """
             this function remove the top of the stack
             returns: the deleted element
