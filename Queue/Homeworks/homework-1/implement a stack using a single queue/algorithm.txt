@@ -6,9 +6,11 @@ class name: Stack
 methods:
 - push: push the element is the last queue
 #
-call enqeue method of queue linked list 
+call enqeue method of queue linked list
+loop amount the size of the queue
+add the dequeue element(first element) in the last => enqueue(dequeue) 
 #
 - peak: remvoe the last element in the queue
 #
-call delete back from linked list from queue
+return the first element in the qeueu => head.data
 #
