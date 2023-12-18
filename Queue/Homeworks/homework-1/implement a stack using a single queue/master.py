@@ -23,7 +23,7 @@ class Stack:
             this function remove the top element in the stack
             returns: removed element
         """
-        return self.queue.queue_list.delete_back()
+        return self.queue.front()
     def __repr__(self) -> str:
         return str(self.queue)
     
@@ -42,7 +42,7 @@ def test1(data, expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"  
 
-def test2(data, counter, expected):
+def test2(data, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
     print(f"{fun_name} => peek")
@@ -53,11 +53,8 @@ def test2(data, counter, expected):
     for ele in data:
         stack.push(ele)
 
-    # remove insted of counter
-    for _ in range(counter):
-        stack.peek()
     
-    result = str(stack)
+    result = str(stack.peek())
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"  
 
@@ -69,9 +66,9 @@ if __name__ == "__main__":
     test1([], "[]")
     
     # test 2 => peek
-    # test2([1,2,3], 0,"[3, 2, 1]")
-    # test2([1,2,3], 1,"[2, 1]")
-    # test2([1,2,3], 4,"[]")
+    test2([1,2,3], "3")
+    test2([1,2], "2")
+    test2([], "")
 
     # all tests passed
     print("all tests passed")

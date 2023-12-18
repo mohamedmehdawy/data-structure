@@ -36,6 +36,17 @@ class Queue:
                 the boolean value for the queue is empty
         """
         return len(self.queue_list) == 0
+    
+    def front(self):
+        """
+            this function return the first element in the queue
+        """
+        # check if empty, cant remove the front
+        if self.isEmpty():
+            print("the queue is empty, not elements to return")
+            return ""
+        
+        return self.queue_list.head.data
     def __len__(self):
         return len(self.queue_list)
     
