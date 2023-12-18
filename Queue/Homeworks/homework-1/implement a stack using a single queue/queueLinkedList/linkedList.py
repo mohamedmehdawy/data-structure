@@ -70,14 +70,18 @@ class LinkedList:
             Time: O(n)
             memory: O(1)
         """
+        # get deleted value first
+        deleted_value = self.tail.data if self.tail else None
         if self.length <= 1:
             self.delete_front()
-            return
+            
         else: 
             prev = self.get_nth(self.length - 1)
             self._delete_node(self.tail)
             self.tail = prev
             self.tail.next = None
+            
+        return deleted_value
     def delete_nth(self, n):
         """
             Time: O(n)
