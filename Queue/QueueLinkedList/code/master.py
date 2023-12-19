@@ -6,7 +6,7 @@ class Queue:
         # init proerties
         self.queue_list = LinkedList()
 
-    def enque(self, value):
+    def enqueue(self, value):
         """
             this function append the value to the queue
             parameters:
@@ -16,7 +16,7 @@ class Queue:
         self.queue_list.insert_end(value)
         
 
-    def deque(self):
+    def dequeue(self):
         """
             this function remove the front of the queue
             returns: None
@@ -36,6 +36,20 @@ class Queue:
                 the boolean value for the queue is empty
         """
         return len(self.queue_list) == 0
+    
+    def front(self):
+        """
+            this function return the first element in the queue
+        """
+        # check if empty, cant remove the front
+        if self.isEmpty():
+            print("the queue is empty, not elements to return")
+            return ""
+        
+        return self.queue_list.head.data
+    def __len__(self):
+        return len(self.queue_list)
+    
     def __repr__(self) -> str:
         return str(self.queue_list)
     
@@ -43,12 +57,12 @@ class Queue:
 def test1(data, expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"{fun_name} => enque")
+    print(f"{fun_name} => enqueue")
     
     queue = Queue()
     
     for ele in data:
-        queue.enque(ele)
+        queue.enqueue(ele)
 
     
     result = str(queue)
@@ -56,30 +70,30 @@ def test1(data, expected):
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"  
 
 
-def test2(data, deque_count,expected):
+def test2(data, dequeue_count,expected):
     fun_name = inspect.currentframe().f_code.co_name
     
-    print(f"{fun_name} => deque")
+    print(f"{fun_name} => dequeue")
     
     queue = Queue()
     
     for ele in data:
-        queue.enque(ele)
+        queue.enqueue(ele)
 
-    # deque counter
-    for _ in range(deque_count):
-        queue.deque()
+    # dequeue counter
+    for _ in range(dequeue_count):
+        queue.dequeue()
         
     result = str(queue)
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"  
 if __name__ == "__main__":
     
-    # test 1 enque
+    # test 1 enqueue
     test1([1,2,3,4,5], "[1,2,3,4,5]")
     test1([1,2,3,4,5,6], "[1,2,3,4,5,6]")
     
-    # test 2 deque
+    # test 2 dequeue
     test2([1,2,3,4,5], 1,"[2,3,4,5]")
     test2([1,2,3,4,5,6], 1,"[2,3,4,5,6]")
     test2([1,2,3,4,5,6], 7,"[]")
