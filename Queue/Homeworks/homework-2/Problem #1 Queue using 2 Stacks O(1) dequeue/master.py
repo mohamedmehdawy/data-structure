@@ -1,3 +1,4 @@
+import inspect
 from packages.stack import Stack
 
 class Queue:
@@ -16,9 +17,9 @@ class Queue:
                 None
         """
         while not first.isEmpty():
-            second.push(first)
+            second.push(first.pop())
             
-    def push(self, value):
+    def enqueue(self, value):
         """
             this function push the value to the qeueu
             parameters:
@@ -39,3 +40,32 @@ class Queue:
         
         
     
+    def __repr__(self) -> str:
+        return str(self.stk1)
+    
+def test1(data,expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => enqueue")
+    
+    # queue
+    queue = Queue()
+    
+    # push data
+    for ele in data:
+        queue.enqueue(ele)
+    
+    # result
+    result = str(queue)
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+
+if __name__ == "__main__":
+    # test 1 => enqueue
+    test1([], "")
+    test1([1], "1")
+    test1([1,2], "1, 2")
+    test1([1, 2, 3, 4, 5], "1, 2, 3, 4, 5")
+    
+    # all tests passed
+    print("all tests passed")
