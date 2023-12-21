@@ -26,3 +26,9 @@ move elements from stk2 to stk1
 #
 pop the stk1
 #
+
+- is_empty: return the boolean value of queue is empty or not
+#
+return the status value of is_empty function from stk1
+#
+

@@ -56,6 +56,15 @@ class Queue:
         """
         return self.stk1.pop()
     
+    def is_empty(self):
+        """
+            this function return the boolean value of stk1 is empty or not
+            returns:
+                status of empty of queue
+        """
+        
+        return self.stk1.isEmpty()
+    
     def __repr__(self) -> str:
         return str(self.stk1)
     
@@ -97,6 +106,24 @@ def test2(data, counter, expected):
     
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
 
+def test3(data,expected):
+    func_name = inspect.currentframe().f_code.co_name
+    
+    print(f"testing => is empty")
+    
+    # queue
+    queue = Queue()
+    
+    # push data
+    for ele in data:
+        queue.enqueue(ele)
+    
+    # result
+    result = queue.is_empty()
+    
+    
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+
 if __name__ == "__main__":
     # test 1 => enqueue
     test1([], "")
@@ -111,5 +138,10 @@ if __name__ == "__main__":
     test2([1], 10, "")
     test2([1, 2, 3, 4, 5], 2, "3, 4, 5")
 
+    # test 3 => is empty
+    test3([], True)
+    test3([1], False)
+    test3([1,2], False)
+    test3([1, 2, 3, 4, 5], False)
     # all tests passed
     print("all tests passed")
