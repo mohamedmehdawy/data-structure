@@ -26,7 +26,8 @@ class Stack:
         """
         if len(self.array):
             return self.array.pop()
-
+        
+        print("the list is empty")
         return None
     def peek(self):
         """
