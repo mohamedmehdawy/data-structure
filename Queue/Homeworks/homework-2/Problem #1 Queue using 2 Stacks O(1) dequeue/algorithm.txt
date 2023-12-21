@@ -16,6 +16,7 @@ loop until skt1 be empty, each time pop the elements from 1 and push to 2
 
 - enqeue(value): add the value to the queue
 #
+if first stack have no elements just append to first one
 first move elements from skt1 to stk2 (reverse the stk1)
 add the value to stk2
 move elements from stk2 to stk1
