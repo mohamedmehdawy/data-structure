@@ -1,27 +1,24 @@
 Priority Queue => the idea is add the elements to the queue insted of his Priority
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-edit in linked list queue => add Priority to the node
-%%%%%%%%%%%%%%%%%%%%%%%%%%
 properties:
-- queue => the linked list queue
+- queue_1 => the linked list queue of Priority 1
+- queue_2 => the linked list queue of Priority 2
+- queue_3 => the linked list queue of Priority 3
 
 methods:
 - enqueue => add the element to the queue insted of his Priority
 #
-if no elements append to the queue
-if the Priority of current node is greater than the head, push first
-else push end
+append the node insted of queue list
 #
 
 - deqeue => remove the first element of the queue
 #
-call function remove the first element of the queue
+if found elements in queue_3 remove first element
+else if found elements in queue_2 remove first element
+else if  found elements in queue_1 remove first element
+else return nothing
 #
 
 - repr => display the queue with Priority
 #
-set current Priority = the first element Priority
-loop until end
-if each element Priority != the current Priority, we end the all of these Priority and print in new line
-- and set the current Priority to the element Priority
+set current the first element in Priority 3, and loop until end, and do these operations in another Priorities
 #
