@@ -1,9 +1,7 @@
 Priority Queue => the idea is add the elements to the queue insted of his Priority
 properties:
-- queue_1 => the linked list queue of Priority 1
-- queue_2 => the linked list queue of Priority 2
-- queue_3 => the linked list queue of Priority 3
-
+- queues => the dictionary of the queues (1,2,3)
+- priorities => the priorities will used in the queue (1,2,3)
 methods:
 - enqueue => add the element to the queue insted of his Priority
 #
