@@ -15,7 +15,11 @@ else if found elements in queue_2 remove first element
 else if  found elements in queue_1 remove first element
 else return nothing
 #
-
+- empty => return the boolean value is true if the all priorities are empty
+#
+loop in the 3 priorities, if found one not empty return false
+if the loop end return true
+#
 - repr => display the queue with Priority
 #
 set current the first element in Priority 3, and loop until end, and do these operations in another Priorities
