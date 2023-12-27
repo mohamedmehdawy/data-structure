@@ -1,7 +1,7 @@
 Priority Queue => the idea is add the elements to the queue insted of his Priority
 properties:
 - queues => the dictionary of the queues (1,2,3)
-- priorities => the priorities will used in the queue (1,2,3)
+- priorities => the priorities will used in the queue (3,2,1)
 methods:
 - enqueue => add the element to the queue insted of his Priority
 #
@@ -10,10 +10,8 @@ append the node insted of queue list
 
 - deqeue => remove the first element of the queue
 #
-if found elements in queue_3 remove first element
-else if found elements in queue_2 remove first element
-else if  found elements in queue_1 remove first element
-else return nothing
+loop in priorities will be [3,2,1] insted of high priority, if found element in the current highst one return insted
+if loop end, return false
 #
 - empty => return the boolean value is true if the all priorities are empty
 #
