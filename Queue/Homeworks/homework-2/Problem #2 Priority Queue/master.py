@@ -103,6 +103,38 @@ def test3(data, counter, expected):
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
 
 
+def test4():
+    """
+        simulate the tutorail test
+    """
+
+    fun_name = inspect.currentframe().f_code.co_name
+
+    print(f"{fun_name} => simulate the tutorail test")
+
+    tasks = PriorityQueue()
+
+    tasks.enqueue(1131, 1)
+    tasks.enqueue(3111, 3)
+    tasks.enqueue(2211, 2)
+    tasks.enqueue(3161, 3)
+
+    # for print
+    print(tasks)
+
+    print(tasks.dequeue())
+    print(tasks.dequeue())
+
+    tasks.enqueue(1535, 1)
+    tasks.enqueue(2815, 2)
+    tasks.enqueue(3845, 3)
+    tasks.enqueue(3145, 3)
+
+    while not tasks.empty():
+        print(tasks.dequeue(), end=' ')
+    print()
+
+
 if __name__ == "__main__":
     # test 1 => enqueue
     test1([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], "")
@@ -118,6 +150,9 @@ if __name__ == "__main__":
     test3([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], 1, "")
     test3([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], 2, "")
     test3([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], 6, "")
+
+    # test 4 => simulate the tutorail test
+    test4()
 
     # all tests passed
     print("all tests passed")
