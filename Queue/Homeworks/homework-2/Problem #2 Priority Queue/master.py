@@ -32,7 +32,7 @@ class PriorityQueue:
             if len(self.queues[str(priority)]):
                 return self.queues[str(priority)].dequeue()
 
-        # if not elements in queues, return none
+        # if no elements in queues, return none
         return None
 
     def empty(self):
@@ -83,6 +83,26 @@ def test2(data, expected):
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
 
 
+def test3(data, counter, expected):
+    fun_name = inspect.currentframe().f_code.co_name
+
+    print(f"{fun_name} => dequeue")
+
+    tasks = PriorityQueue()
+
+    # add elements
+    for ele in data:
+        tasks.enqueue(ele[0], ele[1])
+
+    # remove elements insted of number of counter
+    for _ in range(counter):
+        tasks.dequeue()
+
+    result = str(tasks)
+
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
+
+
 if __name__ == "__main__":
     # test 1 => enqueue
     test1([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], "")
@@ -92,6 +112,12 @@ if __name__ == "__main__":
     test2([(1131, 1), (2211, 2)], False)
     test2([(1131, 1)], False)
     test2([], True)
+
+    # test 3 => dequeue
+    test3([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], 0, "")
+    test3([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], 1, "")
+    test3([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], 2, "")
+    test3([(1131, 1), (3111, 3), (2211, 2), (3161, 3)], 6, "")
 
     # all tests passed
     print("all tests passed")
