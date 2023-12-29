@@ -26,7 +26,7 @@ $$
 #
 if empty, return no thing
 move elements from stk1 to stk2
-pop the top element in stk2
+pop the top element in stk2 and store it in removed element variable
 move elements from stk2 to stk1
 #
 
