@@ -1,0 +1,37 @@
+build the queue using 2 stacks, the idea here:
+- when take the element from stack to another you reverse the first one and this will be
+look like the queue logical idea
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+queue
+properties:
+- stk1: the first stack
+- skt2: the second stack
+
+methods:
+- move(stk1, stk2): move the elements from stack to another using pop to clear each element you move
+#
+if stk1 is empty return no thing
+loop until skt1 be empty, each time pop the elements from 1 and push to 2
+#
+
+- enqeue(value): add the value to the queue
+#
+just append the value to stk1
+#
+
+- deqeue: remove the first element in the qeueue (will be the top of stk1)
+$$
+idea here we want to remove the first element in the stack not the pop, so we need to reverse it first
+$$
+#
+if empty, return no thing
+move elements from stk1 to stk2
+pop the top element in stk2
+move elements from stk2 to stk1
+#
+
+- is_empty: return the boolean value of queue is empty or not
+#
+return the status value of is_empty function from stk1
+#
+
