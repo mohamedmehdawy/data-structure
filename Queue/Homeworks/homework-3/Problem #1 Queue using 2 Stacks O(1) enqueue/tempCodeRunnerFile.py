@@ -68,9 +68,9 @@ class Queue:
         return self.stk1.isEmpty()
 
     def __repr__(self) -> str:
-        result = str(self.stk1).split(', ')
+        result = str(self.stk1).split()
 
-        return ", ".join(reversed(result))
+        return ",".join(reversed(result))
 
 
 def test1(data, expected):
