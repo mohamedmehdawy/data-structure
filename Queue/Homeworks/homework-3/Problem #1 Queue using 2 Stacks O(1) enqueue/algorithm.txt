@@ -22,12 +22,13 @@ just append the value to stk1
 - deqeue: remove the first element in the qeueue (will be the top of stk1)
 $$
 idea here we want to remove the first element in the stack not the pop, so we need to reverse it first
+but we will save the reversed in stk2, and if we need to remove the first element,
+just pop the stk2
 $$
 #
-if empty, return no thing
-move elements from stk1 to stk2
-pop the top element in stk2 and store it in removed element variable
-move elements from stk2 to stk1
+if the stk2 is empty, move elements from stk1
+save removed element from skt2, in value
+return value
 #
 
 - is_empty: return the boolean value of queue is empty or not
@@ -40,6 +41,8 @@ $$
 idea here we need to reverse the stk1
 $$
 #
-set result list and it will be list convert from string using split
-return the reversed of the result
+set result_stk2 it will be the same with out change
+set result_stk1 list and it will be list convert from string using split
+merge two results and set it in result, but put the ', ' between skt2 and stk1 if the two elements have values
+return the result
 #

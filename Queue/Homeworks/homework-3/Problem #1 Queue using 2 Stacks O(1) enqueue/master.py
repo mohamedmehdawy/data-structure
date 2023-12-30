@@ -43,20 +43,15 @@ class Queue:
             retruns:
                 the removed element
         """
-        # if empty return no thing
-        if self.stk1.isEmpty():
-            return None
+        # if not elements to remove in stk2 move all elements from skt1
 
-        # move elements from stk1 to stk2 to reverse it
-        self._move(self.stk1, self.stk2)
+        if self.stk2.isEmpty():
+            self._move(self.stk1, self.stk2)
 
-        # pop the element in stk2, and store it in removed element
-        removed_element = self.stk2.pop()
+        # remove value
+        value = self.stk2.pop()
 
-        # move elements from stk1 to stk2
-        self._move(self.stk2, self.stk1)
-
-        return removed_element
+        return value
 
     def is_empty(self):
         """
@@ -68,9 +63,15 @@ class Queue:
         return self.stk1.isEmpty()
 
     def __repr__(self) -> str:
-        result = str(self.stk1).split(', ')
 
-        return ", ".join(reversed(result))
+        result_stk2 = str(self.stk2)
+        result_stk1 = ", ".join(reversed(str(self.stk1).split(', ')))
+
+        result = result_stk2 + \
+            f"{', ' if not self.stk2.isEmpty() and not self.stk1.isEmpty() else ''}" + \
+            result_stk1
+
+        return result
 
 
 def test1(data, expected):
@@ -131,6 +132,31 @@ def test3(data, expected):
     assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
 
 
+def test4(first_push, second_push, counter, expected):
+    func_name = inspect.currentframe().f_code.co_name
+    print(f"testing => custom test")
+
+    # queue
+    queue = Queue()
+
+    # push data
+    for ele in first_push:
+        queue.enqueue(ele)
+
+    # dequeue elements insted of counter number
+    for _ in range(counter):
+        queue.dequeue()
+
+    # push data
+    for ele in second_push:
+        queue.enqueue(ele)
+
+    # result
+    result = str(queue)
+
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {func_name}"
+
+
 if __name__ == "__main__":
     # test 1 => enqueue
     test1([], "")
@@ -150,5 +176,8 @@ if __name__ == "__main__":
     test3([1], False)
     test3([1, 2], False)
     test3([1, 2, 3, 4, 5], False)
+
+    # test 4 => custom push
+    test4([1, 2, 3], [4, 5, 6], 2, "3, 4, 5, 6")
     # all tests passed
     print("all tests passed")
