@@ -35,3 +35,11 @@ move elements from stk2 to stk1
 return the status value of is_empty function from stk1
 #
 
+- __repr__: for print the object
+$$
+idea here we need to reverse the stk1
+$$
+#
+set result list and it will be list convert from string using split
+return the reversed of the result
+#
