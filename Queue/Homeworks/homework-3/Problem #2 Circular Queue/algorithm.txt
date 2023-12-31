@@ -15,14 +15,12 @@ methods:
 - if the array is full, tell the user
 - else, add the value to the current rear
 -- get the next pos for the rear and set it
--- increase the added_elements
 #
 - deque => this function remove the front element and move the front 1 step, until it will be empty 
 #
 - if the array is empty, tell the user
 - else, set the current front = None
 -- get the next pos for the front and set it
--- decrease the added_elements
 #
 - isFull => this function check if the queue is full or not
 #
@@ -36,9 +34,15 @@ methods:
 - repr => this function print the queue
 #
 if the queue is empty return empty string
-check first if we have elements or not, if not retur empty string
-set result = [], current_position = the front
-loop added_elements time
--- each one append current element to the result
-covert the result to string, and return it
+set result empty list
+set current = the front
+set counter = None and check
+- if queue is full, set counter = queue length
+- elif rear is greater than the front, set counter = rear - front
+- else, set counter = the length - (front - rear)
+
+loop insted of counter:
+    append current to the result
+    move the current to the next one
+convert the list to string and return is
 #
