@@ -36,7 +36,7 @@ class Queue:
 
     def dequeue(self):
         """
-            Time Complexity: O(1)
+            Time Complexity: O(n)
             Memory Complexity: O(1)
             ########################
             this function remove the first element of the queue
@@ -60,7 +60,7 @@ class Queue:
                 status of empty of queue
         """
 
-        return self.stk1.isEmpty()
+        return self.stk1.isEmpty() and self.stk2.isEmpty()
 
     def __repr__(self) -> str:
 
