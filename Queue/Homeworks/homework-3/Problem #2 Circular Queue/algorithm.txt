@@ -1,0 +1,44 @@
+Queue Class => this class handle the queue operations
+proerties:
+- front, rear => will start with the index of 0
+- array => the array will store the elements
+- size => the size of the array
+
+methods:
+- _next(pos) => this function return the next of the position passed
+#
+- increase the pos
+- if the pos is equal the size, reutrn 0, else return the position
+#
+- enque(value) => this function add the value to the array if it not full
+#
+- if the array is full, tell the user
+- else, add the value to the current rear
+-- get the next pos for the rear and set it
+-- increase the added_elements
+#
+- deque => this function remove the front element and move the front 1 step, until it will be empty 
+#
+- if the array is empty, tell the user
+- else, set the current front = None
+-- get the next pos for the front and set it
+-- decrease the added_elements
+#
+- isFull => this function check if the queue is full or not
+#
+- retrun true if the the front and rear are the same, and the current value of both is not None
+#
+- isEmpty => this function check if the queue is empty or not
+#
+- retrun true if the the front and rear are the same, and the current value of both is None
+#
+
+- repr => this function print the queue
+#
+if the queue is empty return empty string
+check first if we have elements or not, if not retur empty string
+set result = [], current_position = the front
+loop added_elements time
+-- each one append current element to the result
+covert the result to string, and return it
+#
