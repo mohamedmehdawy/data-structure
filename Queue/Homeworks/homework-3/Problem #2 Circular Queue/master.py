@@ -85,7 +85,6 @@ class Queue:
         result = []
         current = self.front
         counter = None
-
         # loop in all array if full
         if self.isFull():
             counter = len(self.array)
@@ -94,7 +93,7 @@ class Queue:
             counter = self.rear - self.front
         # set counter after remove and different from rear and front from the array
         else:
-            counter = len(self.array) - (self.rear - self.front)
+            counter = len(self.array) - (self.front - self.rear)
         for _ in range(counter):
 
             result.append(self.array[current])
