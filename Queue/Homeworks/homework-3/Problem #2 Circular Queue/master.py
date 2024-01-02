@@ -6,8 +6,10 @@ class Queue:
         # init proerties
         self.front = self.rear = 0
 
-        self.size = size
-        self.array = [None] * size
+        self.size = max(1, size+1)
+
+        # increase the array to 1, to handle if the queue is full, not make the rear and the front are the same
+        self.array = [None] * self.size
 
     def _next(self, pos):
         """
@@ -66,7 +68,7 @@ class Queue:
             returns:
                 the boolean value for the queue is full
         """
-        return self.front == self.rear and self.array[self.front] != None
+        return self._next(self.rear) == self.front
 
     def isEmpty(self):
         """
@@ -74,28 +76,18 @@ class Queue:
             returns:
                 the boolean value for the queue is empty
         """
-        return self.front == self.rear and self.array[self.front] == None
+        return self.front == self.rear
 
     def __repr__(self) -> str:
         # check if empty, return empty list
         if self.isEmpty():
             return "[]"
 
-        # init result and current
+        # init variables
         result = []
         current = self.front
-        counter = None
-        # loop in all array if full
-        if self.isFull():
-            counter = len(self.array)
-        # if in normal case, rear is greater than front, just set counter =self.rear - self.front
-        elif self.rear > self.front:
-            counter = self.rear - self.front
-        # set counter after remove and different from rear and front from the array
-        else:
-            counter = len(self.array) - (self.front - self.rear)
-        for _ in range(counter):
 
+        while current != self.rear:
             result.append(self.array[current])
             current = self._next(current)
 

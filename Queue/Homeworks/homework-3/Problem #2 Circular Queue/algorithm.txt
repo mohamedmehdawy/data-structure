@@ -2,7 +2,8 @@ Queue Class => this class handle the queue operations
 proerties:
 - front, rear => will start with the index of 0
 - array => the array will store the elements
-- size => the size of the array
+- size => the size of the array, but we will add 1 to this
+to handle if the array are full or not
 
 methods:
 - _next(pos) => this function return the next of the position passed
@@ -24,25 +25,20 @@ methods:
 #
 - isFull => this function check if the queue is full or not
 #
-- retrun true if the the front and rear are the same, and the current value of both is not None
+- retrun true if the next of the rear is the front
 #
 - isEmpty => this function check if the queue is empty or not
 #
-- retrun true if the the front and rear are the same, and the current value of both is None
+- retrun true if the the front and rear are the same
 #
 
 - repr => this function print the queue
 #
 if the queue is empty return empty string
-set result empty list
 set current = the front
-set counter = None and check
-- if queue is full, set counter = queue length
-- elif rear is greater than the front, set counter = rear - front
-- else, set counter = the length - (front - rear)
 
-loop insted of counter:
+loop until the current is the rear:
     append current to the result
     move the current to the next one
-convert the list to string and return is
+convert the list to string and return the result
 #
