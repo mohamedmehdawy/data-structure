@@ -1,0 +1,14 @@
+This class receives a infinite stream of numbers, each time returning the sum of the last k numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+properties:
+- k => the range of numbers can added in each sum
+- removed => the number will remove from the sum
+- last_sum => last sum of the last stream
+
+methods:
+- next(new_num) => this function take the new number and calacute the sum of streaming
+#########################
+if new_num is greater than k, increase removed by one
+set last_sum = last_sum + new_num - removed
+return last_sum
+#########################
