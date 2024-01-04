@@ -19,3 +19,12 @@ class LastKNumerSumStream:
         self.last_sum = self.last_sum + new_num - self.removed
 
         return self.last_sum
+
+
+if __name__ == "__main__":
+    processor = LastKNumerSumStream(4)
+
+    while True:
+        num = int(input())
+
+        print(f"sum of last k numbers: {processor.next(num)}")
