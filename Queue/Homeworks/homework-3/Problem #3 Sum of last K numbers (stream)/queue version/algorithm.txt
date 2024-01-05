@@ -1,0 +1,15 @@
+This class receives a infinite stream of numbers, each time returning the sum of the last k numbers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+properties:
+- k => the range of numbers can added in each sum
+- queue_stream => the queue with store numbers, and the range of it will be the k
+
+methods:
+- next(new_num) => this function take the new number and calacute the sum of streaming
+#########################
+if the queue if full, dequeue the queue
+add the new_num to the queue
+init result = 0
+calc the result and will be the sum of the queue by iteration
+return the result
+#########################
