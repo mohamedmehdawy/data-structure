@@ -1,5 +1,5 @@
 import inspect
-from packges.linkedList import LinkedList
+from packages.linkedList import LinkedList
 
 class Queue:
     def __init__(self) -> None:

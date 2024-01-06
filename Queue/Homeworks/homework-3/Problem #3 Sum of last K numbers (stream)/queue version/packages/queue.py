@@ -38,16 +38,15 @@ class Queue:
         if self.isFull():
             print("the queue is full, cant added new one")
             return
-        
+
         # set the value in the current rear
         self.array[self.rear] = value
-        
+
         # move the rear
         self.rear = self._next(self.rear)
-        
+
         # increase added elements
         self.added_elements += 1
-        
 
     def deque(self):
         """
@@ -58,16 +57,16 @@ class Queue:
         if self.isEmpty():
             print("the queue is empty, not elements to remove")
             return
-        
+
         # set the current front = None
         self.array[self.front] = None
-        
+
         # move the front
         self.front = self._next(self.front)
-        
+
         # deccrease added elements
         self.added_elements -= 1
-        
+
     def isFull(self):
         """
             this function check if the queue is full or not
@@ -83,6 +82,21 @@ class Queue:
                 the boolean value for the queue is empty
         """
         return self.added_elements == 0
+
+    def __iter__(self):
+        self.current = self.front
+        self.counter = 0
+        return self
+
+    def __next__(self):
+        if self.counter != self.added_elements:
+            current_value = self.array[self.current]
+            self.current = self._next(self.current)
+            self.counter += 1
+            return current_value
+
+        raise StopIteration
+
     def __repr__(self) -> str:
         if self.added_elements:
             # init result and current
@@ -91,54 +105,62 @@ class Queue:
             for _ in range(self.added_elements):
                 result.append(self.array[current])
                 current = self._next(current)
-                
+
             return str(result)
-    
+
         return str([])
-def test1(data, size,expected):
+
+
+def test1(data, size, expected):
     fun_name = inspect.currentframe().f_code.co_name
-    
+
     print(f"{fun_name} => enque")
-    
+
     queue = Queue(size)
-    
+
     for ele in data:
         queue.enque(ele)
 
-    
     result = str(queue)
-    
-    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"    
 
-def test2(data, size, deque_count,expected):
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
+
+
+def test2(data, size, deque_count, expected):
     fun_name = inspect.currentframe().f_code.co_name
-    
+
     print(f"{fun_name} => deque")
-    
+
     queue = Queue(size)
-    
+
     for ele in data:
         queue.enque(ele)
 
     # deque counter
     for _ in range(deque_count):
         queue.deque()
-        
+
     result = str(queue)
-    
-    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"    
+
+    assert result == expected, f"Mismatch between expected={expected}, and result={result} in {fun_name}"
+
 
 if __name__ == "__main__":
-    
+
     # test 1 enque
-    test1([1,2,3,4,5], 5, "[1, 2, 3, 4, 5]")
-    test1([1,2,3,4,5,6], 5, "[1, 2, 3, 4, 5]")
-    
+    test1([1, 2, 3, 4, 5], 5, "[1, 2, 3, 4, 5]")
+    test1([1, 2, 3, 4, 5, 6], 5, "[1, 2, 3, 4, 5]")
+
     # test 2 deque
-    test2([1,2,3,4,5], 5, 1,"[2, 3, 4, 5]")
-    test2([1,2,3,4,5,6], 7, 1,"[2, 3, 4, 5, 6]")
-    test2([1,2,3,4,5,6], 7, 7,"[]")
-    test2([1,2,3,4,5,6], 7, 8,"[]")
+    test2([1, 2, 3, 4, 5], 5, 1, "[2, 3, 4, 5]")
+    test2([1, 2, 3, 4, 5, 6], 7, 1, "[2, 3, 4, 5, 6]")
+    test2([1, 2, 3, 4, 5, 6], 7, 7, "[]")
+    test2([1, 2, 3, 4, 5, 6], 7, 8, "[]")
+
+    tt = Queue(3)
+    tt.enque(1)
+    tt.enque(2)
+    tt.enque(3)
     
     # all tests passed
     print("all tests passed")
