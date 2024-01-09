@@ -7,6 +7,8 @@ class LastKNumerSumStream:
         # queue stream
         self.queue_stream = Queue(k)
 
+        self.sum = 0
+
     def next(self, new_num):
         """
             this function take the new number and calacute the sum of streaming
@@ -17,19 +19,15 @@ class LastKNumerSumStream:
         """
         # if the queue is full, remove the first element
         if self.queue_stream.isFull():
-            self.queue_stream.deque()
+            self.sum -= self.queue_stream.deque()
 
         # add the new number to queue stream
         self.queue_stream.enque(new_num)
 
-        # init result
-        result = 0
+        # increase the sum
+        self.sum += new_num
 
-        # sum the elements of the queue
-        for ele in self.queue_stream:
-            result += ele
-        # return the result
-        return result
+        return self.sum
 
 
 if __name__ == "__main__":
