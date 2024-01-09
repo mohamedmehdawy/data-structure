@@ -11,19 +11,22 @@ methods:
 - increase the pos
 - if the pos is equal the size, reutrn 0, else return the position
 #
-- enque(value) => this function add the value to the array if it not full
+- enqueue(value) => this function add the value to the array if it not full
 #
 - if the array is full, tell the user
 - else, add the value to the current rear
 -- get the next pos for the rear and set it
 -- increase the added_elements
 #
-- deque => this function remove the front element and move the front 1 step, until it will be empty 
+- dequeue => this function remove the front element and move the front 1 step, until it will be empty 
 #
 - if the array is empty, tell the user
-- else, set the current front = None
+- else
+-- set removed_element with front of the queue
+--set the current front = None
 -- get the next pos for the front and set it
 -- decrease the added_elements
+return removed_element
 #
 - isFull => this function check if the queue is full or not using added_elements
 #

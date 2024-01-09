@@ -16,7 +16,7 @@ class Queue:
             parameters:
                 pos: the position will get the next of it
             returns:
-                the next position of the current position 
+                the next position of the current position
         """
         # increase the position
         pos += 1
@@ -27,7 +27,7 @@ class Queue:
         # else, return the current position
         return pos
 
-    def enque(self, value):
+    def enqueue(self, value):
         """
             this function append the value to the queue
             parameters:
@@ -48,7 +48,7 @@ class Queue:
         # increase added elements
         self.added_elements += 1
 
-    def deque(self):
+    def dequeue(self):
         """
             this function remove the front of the queue
             returns: None
@@ -57,7 +57,7 @@ class Queue:
         if self.isEmpty():
             print("the queue is empty, not elements to remove")
             return
-
+        removed_element = self.array[self.front]
         # set the current front = None
         self.array[self.front] = None
 
@@ -66,6 +66,8 @@ class Queue:
 
         # deccrease added elements
         self.added_elements -= 1
+
+        return removed_element
 
     def isFull(self):
         """
@@ -119,7 +121,7 @@ def test1(data, size, expected):
     queue = Queue(size)
 
     for ele in data:
-        queue.enque(ele)
+        queue.enqueue(ele)
 
     result = str(queue)
 
@@ -134,11 +136,11 @@ def test2(data, size, deque_count, expected):
     queue = Queue(size)
 
     for ele in data:
-        queue.enque(ele)
+        queue.enqueue(ele)
 
     # deque counter
     for _ in range(deque_count):
-        queue.deque()
+        queue.dequeue()
 
     result = str(queue)
 
@@ -158,9 +160,9 @@ if __name__ == "__main__":
     test2([1, 2, 3, 4, 5, 6], 7, 8, "[]")
 
     tt = Queue(3)
-    tt.enque(1)
-    tt.enque(2)
-    tt.enque(3)
+    tt.enqueue(1)
+    tt.enqueue(2)
+    tt.enqueue(3)
 
     # all tests passed
     print("all tests passed")
