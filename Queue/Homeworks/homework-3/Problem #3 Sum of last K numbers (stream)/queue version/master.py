@@ -26,9 +26,10 @@ class LastKNumerSumStream:
         result = 0
 
         # sum the elements of the queue
-
+        for ele in self.queue_stream:
+            result += ele
         # return the result
-        return None
+        return result
 
 
 if __name__ == "__main__":
