@@ -1,0 +1,10 @@
+Node: the node or vertex in the tree
+properties:
+- data: the data will store in the node
+- left: the left side of the node
+- right: the right side of the node
+#########################
+Binary Tree
+properties:
+- root: the root the of Tree
+- length: the length of the binary tree
