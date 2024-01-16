@@ -8,3 +8,13 @@ Binary Tree
 properties:
 - root: the root the of Tree
 - length: the length of the binary tree
+
+
+
+#######################
+- print_tree(root): this function the binary tree
+#
+if the root is empty return None
+print the root value
+call print and pass left and right
+#
