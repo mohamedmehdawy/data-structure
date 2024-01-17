@@ -29,6 +29,15 @@ def print_tree(root):
     print_tree(root.right)
 
 
+def print_expression(root):
+    """
+        this funciton print the binary as postfix
+        parameters:
+            root: the root will start print the left and right from it
+    """
+    pass
+
+
 if __name__ == "__main__":
     # create 8 nodes
     root = Node(1)

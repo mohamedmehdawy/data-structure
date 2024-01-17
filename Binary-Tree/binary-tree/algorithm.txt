@@ -12,9 +12,20 @@ properties:
 
 
 #######################
-- print_tree(root): this function the binary tree
+- print_tree(root): this function print the binary tree
 #
 if the root is empty return None
 print the root value
 call print and pass left and right
+#
+
+- print_expression(root): this funciton print the binary as postfix
+#
+create the is_operator function(operator), if the current not is operator return true, else return false
+if the current node is operator
+- call the function for left and right
+- get the left value and right value
+- return the left + right + the value as string
+else:
+- return the current value
 #
