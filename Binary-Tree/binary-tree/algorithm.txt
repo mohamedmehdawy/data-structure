@@ -21,11 +21,10 @@ call print and pass left and right
 
 - print_expression(root): this funciton print the binary as postfix
 #
-create the is_operator function(operator), if the current not is operator return true, else return false
-if the current node is operator
+if the current node is not digit (is operator) , and convert current root data to string
 - call the function for left and right
-- get the left value and right value
+- get the left value and right
 - return the left + right + the value as string
 else:
-- return the current value
+- return the current node (root) data
 #
