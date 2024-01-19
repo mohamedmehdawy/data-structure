@@ -46,6 +46,21 @@ def print_expression(root):
     return root.data
 
 
+def print_expression_postfix(root):
+    """
+        this funciton print the binary as postfix
+        parameters:
+            root: the root will start print the left and right from it
+    """
+    # if not have a root, the parent is a number
+    if not root:
+        return
+    print_expression_postfix(root.left)
+    print_expression_postfix(root.right)
+
+    print(root.data, end='')
+
+
 if __name__ == "__main__":
     # # create 8 nodes
     # root = Node(1)
@@ -91,3 +106,4 @@ if __name__ == "__main__":
     node2.right = node5
 
     print(print_expression(root))
+    print_expression_postfix(root)
