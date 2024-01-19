@@ -28,3 +28,11 @@ if the current node is not digit (is operator) , and convert current root data t
 else:
 - return the current node (root) data
 #
+
+- print_expression_postfix(root): this funciton print the binary as postfix
+#
+if not current: return no thing
+call print_expression_postfix for the left
+call print_expression_postfix for the right
+print the current value
+#
