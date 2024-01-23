@@ -22,7 +22,23 @@ call inorder for right side
 call inorder and pass root for it (self.root)
 #
 
-
+- add(self, nodes, positions): this function add each node insted of his position (left or right)
+#
+set current = the root
+for each index of node:
+set current the return of add_node = add_node(current, current node(nodes[index]), current position(positions[index]))
+#
+- add_node(current, value, position): create node or override it insted of current position
+#
+if the position is L:
+-- if the current.left is found, set the new value of it
+-- else create new node with the current value, and link it by the current.left
+-- return current.left
+else:
+-- if the current.right is found, set the new value of it
+-- else create new node with the current value, and link it by the current.right
+-- return current.right
+#
 #######################
 - print_tree(root): this function print the binary tree
 #
