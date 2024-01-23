@@ -9,6 +9,18 @@ properties:
 - root: the root the of Tree
 - length: the length of the binary tree
 
+methods:
+- print_inroder(self): this function print the tree in inorder way
+#
+create function indorder this take the start root
+# inorder #
+if the current is none, return no thing
+call inorder for left side
+print the current node with end=""
+call inorder for right side
+# inorder #
+call inorder and pass root for it (self.root)
+#
 
 
 #######################
