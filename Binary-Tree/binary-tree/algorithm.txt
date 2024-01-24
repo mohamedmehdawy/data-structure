@@ -22,15 +22,15 @@ call inorder for right side
 call inorder and pass root for it (self.root)
 #
 
-- add(self, nodes, positions): this function add each node insted of his position (left or right)
+- add(self, nodes, directions): this function add each node insted of his directions (left or right)
 #
 set current = the root
 for each index of node:
-set current the return of add_node = add_node(current, current node(nodes[index]), current position(positions[index]))
+set current the return of add_node = add_node(current, current node(nodes[index]), current direction(directions[index]))
 #
-- add_node(current, value, position): create node or override it insted of current position
+- add_node(current, value, direction): create node or override it insted of current direction
 #
-if the position is L:
+if the direction is L:
 -- if the current.left is found, set the new value of it
 -- else create new node with the current value, and link it by the current.left
 -- return current.left

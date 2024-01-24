@@ -7,33 +7,33 @@ class Node:
 
 class BinaryTree:
     def __init__(self, root) -> None:
-        self.root = root
+        self.root = Node(root)
 
-    def add(self, nodes, positions):
+    def add(self, nodes, directions):
         """
-            this function add nodes to the binary insted of his position
+            this function add nodes to the binary insted of his directions
             parameters:
                 nodes: the nodes will added to the binary
-                positions: the positions of the nodes
+                directions: the direction of the nodes
         """
         # init current
         current = self.root
 
         # loop insted of the index
         for index in range(len(nodes)):
-            current = self.add_node(current, nodes[index], positions[index])
+            current = self.add_node(current, nodes[index], directions[index])
 
     @staticmethod
-    def add_node(current, value, position):
+    def add_node(current, value, direction):
         """
-            this function link the node insted of his position
+            this function link the node insted of his direction
             parameters:
                 current: the current node will linked with the target node
                 value: the value of current or new node
-                position: the position of the linked (left or right)
+                direction: the direction of the linked (left or right)
         """
-        # if the position is left
-        if position == "L":
+        # if the direction is left
+        if direction == "L":
             if current.left:
                 current.left.data = value
             else:
@@ -44,7 +44,7 @@ class BinaryTree:
                 current.left.data = value
             return current.left
 
-        # if the position is right
+        # if the direction is right
         if current.right:
             current.right.data = value
         else:
@@ -132,36 +132,45 @@ def print_expression_postfix(root):
 
 
 if __name__ == "__main__":
-    # create 8 nodes
-    root = Node(1)
-    node2 = Node(2)
-    node3 = Node(3)
-    node4 = Node(4)
-    node5 = Node(5)
-    node6 = Node(6)
-    node7 = Node(7)
-    node8 = Node(8)
 
-    # link them together
+    # tree
+    tree = BinaryTree(1)
+    tree.add([2, 4, 7], ["L", "L", "L",])
+    tree.add([2, 4, 8], ["L", "L", "R",])
+    tree.add([2, 5, 9], ["L", "R", "R",])
+    tree.add([3, 6, 10], ["R", "R", "L",])
 
-    root.left = node2
-    root.right = node3
-
-    node2.left = node4
-    node2.right = node5
-
-    node5.right = node7
-
-    node3.right = node6
-
-    node6.left = node8
-
-    print_tree(root)
-
-    tree = BinaryTree()
-    tree.root = root
     tree.print_inorder()
-    # test for print expression
+    # # create 8 nodes
+    # root = Node(1)
+    # node2 = Node(2)
+    # node3 = Node(3)
+    # node4 = Node(4)
+    # node5 = Node(5)
+    # node6 = Node(6)
+    # node7 = Node(7)
+    # node8 = Node(8)
+
+    # # link them together
+
+    # root.left = node2
+    # root.right = node3
+
+    # node2.left = node4
+    # node2.right = node5
+
+    # node5.right = node7
+
+    # node3.right = node6
+
+    # node6.left = node8
+
+    # print_tree(root)
+
+    # tree = BinaryTree()
+    # tree.root = root
+    # tree.print_inorder()
+    # # test for print expression
     # root = Node("*")
 
     # node2 = Node("+")
