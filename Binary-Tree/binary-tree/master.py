@@ -6,8 +6,54 @@ class Node:
 
 
 class BinaryTree:
-    def __init__(self) -> None:
-        self.root = None
+    def __init__(self, root) -> None:
+        self.root = root
+
+    def add(self, nodes, positions):
+        """
+            this function add nodes to the binary insted of his position
+            parameters:
+                nodes: the nodes will added to the binary
+                positions: the positions of the nodes
+        """
+        # init current
+        current = self.root
+
+        # loop insted of the index
+        for index in range(len(nodes)):
+            current = self.add_node(current, nodes[index], positions[index])
+
+    @staticmethod
+    def add_node(current, value, position):
+        """
+            this function link the node insted of his position
+            parameters:
+                current: the current node will linked with the target node
+                value: the value of current or new node
+                position: the position of the linked (left or right)
+        """
+        # if the position is left
+        if position == "L":
+            if current.left:
+                current.left.data = value
+            else:
+                # create new node
+                node = Node(value)
+                # link with current
+                current.left = node
+                current.left.data = value
+            return current.left
+
+        # if the position is right
+        if current.right:
+            current.right.data = value
+        else:
+            # create new node
+            node = Node(value)
+            # link with current
+            current.right = node
+            current.right.data = value
+        return current.right
 
     def print_inorder(self):
         """
