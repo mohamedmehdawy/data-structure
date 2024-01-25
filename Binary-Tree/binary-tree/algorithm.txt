@@ -31,12 +31,12 @@ set current the return of add_node = add_node(current, current node(nodes[index]
 - add_node(current, value, direction): create node or override it insted of current direction
 #
 if the direction is L:
--- if the current.left is found, set the new value of it
--- else create new node with the current value, and link it by the current.left
+-- if the current.left is not found, create new node with the current value, and link it by the current.left
+-- else assert the current.left value should be same like current value
 -- return current.left
 else:
--- if the current.right is found, set the new value of it
--- else create new node with the current value, and link it by the current.right
+-- if the current.right is not found, create new node with the current value, and link it by the current.right
+-- else assert the current.right value should be same like current value
 -- return current.right
 #
 #######################

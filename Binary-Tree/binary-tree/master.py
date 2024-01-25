@@ -34,25 +34,19 @@ class BinaryTree:
         """
         # if the direction is left
         if direction == "L":
-            if current.left:
-                current.left.data = value
+            if not current.left:
+                # create new node and link with current.left
+                current.left = Node(value)
             else:
-                # create new node
-                node = Node(value)
-                # link with current
-                current.left = node
-                current.left.data = value
+                assert current.left.data == value
             return current.left
 
         # if the direction is right
-        if current.right:
-            current.right.data = value
+        if not current.right:
+            # create new node and link with current.right
+            current.right = Node(value)
         else:
-            # create new node
-            node = Node(value)
-            # link with current
-            current.right = node
-            current.right.data = value
+            assert current.right.data == value
         return current.right
 
     def print_inorder(self):
