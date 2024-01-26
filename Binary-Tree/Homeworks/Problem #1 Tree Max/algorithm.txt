@@ -1,0 +1,84 @@
+Node: the node or vertex in the tree
+properties:
+- data: the data will store in the node
+- left: the left side of the node
+- right: the right side of the node
+#########################
+Binary Tree
+properties:
+- root: the root the of Tree
+- length: the length of the binary tree
+
+methods:
+- print_inroder(self): this function print the tree in inorder way
+#
+create function indorder this take the start root
+# inorder #
+if the current is none, return no thing
+call inorder for left side
+print the current node with end=""
+call inorder for right side
+# inorder #
+call inorder and pass root for it (self.root)
+#
+
+- add(self, nodes, directions): this function add each node insted of his directions (left or right)
+#
+set current = the root
+for each index of node:
+set current the return of add_node = add_node(current, current node(nodes[index]), current direction(directions[index]))
+#
+- add_node(current, value, direction): create node or override it insted of current direction
+#
+if the direction is L:
+-- if the current.left is not found, create new node with the current value, and link it by the current.left
+-- else assert the current.left value should be same like current value
+-- return current.left
+else:
+-- if the current.right is not found, create new node with the current value, and link it by the current.right
+-- else assert the current.right value should be same like current value
+-- return current.right
+#
+- tree_max(self): this function get the max value of the whole tree and return it
+
+#
+- get_sub_max(root): this function get the max value for the sub tree and return it
+##
+if the root is none, return nothing
+left_value = get_sub_max(left)
+right_value = get_sub_max(right)
+
+if the left_value is none, set it with smallest number
+if right_value is none, set it with smallest number
+- check if the root value is greater than left_value and right_value return the root value
+- elif the left_value is greater than root and right_value return left_value
+- else return right_value
+##
+return the return of get_sub_max(of the root)
+#
+
+#######################
+- print_tree(root): this function print the binary tree
+#
+if the root is empty return None
+print the root value
+call print and pass left and right
+#
+
+- print_expression(root): this funciton print the binary as postfix
+#
+if the current node is not digit (is operator) , and convert current root data to string
+- call the function for left and right
+- get the left value and right
+- return the left + right + the value as string
+else:
+- return the current node (root) data
+#
+
+- print_expression_postfix(root): this funciton print the binary as postfix
+#
+if not current: return no thing
+call print_expression_postfix for the left
+call print_expression_postfix for the right
+print the current value
+#
