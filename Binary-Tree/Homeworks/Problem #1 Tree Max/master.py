@@ -49,6 +49,37 @@ class BinaryTree:
             assert current.right.data == value
         return current.right
 
+    def tree_max(self):
+        """
+            this function get the max value of the whole tree and return it
+            returns: the max value in the tree
+        """
+        def get_sub_max(root):
+            """
+                this function get the max value for the sub tree and return it
+                parameters:
+                    root: the root of the sub tree
+                returns: the max value of the sub tree
+            """
+            # if the root is none, return none
+            if not root:
+                return None
+
+            # get left side value
+            left_value = (get_sub_max(
+                root.left).data if root.left else None) or float('-inf')
+            right_value = (get_sub_max(
+                root.right).data if root.right else None) or float('-inf')
+
+            # return max value
+            if root.data >= left_value and root.data >= right_value:
+                return root
+            elif left_value >= root.data and left_value >= right_value:
+                return root.left
+            else:
+                return root.right
+        return get_sub_max(self.root).data
+
     def print_inorder(self):
         """
             this function print the tree in inorder way
@@ -91,4 +122,16 @@ def print_expression_postfix(root):
 
 if __name__ == "__main__":
 
-    pass
+    tree = BinaryTree(2)
+    tree.add([3], ["L"])
+    tree.add([13, 8], ["R", "R"])
+    tree.add([13, 7], ["R", "L"])
+
+    print(tree.tree_max())
+
+    tree2 = BinaryTree(1)
+    tree2.add([2, 4, 7], ["L", "L", "L",])
+    tree2.add([2, 4, 8], ["L", "L", "R",])
+    tree2.add([2, 5, 9], ["L", "R", "R",])
+    tree2.add([3, 6, 10], ["R", "R", "L",])
+    print(tree2.tree_max())

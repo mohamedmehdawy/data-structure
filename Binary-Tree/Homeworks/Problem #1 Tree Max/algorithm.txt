@@ -45,14 +45,12 @@ else:
 - get_sub_max(root): this function get the max value for the sub tree and return it
 ##
 if the root is none, return nothing
-left_value = get_sub_max(left)
-right_value = get_sub_max(right)
+left_value = get_sub_max(left).data if the left is not None or set it with smallest number
+right_value = get_sub_max(right).data if the right is not None or set it with smallest number
 
-if the left_value is none, set it with smallest number
-if right_value is none, set it with smallest number
 - check if the root value is greater than left_value and right_value return the root value
-- elif the left_value is greater than root and right_value return left_value
-- else return right_value
+- elif the left_value is greater than root and right_value return left node
+- else return right node
 ##
 return the return of get_sub_max(of the root)
 #
