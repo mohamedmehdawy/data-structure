@@ -66,18 +66,23 @@ class BinaryTree:
                 return None
 
             # get left side value
-            left_value = (get_sub_max(
-                root.left).data if root.left else None) or float('-inf')
-            right_value = (get_sub_max(
-                root.right).data if root.right else None) or float('-inf')
+            left_max_node = get_sub_max(
+                root.left)
+            right_max_node = get_sub_max(
+                root.right)
+            left_value = (
+                left_max_node.data if left_max_node else None) or float('-inf')
+            right_value = (
+                right_max_node.data if right_max_node else None) or float('-inf')
 
             # return max value
             if root.data >= left_value and root.data >= right_value:
                 return root
             elif left_value >= root.data and left_value >= right_value:
-                return root.left
+                return left_max_node
             else:
-                return root.right
+
+                return right_max_node
         return get_sub_max(self.root).data
 
     def print_inorder(self):
@@ -103,6 +108,9 @@ class BinaryTree:
             # call for right side
             inorder(current.right)
         inorder(self.root)
+
+        # to make new line
+        print()
 
 
 def print_expression_postfix(root):
