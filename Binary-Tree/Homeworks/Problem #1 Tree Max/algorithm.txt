@@ -56,7 +56,23 @@ right_value = right_max_node.data if the right is not None or set it with smalle
 ##
 return the return of get_sub_max(of the root)
 #
+- tree_max_v2(self): this function get the max value of the whole tree and return it
+init bigger_node and will be the root
+#
+- get_sub_max(root): this function get the max value for the sub tree and return it
+##
+if the root is none, return nothing
+left_max_node = get_sub_max(left)
+right_max_node = get_sub_max(right)
+left_value = left_max_node.data if the left is not None or set it with smallest number
+right_value = right_max_node.data if the right is not None or set it with smallest number
 
+- check if the root value is greater than left_value and right_value bigger_node = root 
+- elif the left_value is greater than root and right_value bigger_node = left_max_node
+- else bigger_node = right_max_node
+##
+return the return of get_sub_max(of the root)
+#
 #######################
 - print_tree(root): this function print the binary tree
 #

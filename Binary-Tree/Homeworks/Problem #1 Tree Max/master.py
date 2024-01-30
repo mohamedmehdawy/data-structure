@@ -49,6 +49,7 @@ class BinaryTree:
             assert current.right.data == value
         return current.right
 
+    # version 1 is the best when i dont need to share bigger in a shared variables
     def tree_max(self):
         """
             this function get the max value of the whole tree and return it
@@ -84,6 +85,46 @@ class BinaryTree:
 
                 return right_max_node
         return get_sub_max(self.root).data
+
+    def tree_max_v2(self):
+        """
+            this function get the max value of the whole tree and return it
+            returns: the max value in the tree
+        """
+        bigger_node = self.root
+
+        def get_sub_max(root):
+            """
+                this function get the max value for the sub tree and return it
+                parameters:
+                    root: the root of the sub tree
+                returns: the max value of the sub tree
+            """
+            nonlocal bigger_node
+            # if the root is none, return none
+            if not root:
+                return None
+
+            # get left side value
+            left_max_node = get_sub_max(
+                root.left)
+            right_max_node = get_sub_max(
+                root.right)
+            left_value = (
+                left_max_node.data if left_max_node else None) or float('-inf')
+            right_value = (
+                right_max_node.data if right_max_node else None) or float('-inf')
+
+            # return max value
+            if root.data >= left_value and root.data >= right_value:
+                bigger_node = root
+            elif left_value >= root.data and left_value >= right_value:
+                bigger_node = left_max_node
+            else:
+                bigger_node = right_max_node
+            return bigger_node
+        get_sub_max(self.root)
+        return bigger_node.data
 
     def print_inorder(self):
         """
@@ -136,6 +177,7 @@ if __name__ == "__main__":
     tree.add([13, 7], ["R", "L"])
 
     print(tree.tree_max())
+    print(tree.tree_max_v2())
 
     tree2 = BinaryTree(1)
     tree2.add([2, 4, 7], ["L", "L", "L",])
@@ -143,3 +185,4 @@ if __name__ == "__main__":
     tree2.add([2, 5, 9], ["L", "R", "R",])
     tree2.add([3, 6, 10], ["R", "R", "L",])
     print(tree2.tree_max())
+    print(tree2.tree_max_v2())
