@@ -50,35 +50,27 @@ class BinaryTree:
         return current.right
 
     # version 1 is the best when i dont need to share bigger in a shared variables
+    def _get_sub_max(self, root):
+        """
+            this function get the max value for the sub tree and return it
+            parameters:
+                root: the root of the sub tree
+            returns: the max value of the sub tree
+        """
+        # if the root is none, return none
+        if not root:
+            return float('-inf')
+
+        # return max value
+        return max(root.data, self._get_sub_max(root.left), self._get_sub_max(root.right))
+
     def tree_max(self):
         """
             this function get the max value of the whole tree and return it
             returns: the max value in the tree
         """
-        def get_sub_max(root):
-            """
-                this function get the max value for the sub tree and return it
-                parameters:
-                    root: the root of the sub tree
-                returns: the max value of the sub tree
-            """
-            # if the root is none, return none
-            if not root:
-                return float('-inf')
 
-            # get left side value
-            left_value = get_sub_max(root.left)
-            right_value = get_sub_max(root.right)
-
-            # return max value
-            if root.data >= left_value and root.data >= right_value:
-                return root.data
-            elif left_value >= root.data and left_value >= right_value:
-                return left_value
-            else:
-
-                return right_value
-        return get_sub_max(self.root)
+        return self._get_sub_max(self.root)
 
     def tree_max_v2(self):
         """
@@ -180,3 +172,10 @@ if __name__ == "__main__":
     tree2.add([3, 6, 10], ["R", "R", "L",])
     print(tree2.tree_max())
     print(tree2.tree_max_v2())
+
+    tree3 = BinaryTree(1)
+    tree3.add([2, 4, 7], ['L', 'L', 'L'])
+    tree3.add([2, 4, 8], ['L', 'L', 'R'])
+    tree3.add([2, 5, 9], ['L', 'R', 'R'])
+    tree3.add([3, 6, 15], ['R', 'R', 'L'])
+    print(tree3.tree_max())
