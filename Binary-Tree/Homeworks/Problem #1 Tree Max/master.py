@@ -64,27 +64,21 @@ class BinaryTree:
             """
             # if the root is none, return none
             if not root:
-                return None
+                return float('-inf')
 
             # get left side value
-            left_max_node = get_sub_max(
-                root.left)
-            right_max_node = get_sub_max(
-                root.right)
-            left_value = (
-                left_max_node.data if left_max_node else None) or float('-inf')
-            right_value = (
-                right_max_node.data if right_max_node else None) or float('-inf')
+            left_value = get_sub_max(root.left)
+            right_value = get_sub_max(root.right)
 
             # return max value
             if root.data >= left_value and root.data >= right_value:
-                return root
+                return root.data
             elif left_value >= root.data and left_value >= right_value:
-                return left_max_node
+                return left_value
             else:
 
-                return right_max_node
-        return get_sub_max(self.root).data
+                return right_value
+        return get_sub_max(self.root)
 
     def tree_max_v2(self):
         """
