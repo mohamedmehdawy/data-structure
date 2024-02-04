@@ -1,0 +1,19 @@
+
+
+maxDepth(root: Optional[TreeNode]) -> int: maxDepth function get the meaximum depth from the root to the longest path down to the farthest leaf node
+
+#
+if root is none, return 0
+create function arriveToMaxDepth(current, prevDepth): this function arrive to max depth and return max of left and right
+- current: current node
+- prevDepth: the prev depth of the current node
+##
+if the current is none, return prevDepth
+create current_depth = prevDepth+1
+left_max = call arriveToMaxDepth(current.left, current_depth)
+right_max = call arriveToMaxDepth(current.right, current_depth)
+note: if arrive to here this mean the current node dont have left and right
+return max(left_max, right_max)
+##
+return arriveToMaxDepth(root, 1) => return the max path
+#
