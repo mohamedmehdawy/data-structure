@@ -15,5 +15,5 @@ right_max = call arriveToMaxDepth(current.right, current_depth)
 note: if arrive to here this mean the current node dont have left and right
 return max(left_max, right_max)
 ##
-return arriveToMaxDepth(root, 1) => return the max path
+return arriveToMaxDepth(root, 0) => return the max path
 #
