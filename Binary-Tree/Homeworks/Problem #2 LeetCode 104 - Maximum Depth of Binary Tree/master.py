@@ -6,6 +6,7 @@
 #         self.right = right
 
 
+# v1
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         # if not elements return 0
@@ -18,7 +19,7 @@ class Solution:
                 parameters:
                     current: the current node will start to get the max of left and right
                     prev_depth: the previous depth of the current node
-                return: 
+                return:
                         the max depth of left and right
             """
             # stop case
@@ -37,3 +38,13 @@ class Solution:
             return max(left_max, right_max)
 
         return arriveToMaxDepth(root, 0)
+
+
+# v2
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        # if not elements return 0
+        if not root:
+            return 0
+
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))

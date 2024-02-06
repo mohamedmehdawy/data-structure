@@ -17,3 +17,13 @@ return max(left_max, right_max)
 ##
 return arriveToMaxDepth(root, 0) => return the max path
 #
+
+!!!!!
+v2
+!!!!!
+#
+if root is none, return 0
+
+return the max of maxDepth(left) and maxDepth(right) + 1
+=> when arrive to last this will return 0, and after return to the top each step will increase by 1 and return the max of them
+#
