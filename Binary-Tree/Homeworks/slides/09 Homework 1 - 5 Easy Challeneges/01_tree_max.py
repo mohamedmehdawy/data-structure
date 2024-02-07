@@ -28,8 +28,8 @@ class BinaryTree:
                     assert current.right.data == values_lst[i]
                 current = current.right
 
-
     ##################################
+
     def _tree_max(self, current):
         if not current:
             return float('-inf')
@@ -48,3 +48,4 @@ if __name__ == '__main__':
     tree.add([3, 6, 15], ['R', 'R', 'L'])
 
     assert tree.tree_max() == 15
+    print(tree.tree_max())
