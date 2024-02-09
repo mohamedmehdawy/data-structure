@@ -20,7 +20,7 @@ class Solution:
         # if the current node has left node, and the left node is leaf add it so the sum_sides
 
         if root.left and not root.left.left and not root.left.right:
-            return sum_sides + root.left.value
+            return sum_sides + root.left.val
 
         # return the sum
         return sum_sides
