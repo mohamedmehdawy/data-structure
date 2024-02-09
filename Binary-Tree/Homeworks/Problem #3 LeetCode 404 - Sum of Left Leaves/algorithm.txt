@@ -1,0 +1,9 @@
+sumOfLeftLeaves(root) => this function return the sum of all left sumOfLeftLeaves
+#
+if the root is none, return 0
+left = call the function for root.left
+right = call the function for root.right
+sum_sides = left + right
+if the root has left and the left not have left and right (leaf), return the sum_sides + the root.left value
+return the sum side
+#
