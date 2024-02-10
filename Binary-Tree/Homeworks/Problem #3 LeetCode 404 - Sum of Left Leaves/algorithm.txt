@@ -7,3 +7,15 @@ sum_sides = left + right
 if the root has left and the left not have left and right (leaf), return the sum_sides + the root.left value
 return the sum side
 #
+$$$$$$$$$$$$
+v2
+$$$$$$$$$$$$
+sumOfLeftLeaves(root, is_left=False) => this function return the sum of all left sumOfLeftLeaves
+#
+if the root is none, return 0
+if the root not have left and right(is leaf):
+##
+if  is_left = True, return the root value, else return 0
+##
+return call (sumOfLeftLeaves) for left with is_left=true + call (sumOfLeftLeaves) for right with is_left=False
+#

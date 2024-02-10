@@ -4,7 +4,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:
+class SolutionV1:
     def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
         # if not root return 0
         if not root:
@@ -20,7 +20,22 @@ class Solution:
         # if the current node has left node, and the left node is leaf add it so the sum_sides
 
         if root.left and not root.left.left and not root.left.right:
-            return sum_sides + root.left.val
+            return root.left.val
 
         # return the sum
         return sum_sides
+
+
+class Solution:
+    def sumOfLeftLeaves(self, root: Optional[TreeNode], is_left=False) -> int:
+        # if not root return 0
+        if not root:
+            return 0
+
+        # if the root is leaf
+        if not root.left and not root.right:
+            # if is left leaf return the root value, else return 0
+            return root.val if is_left else 0
+
+        # return the sum of left and right
+        return self.sumOfLeftLeaves(root.left, is_left=True) + self.sumOfLeftLeaves(root.right)
