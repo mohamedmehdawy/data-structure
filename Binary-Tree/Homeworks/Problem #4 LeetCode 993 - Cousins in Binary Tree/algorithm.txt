@@ -1,0 +1,19 @@
+Cousins in Binary Tree => this problem is about check of two nodes x and y are Cousins or not
+isCousins(self, root: Optional[TreeNode], x: int, y: int):
+#
+create getDepthWithParent(parent, target): this function get the depth of the target and each time pass the parent with it
+##
+if not parent.left and not parent.right: return (none, 0)
+if left of parent is = target, or the right of parent is = target:
+return current parent, 1
+search_in_left = getDepthWithParent(parent.left, target)
+if the search in left have return (by parent is set),increase the depth by 1 and return it 
+search_in_right = getDepthWithParent(parent.right, target)
+increase the depth by 1 and return search_in_right 
+##
+x_analysis = call getDepthWithParent for x and start from the root
+y_analysis = call getDepthWithParent for y and start from the root
+
+if x_analysis and y_return have the same depth and the parents are different return true
+else return false
+#
