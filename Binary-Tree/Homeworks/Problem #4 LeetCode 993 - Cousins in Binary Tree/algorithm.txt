@@ -3,7 +3,7 @@ isCousins(self, root: Optional[TreeNode], x: int, y: int):
 #
 create getDepthWithParent(parent, target): this function get the depth of the target and each time pass the parent with it
 ##
-if not parent.left and not parent.right: return (none, 0)
+if no parent or the partent value is target (in this case the target found in the root) or not parent.left and not parent.right: return (none, 0)
 if left of parent is = target, or the right of parent is = target:
 return current parent, 1
 search_in_left = getDepthWithParent(parent.left, target)

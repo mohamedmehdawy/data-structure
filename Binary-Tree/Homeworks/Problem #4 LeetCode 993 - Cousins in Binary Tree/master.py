@@ -15,7 +15,7 @@ class Solution:
                 returns (parent, depth)
             """
             # if no elements in the parent, return nothing
-            if not parent or not parent.left and not parent.right:
+            if not parent or parent.val == target or not parent.left and not parent.right:
                 return [None, 0]
             # check if the target is in any child of the parent
             if parent.left and parent.left.val == target or parent.right and parent.right.val == target:
