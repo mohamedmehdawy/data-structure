@@ -4,36 +4,72 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+# class Solution:
+#     def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
+#         def getDepthWithParent(parent, target):
+#             """
+#                 this function get the depth of the target and each time pass the parent with it
+#                 parameters:
+#                     parent: the parent of target node
+#                     target: the target want to get depth of if
+#                 returns (parent, depth)
+#             """
+#             # if no elements in the parent, return nothing
+#             if not parent or parent.val == target or not parent.left and not parent.right:
+#                 return [None, 0]
+#             # check if the target is in any child of the parent
+#             if parent.left and parent.left.val == target or parent.right and parent.right.val == target:
+#                 return [parent, 1]
+
+#             # search in left
+#             search_in_left = getDepthWithParent(parent.left, target)
+
+#             if search_in_left[0]:
+#                 search_in_left[1] += 1
+#                 return search_in_left
+
+#             # search in right
+#             search_in_right = getDepthWithParent(parent.right, target)
+#             search_in_right[1] += 1
+#             return search_in_right
+
+#         x_analysis = getDepthWithParent(root, x)
+#         y_analysis = getDepthWithParent(root, y)
+
+#         return True if x_analysis[1] == y_analysis[1] and x_analysis[0] is not y_analysis[0] else False
+
 class Solution:
     def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
-        def getDepthWithParent(parent, target):
+        def getDepthWithParent(root, parent, value, depth=0):
             """
                 this function get the depth of the target and each time pass the parent with it
                 parameters:
-                    parent: the parent of target node
-                    target: the target want to get depth of if
+                    root: the current elemnet
+                    parent: the parent of the root
+                    value: the target value
+                    depth: the depth of the value
                 returns (parent, depth)
             """
-            # if no elements in the parent, return nothing
-            if not parent or parent.val == target or not parent.left and not parent.right:
-                return [None, 0]
-            # check if the target is in any child of the parent
-            if parent.left and parent.left.val == target or parent.right and parent.right.val == target:
-                return [parent, 1]
+            # if not element return none
+            if not root:
+                return None, depth
 
-            # search in left
-            search_in_left = getDepthWithParent(parent.left, target)
+            # if the value found, return current root and depth
+            if root.val == value:
+                return parent, depth
 
-            if search_in_left[0]:
-                search_in_left[1] += 1
-                return search_in_left
+            # search for left
+            left_parent, left_depth = getDepthWithParent(
+                root.left, root, value, depth+1)
 
-            # search in right
-            search_in_right = getDepthWithParent(parent.right, target)
-            search_in_right[1] += 1
-            return search_in_right
+            # if the element found in left, return it
+            if left_parent:
+                return left_parent, left_depth
 
-        x_analysis = getDepthWithParent(root, x)
-        y_analysis = getDepthWithParent(root, y)
+            # if not search for right
+            return getDepthWithParent(root.right, root, value, depth+1)
 
-        return True if x_analysis[1] == y_analysis[1] and x_analysis[0] is not y_analysis[0] else False
+        x_parent, x_depth = getDepthWithParent(root, None, x)
+        y_parent, y_depth = getDepthWithParent(root, None, y)
+
+        return x_depth == y_depth and x_parent is not y_parent

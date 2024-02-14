@@ -17,3 +17,24 @@ y_analysis = call getDepthWithParent for y and start from the root
 if x_analysis and y_return have the same depth and the parents are different return true
 else return false
 #
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+isCousinsV2(self, root: Optional[TreeNode], x: int, y: int):
+#
+create getDepthWithParent(root, parent, value, depth=0): this function get the depth of the value and each time pass the parent with it with increase the depth
+##
+if not root, none, depth
+
+if root value == value, return parent, depth
+
+init left_parent, left_depth = getDepthWithParent(root.left, root, value, depth+1)
+
+if the left_parent found (this mean we arraive to the value), return left_parent, left_depth
+
+return getDepthWithParent(root.right, root, value, depth+1)
+##
+x_parent, x_depth= call getDepthWithParent for x and start from the root and parent none
+y_parent, y_depth = call getDepthWithParent for y and start from the root and parent none
+
+if x_depgth and y_depth have the same depth and the parents are different return true
+else return false
+#
