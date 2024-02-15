@@ -1,0 +1,5 @@
+main idea:
+the tree will be perfect if the all levels is full
+so i need to:
+-- each subtree has left and right, and if left is leaf the right should be leaf
+-- left side and right side should have the same level
