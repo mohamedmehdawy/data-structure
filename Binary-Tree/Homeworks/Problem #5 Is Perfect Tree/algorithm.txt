@@ -12,6 +12,6 @@ check is perfect for left side = is_perfect(root.left, level+ 1)
 if check for left is false, return [false, level]
 check is perfect for right side = is_perfect(root.left, level+ 1)
 
-if left and right have same level, return [true, left level (left and right have same level)]
+if left and right have same level and right is true, return [true, left level (left and right have same level)]
 return [false, max of (left and right level)]
 #

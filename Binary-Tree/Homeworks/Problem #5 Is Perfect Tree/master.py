@@ -73,9 +73,29 @@ class BinaryTree:
             inorder(current.right)
         inorder(self.root)
 
-    def is_perfect(self):
+    def is_perfect(self, root, level=0):
         """
             this function check if the tree is prefect or not
             returns: the status of tree is perfect or not
         """
-        pass
+        # if the subtree is empty return true with current level
+        if not root:
+            return [True, level]
+        
+        # check for left side
+        left_side = self.is_perfect(root.left, level+1)
+        
+        # if the return of left side is false, return false with current level
+        if not left_side[0]:
+            return [False, left_side[1]]
+        
+        # check for right side
+        right_side = self.is_perfect(root.right, level+1)
+        
+        # check left and right for levels
+        if right_side[0] and left_side[1] == right_side[1]:
+            return [True, left_side[1]]
+        
+        # if arraive to this part, the sub tree is not perfect
+        return [False, max(left_side[1], right_side[1])]
+
