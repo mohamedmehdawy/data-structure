@@ -4,6 +4,7 @@ so i need to:
 -- each subtree has left and right, and if left is leaf the right should be leaf
 -- left side and right side should have the same level
 
+# v1 #
 sub_is_perfect(root, level=0): this function check if the sub tree tree is perfect or not
 ##
 if no root, return [true, level]
@@ -18,4 +19,26 @@ return [false, max of (left and right level)]
 is_perfect(): this function check if the tree is perfect or not
 #
 return sub_is_perfect(root)[0]
+#
+
+# v2 #
+check if the tree is perfect or not insted of tree height
+_tree_height(root): this function get the hegiht of the sub tree
+#
+if the root is none, return -1
+return 1 + the max left and right
+#
+tree_height(): this function return the height of the tree
+#
+return _tree_height(root)
+#
+
+_is_perfect_v2(root, height): this function check if the sub tree is perfect or not insted of the height
+#
+if the root doesnt have left and right the height must be 0 if this is pefect, return tree is the height is 0
+
+if left is found and right not, return false
+if right is found and left not, return false
+
+return check of left with height -1 and the right
 #

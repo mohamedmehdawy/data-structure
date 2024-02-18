@@ -107,15 +107,30 @@ class BinaryTree:
             this function check if the tree is prefect or not
             returns: the status of tree is perfect or not
         """
-        return self.sub_is_perfect(self.root)
+        return self.sub_is_perfect(self.root)[0]
 
 
 if __name__ == "__main__":
     # tree
-    tree = BinaryTree(2)
-    tree.add([3, 5], ["L", "L"])
-    tree.add([3, 6], ["L", "R"])
-    tree.add([13, 8], ["R", "R"])
-    tree.add([13, 7], ["R", "L"])
+    tree = BinaryTree(1)
+
+    assert tree.is_perfect()
+
+    tree.add([2], ['L'])
+    assert not tree.is_perfect()
+
+    tree.add([3], ['R'])
+    assert tree.is_perfect()
+
+    tree.add([2, 4, 7], ['L', 'L', 'L'])
+    tree.add([2, 4, 8], ['L', 'L', 'R'])
+    tree.add([2, 5, 9], ['L', 'R', 'R'])
+    tree.add([3, 6, 15], ['R', 'R', 'L'])
+    assert not tree.is_perfect()
+
+    tree.add([2, 5, 13], ['L', 'R', 'L'])
+    tree.add([3, 6, 12], ['R', 'R', 'R'])
+    tree.add([3, 14, 15], ['R', 'L', 'L'])
+    tree.add([3, 14, 16], ['R', 'L', 'R'])
+    assert tree.is_perfect()
     
-    print(tree.is_perfect())
