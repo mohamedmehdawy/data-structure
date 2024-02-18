@@ -4,14 +4,18 @@ so i need to:
 -- each subtree has left and right, and if left is leaf the right should be leaf
 -- left side and right side should have the same level
 
-is_perfect(root, level=0): this function check if the tree is perfect or not
-#
+sub_is_perfect(root, level=0): this function check if the sub tree tree is perfect or not
+##
 if no root, return [true, level]
 
 check is perfect for left side = is_perfect(root.left, level+ 1)
 if check for left is false, return [false, level]
 check is perfect for right side = is_perfect(root.left, level+ 1)
 
-if left and right have same level and right is true, return [true, left level (left and right have same level)]
+if left and right have same level and right is, return [true, left level (left and right have same level)]
 return [false, max of (left and right level)]
+##
+is_perfect(): this function check if the tree is perfect or not
+#
+return sub_is_perfect(root)[0]
 #
