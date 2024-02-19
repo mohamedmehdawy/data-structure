@@ -109,28 +109,79 @@ class BinaryTree:
         """
         return self.sub_is_perfect(self.root)[0]
 
-
+    def _tree_height(self, root):
+        """
+            this function return the height of the sub tree
+            parameters:
+                root: the root you will start get the height from it
+                height: the height of the subtree
+            returns: the height of the sub tree
+        """
+        # if no root, return -1
+        if not root:
+            return -1
+        
+        # return the max of left and right
+        return 1 + max(self._tree_height(root.left), self._tree_height(root.right))
+    
+    def tree_height(self):
+        """
+            this function return the height of the tree
+            returns: the height of the tree
+        """
+        return self._tree_height(self.root)
+    
+    def _is_perfect_v2(self, root, height):
+        """
+            this function return the status of the tree is perfect of not insted of the height
+            parameters:
+                root: the root of the sub tree
+                height: the height of current root
+            return: the status of the tree is perfect or not
+        """
+        # if the current root is leaf, if the height is 0, this is perfect, not this is not perfect
+        if not root.left and not root.right:
+            return height == 0
+        
+        # check if the root have one child
+        if (root.left and not root.right) or (root.right and not root.left):
+            return False
+        
+        # return the status of left and right
+        return self._is_perfect_v2(root.left, height-1) and self._is_perfect_v2(root.right, height-1)
+    def is_perfect_v2(self):
+        """
+            this function return the status of the tree is perfect of not insted of the height
+        """
+        tree_height = self.tree_height()
+        return self._is_perfect_v2(self.root, tree_height)
 if __name__ == "__main__":
     # tree
     tree = BinaryTree(1)
 
     assert tree.is_perfect()
+    assert tree.is_perfect_v2()
 
     tree.add([2], ['L'])
     assert not tree.is_perfect()
+    assert not tree.is_perfect_v2()
 
     tree.add([3], ['R'])
     assert tree.is_perfect()
+    assert tree.is_perfect_v2()
 
     tree.add([2, 4, 7], ['L', 'L', 'L'])
     tree.add([2, 4, 8], ['L', 'L', 'R'])
     tree.add([2, 5, 9], ['L', 'R', 'R'])
     tree.add([3, 6, 15], ['R', 'R', 'L'])
     assert not tree.is_perfect()
+    assert not tree.is_perfect_v2()
 
     tree.add([2, 5, 13], ['L', 'R', 'L'])
     tree.add([3, 6, 12], ['R', 'R', 'R'])
     tree.add([3, 14, 15], ['R', 'L', 'L'])
     tree.add([3, 14, 16], ['R', 'L', 'R'])
     assert tree.is_perfect()
+    assert tree.is_perfect_v2()
+    
     

@@ -42,3 +42,8 @@ if right is found and left not, return false
 
 return check of left with height -1 and the right
 #
+is_perfect_v2(): this function return the status of the tree is perfect or not
+#
+get the hegiht of the tree
+return _is_perfect_v2(tree root, tree height)
+#
