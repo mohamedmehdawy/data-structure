@@ -47,3 +47,19 @@ is_perfect_v2(): this function return the status of the tree is perfect or not
 get the hegiht of the tree
 return _is_perfect_v2(tree root, tree height)
 #
+
+# v3 #
+is_perfect_v3(): this function check if the tree is perfect or not and return the status of it
+#
+init new_root = root, and index = -1, and stack = []
+loop until the index is greater than or equal the length:
+##
+if the new_root != -1(this mean we are not in the root): set new_root with stack[index]
+if stack length % 2 != 0: return false (in this case this is not perfect because the stack should have 2 peace for each root)
+if the left of the new root is not empty: append to the stack
+if the right of new root is not empty: append to the stack
+increase index by 1
+##
+the power of 2 of the mid of element of the stack (stack / 2) -1 should be = the length, if this true reutrn true
+else return false
+#

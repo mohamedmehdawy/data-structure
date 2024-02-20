@@ -8,6 +8,8 @@ class Node:
 class BinaryTree:
     def __init__(self, root) -> None:
         self.root = Node(root)
+        # length will start with 1, because we already add the root node
+        self.length = 1
 
     def add(self, nodes, directions):
         """
@@ -18,13 +20,11 @@ class BinaryTree:
         """
         # init current
         current = self.root
-
         # loop insted of the index
         for index in range(len(nodes)):
             current = self.add_node(current, nodes[index], directions[index])
 
-    @staticmethod
-    def add_node(current, value, direction):
+    def add_node(self, current, value, direction):
         """
             this function link the node insted of his direction
             parameters:
@@ -32,13 +32,18 @@ class BinaryTree:
                 value: the value of current or new node
                 direction: the direction of the linked (left or right)
         """
+        # increase the length
         # if the direction is left
         if direction == "L":
             if not current.left:
                 # create new node and link with current.left
                 current.left = Node(value)
+                self.length += 1
+
             else:
                 assert current.left.data == value
+                self.length += 1
+
             return current.left
 
         # if the direction is right
@@ -183,5 +188,6 @@ if __name__ == "__main__":
     tree.add([3, 14, 16], ['R', 'L', 'R'])
     assert tree.is_perfect()
     assert tree.is_perfect_v2()
+    print(tree.length)
     
     
