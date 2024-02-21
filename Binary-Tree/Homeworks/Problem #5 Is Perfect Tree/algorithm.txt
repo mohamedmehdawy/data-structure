@@ -51,15 +51,27 @@ return _is_perfect_v2(tree root, tree height)
 # v3 #
 is_perfect_v3(): this function check if the tree is perfect or not and return the status of it
 #
-init new_root = root, and index = -1, and stack = []
-loop until the index is greater than or equal the length:
+if the length is less than or equal 1 (empty or just have 1 node): return false
+init new_root = root, and index = 0, and stack = []
+
+handel first case if new_root has left and right: append the 2 nodes to stack,
+else return fasle
+loop until the index is greater than or equal the length - 2 (-2 because the root node and we start from 0):
 ##
-if the new_root != -1(this mean we are not in the root): set new_root with stack[index]
+set new_root with stack[index]
 if stack length % 2 != 0: return false (in this case this is not perfect because the stack should have 2 peace for each root)
-if the left of the new root is not empty: append to the stack
-if the right of new root is not empty: append to the stack
+left_is_added = fasle
+if the left of the new root is not empty: append to the stack, and set left_is_added = True
+if the right of new root is not empty : append to the stack
+elif left is found (left is found the right not): return false
+increase index by 1
+set new_root = the next one (this will be the right)
+if new_root is not found, return false
+check if we dont add any thing from the left and we have node in the right return false
+if the left of the new root is not empty and left_is_added: append to the stack
+if the right of new root is not empty and left_is_added: append to the stack
 increase index by 1
 ##
-the power of 2 of the mid of element of the stack (stack / 2) -1 should be = the length, if this true reutrn true
-else return false
+
+if we end the loop this mean the tree is perfect so return true
 #

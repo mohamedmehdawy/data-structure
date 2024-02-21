@@ -160,20 +160,87 @@ class BinaryTree:
         """
         tree_height = self.tree_height()
         return self._is_perfect_v2(self.root, tree_height)
+    
+    def is_perfect_v3(self):
+        """
+            this function check if the tree is perfect or not and return the status of it
+            returns: the status of tree is perfect or not
+        """
+        # if the tree is empty or have 1 element (less than or equal 1), return false
+        if self.length <= 1:
+            return True
+        # init main varaibles
+        new_root = self.root
+        index = 0
+        stack = []
+        
+        # handle first case for the big root
+        if new_root.left and new_root.right:
+            stack.append(new_root.left)
+            stack.append(new_root.right)
+        else:
+            return False
+        while index < self.length:
+            # set new root
+            new_root = stack[index]
+            
+            # if the stack is not % 2 = 0, return false, this mean the tree not perfect
+            if len(stack) % 2 != 0:
+                return False
+            
+            # init left is added, to trigger if we add any node current root
+            left_is_added = True
+            # append left and right to the stack
+            if new_root.left:
+                left_is_added = True
+                stack.append(new_root.left)
+            
+            if new_root.right:
+                stack.append(new_root.right)
+                
+            elif new_root.left:
+                return False
+            
+            # increase the index 
+            index += 1
+            
+            
+            # set new root for right node
+            new_root = new_root = stack[index]
+            
+            # if no root return false
+            if not new_root:
+                return False
+
+            if (new_root.left or new_root.right) and not left_is_added:
+                return False
+            # append left and right to the stack
+            if new_root.left:
+                stack.append(new_root.left)
+                
+            if new_root.right:
+                stack.append(new_root.right)
+                
+            # increase the index 
+            index += 1
+        return True
 if __name__ == "__main__":
     # tree
     tree = BinaryTree(1)
 
     assert tree.is_perfect()
     assert tree.is_perfect_v2()
+    assert tree.is_perfect_v3()
 
     tree.add([2], ['L'])
     assert not tree.is_perfect()
     assert not tree.is_perfect_v2()
+    assert not tree.is_perfect_v3()
 
     tree.add([3], ['R'])
     assert tree.is_perfect()
     assert tree.is_perfect_v2()
+    assert tree.is_perfect_v3()
 
     tree.add([2, 4, 7], ['L', 'L', 'L'])
     tree.add([2, 4, 8], ['L', 'L', 'R'])
@@ -181,6 +248,7 @@ if __name__ == "__main__":
     tree.add([3, 6, 15], ['R', 'R', 'L'])
     assert not tree.is_perfect()
     assert not tree.is_perfect_v2()
+    assert not tree.is_perfect_v3()
 
     tree.add([2, 5, 13], ['L', 'R', 'L'])
     tree.add([3, 6, 12], ['R', 'R', 'R'])
@@ -188,6 +256,6 @@ if __name__ == "__main__":
     tree.add([3, 14, 16], ['R', 'L', 'R'])
     assert tree.is_perfect()
     assert tree.is_perfect_v2()
-    print(tree.length)
+    assert tree.is_perfect_v3()
     
     
