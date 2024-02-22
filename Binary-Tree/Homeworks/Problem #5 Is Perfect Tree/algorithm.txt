@@ -4,6 +4,10 @@ so i need to:
 -- each subtree has left and right, and if left is leaf the right should be leaf
 -- left side and right side should have the same level
 
+first_not_perfect_check() => this function handle first check for the tree if no have any node or 1 node
+#
+return length <= 1
+#
 # v1 #
 sub_is_perfect(root, level=0): this function check if the sub tree tree is perfect or not
 ##
