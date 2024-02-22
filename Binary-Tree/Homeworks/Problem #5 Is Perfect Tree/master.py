@@ -224,6 +224,41 @@ class BinaryTree:
             # increase the index 
             index += 1
         return True
+    
+    def _tree_nodes(self, current):
+        """
+            this function return the total number of nodes
+            parameters:
+                current: the current node
+            returns: total number of tree nodes
+        """
+        # if no current return 0
+        if not current:
+            return 0
+        
+        return 1 + self._tree_nodes(current.left) + self._tree_nodes(current.right)
+    def tree_nodes(self):
+        """
+            this function return the total number of nodes
+            returns: total number of tree nodes
+        """
+        
+        return self._tree_nodes(self.root)
+    def is_perfect_v4(self):
+        """
+            this function check if the tree is perfect or not using formula way
+            returns: the tree is perfect or not
+        """
+        # get the tree height
+        tree_height = self.tree_height()
+        
+        # get tree nodes number
+        tree_total_nodes = self.tree_nodes()
+        
+        # get perfect nodes number insted of height
+        perfect_nodes_number = (2 ** (tree_height + 1)) - 1
+        
+        return perfect_nodes_number == tree_total_nodes
 if __name__ == "__main__":
     # tree
     tree = BinaryTree(1)
@@ -231,16 +266,19 @@ if __name__ == "__main__":
     assert tree.is_perfect()
     assert tree.is_perfect_v2()
     assert tree.is_perfect_v3()
+    assert tree.is_perfect_v4()
 
     tree.add([2], ['L'])
     assert not tree.is_perfect()
     assert not tree.is_perfect_v2()
     assert not tree.is_perfect_v3()
+    assert not tree.is_perfect_v4()
 
     tree.add([3], ['R'])
     assert tree.is_perfect()
     assert tree.is_perfect_v2()
     assert tree.is_perfect_v3()
+    assert tree.is_perfect_v4()
 
     tree.add([2, 4, 7], ['L', 'L', 'L'])
     tree.add([2, 4, 8], ['L', 'L', 'R'])
@@ -249,6 +287,7 @@ if __name__ == "__main__":
     assert not tree.is_perfect()
     assert not tree.is_perfect_v2()
     assert not tree.is_perfect_v3()
+    assert not tree.is_perfect_v4()
 
     tree.add([2, 5, 13], ['L', 'R', 'L'])
     tree.add([3, 6, 12], ['R', 'R', 'R'])
@@ -257,5 +296,6 @@ if __name__ == "__main__":
     assert tree.is_perfect()
     assert tree.is_perfect_v2()
     assert tree.is_perfect_v3()
+    assert tree.is_perfect_v4()
     
     

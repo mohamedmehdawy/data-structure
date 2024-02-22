@@ -75,3 +75,28 @@ increase index by 1
 
 if we end the loop this mean the tree is perfect so return true
 #
+
+# v3 #
+_total_nodes(current) => this function return the total nodes in the tree
+#
+if the current not found, return 0
+
+return 1 + _total_nodes(current.left) + _total_nodes(current.right)
+#
+total_nodes() => this function return the total nodes in the tree
+#
+
+return _total_nodes(root)
+#
+is_perfect_v4() => this function check if the tree is perfect or not using forumala way
+$$
+the idea is each level to be perfect should have 2 ^ level,
+so we will calc the total number of the nodes insted of the height and check if 
+all nodes we have = the total from the height
+$$
+#
+tree_height = _tree_height()
+tree_total_nodes = _total_nodes()
+perfect_nodes_number = (2 ^ h+1) - 1
+return perfect_nodes_number == perfect_nodes_number
+#
