@@ -1,0 +1,1 @@
+try to simulate call stack of functions like recursion but using iterative way with stack
