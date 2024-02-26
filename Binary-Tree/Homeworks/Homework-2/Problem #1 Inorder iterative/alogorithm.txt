@@ -8,13 +8,15 @@ create stack and init it with root and show number will be 0
 
 while (loop if stack is not empty):
 ##
-current_node = will be the last one in the stack
+current_node_data = will be the last one in the stack
 
+if current_node_data is None, pop from the stack and continue
 if the current node not have left and right: print it and remove from the stack (using pop) and go to the next iteration
 increase show by 1
 
 if the current_node[1] is 1: append the left of current node to the stack
-if the current_node[1] is 2: append the right of current node to the stack 
-else: print the current node and remove from the stack (using pop)
+if the current_node[1] is 2: print firs the current node (because we need to print (left - current - right)) append the right of current node to the stack 
+else: remove from the stack (using pop)
 ##
+after end print new line
 #
