@@ -1,1 +1,20 @@
 try to simulate call stack of functions like recursion but using iterative way with stack
+
+inorder_iterative() => this function print the tree inorder using iterative way
+main idea if i show the node just 1 this mean i should call the left, and if show is 2 mean i should call the right
+and if show is 3 this mean i handle left and right and should remove current node from the stack
+#
+create stack and init it with root and show number will be 0
+
+while (loop if stack is not empty):
+##
+current_node = will be the last one in the stack
+
+if the current node not have left and right: print it and remove from the stack (using pop) and go to the next iteration
+increase show by 1
+
+if the current_node[1] is 1: append the left of current node to the stack
+if the current_node[1] is 2: append the right of current node to the stack 
+else: print the current node and remove from the stack (using pop)
+##
+#
