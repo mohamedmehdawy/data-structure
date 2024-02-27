@@ -20,3 +20,26 @@ else: remove from the stack (using pop)
 ##
 after end print new line
 #
+
+inorder_iterative_v2 () => this function print the tree inorder using iterative way
+main idea if we arraive to the node second time this mean this is completed and need to add it to the result
+[node, is_completed]
+#
+init the stack = []
+init result = []
+append root to the stack with false = stack.append([root, false])
+
+loop untile the stack will be embty
+##
+get current_node, is_completed = last element in the stack
+remove last element in the stack
+
+if current node is completed, append it to the result
+else:
+-- if current node have right, append it to the stack with false
+-- append current node to the stack with true
+-- if current node have left, append it to the stack with false 
+##
+
+return result
+#
