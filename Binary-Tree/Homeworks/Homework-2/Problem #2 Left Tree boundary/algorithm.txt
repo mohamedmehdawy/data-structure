@@ -1,0 +1,5 @@
+traverse_left_boundry
+$$
+main idea need to know the height the left of the main root, and try to arraive to the node = this height,
+when i arraive to it, add this node to the result and return true, to make the line untile arraive to the main root
+$$
