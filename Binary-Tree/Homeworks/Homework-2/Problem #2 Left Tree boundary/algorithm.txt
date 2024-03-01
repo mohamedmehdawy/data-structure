@@ -1,16 +1,16 @@
-longest_line(root, height) => this function return the longest line list starts from root
+_longest_line(root, height) => this function return the longest line list starts from root
 #
 if no root return none, false
 if not root.left and not root.right: if the height = 0, return [root], true
 left_data, left_status = call longest_line for the left and will return with data and status and pass height -1
-right_data, right_status = call longest_line for the right and will return with data and status and pass height -1
 if left_status is true, append current node to the left data and return it with true
+right_data, right_status = call longest_line for the right and will return with data and status and pass height -1
 if right_status is true, append current node to the right data and return it with true
 
-if arraive to here, return node, false
+if arraive to here, return none, false
 #
 
-traverse_left_boundry
+traverse_left_boundry () => this function return the longest line in the left of root
 $$
 main idea need to know the height the left of the main root, and try to arraive to the node = this height,
 when i arraive to it, add this node to the result and return true, to make the line untile arraive to the main root
@@ -18,5 +18,7 @@ $$
 
 #
 get height of tree = the function return the height of the node
-return longest_line(left of the root, with height - 1 (because we will start from the left of root not the current root))
+get longest_line = longest_line(left of the root, with height - 1 (because we will start from the left of root not the current root))
+append main root to longest_line
+return longest_line
 #
