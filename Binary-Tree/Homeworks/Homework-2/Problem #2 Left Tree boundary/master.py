@@ -3,7 +3,8 @@ class Node:
         self.data = data
         self.left = left
         self.right = right
-
+    def __repr__(self) -> str:
+        return str(self.data)
 
 class BinaryTree:
     def __init__(self, root) -> None:
@@ -42,7 +43,6 @@ class BinaryTree:
 
             else:
                 assert current.left.data == value
-                self.length += 1
 
             return current.left
 
@@ -142,10 +142,10 @@ class BinaryTree:
         # return true with the starts list
         
         if not root.left and not root.right:
-            return [root], True if height == 0 else None, False
+            # use () to return data with status in one piece
+            return ([root], True) if height == 0 else (None, False)
 
         # get left data and his status
-        print(self._longest_line(root.left, height-1))
         left_data, left_status = self._longest_line(root.left, height-1)
         
         # check if the left has the longest line
@@ -233,7 +233,7 @@ if __name__ == "__main__":
     # tree
     tree = BinaryTree(1)
     tree.add([2, 4, 7], ["L", "L", "L",])
-    tree.add([2, 4, 8], ["L", "L", "R",])
+    tree.add([2, 4, 8, 20], ["L", "L", "R", "R"])
     tree.add([2, 5, 9], ["L", "R", "R",])
     tree.add([3, 6, 10], ["R", "R", "L",])
 
