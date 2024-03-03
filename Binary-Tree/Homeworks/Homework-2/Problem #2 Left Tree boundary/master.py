@@ -177,6 +177,45 @@ class BinaryTree:
         longest_line.append(self.root)
         
         return longest_line
+    
+    def _traverse_left_boundry(self, current):
+        """
+            this function walk until arraive to most left node boundry
+            parameters:
+                current: the current node you wall arraive to it
+            returns: the list will update with the line of left boundry
+        """
+        # init result
+        result = None
+        
+        # if no element return empty list
+        if not current:
+            return []
+        
+        # if the current have left
+        # walk in this line
+        if current.left:
+            result = self._traverse_left_boundry(current.left)
+        
+        # if no left walk in right line
+        else:
+            result = self._traverse_left_boundry(current.right)
+        
+        # append current to the result
+        result.append(current)
+        
+        # return result
+        return result
+    
+    def traverse_left_boundry(self):
+        """
+            this function return the left boundry and starts from the root
+        """
+        # get the result and start from the root
+        result = self._traverse_left_boundry(self.root)
+        
+        # reverse the result list
+        return result[::-1]
 def print_tree(root):
     """
         this function the binary tree recursively
@@ -239,3 +278,4 @@ if __name__ == "__main__":
 
     # tree.print_inorder()
     print(tree.longest_left_line())
+    print(tree.traverse_left_boundry())
