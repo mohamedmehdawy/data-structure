@@ -10,7 +10,7 @@ if right_status is true, append current node to the right data and return it wit
 if arraive to here, return none, false
 #
 
-traverse_left_boundry () => this function return the longest line in the left of root
+longest_left_line () => this function return the longest line in the left of root
 $$
 main idea need to know the height the left of the main root, and try to arraive to the node = this height,
 when i arraive to it, add this node to the result and return true, to make the line untile arraive to the main root
@@ -21,4 +21,22 @@ get height of tree = the function return the height of the node
 get longest_line = longest_line(left of the root, with height - 1 (because we will start from the left of root not the current root))
 append main root to longest_line
 return longest_line
+
+--------------------------------------------------------------
+the main idea of traverse left boundry you walk in left if not found coninue walk in right if found
+
+_traverse_left_boundry(current) => this function walk until arraive to most left node boundry
+current: the current node you wall arraive to it
+#
+init result with None
+if no current, return empty list, here we will start and back to fill our left boundry
+if the left of current is found, the result = call the function _traverse_left_boundry to the left
+else the result = call the function _traverse_left_boundry to the right
+append current to the result
+return result
+#
+traverse_left_boundry() => this function return the left boundry and starts from the root
+#
+result = _traverse_left_boundry(root)
+return the reverse of the result
 #

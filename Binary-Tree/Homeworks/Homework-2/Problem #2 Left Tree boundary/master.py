@@ -161,7 +161,7 @@ class BinaryTree:
             right_data.append(root)
             return right_data, True
         return None, False
-    def traverse_left_boundry(self):
+    def longest_left_line(self):
         """
             this function return the longest line in the left of root
             returns:
@@ -238,4 +238,4 @@ if __name__ == "__main__":
     tree.add([3, 6, 10], ["R", "R", "L",])
 
     # tree.print_inorder()
-    print(tree.traverse_left_boundry())
+    print(tree.longest_left_line())
