@@ -25,3 +25,9 @@ class Solution:
             this function return the diameter of a binary tree
             returns: the length of the longest path between any two nodes in a tree
         """
+        # get left and right height and increase it by 1
+        left_height = self._tree_height(root.left) + 1
+        right_height = self._tree_height(root.right) + 1
+        
+        # return the sum of each height
+        return left_height + right_height
