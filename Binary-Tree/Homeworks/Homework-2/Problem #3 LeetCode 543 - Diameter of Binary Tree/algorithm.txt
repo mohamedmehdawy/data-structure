@@ -1,12 +1,21 @@
 Diameter of Binary Tree
 $
 the main idea is get the longest node in left and right and calc the length between them
+i need to get the longest for each root node and return the max path
 $
 _tree_height(root) => this function return the height of the tree stated from the target node
-diameterOfBinaryTree() => this function return the diameter of a binary tree
+_diameterOfBinaryTree(root) => this function return the diameter of a binary tree
 #
+if not root, return -1
 'get left and right height and increase each 1 by 1, because we start from the children not from the root'
 get left height left_height = _tree_height(left of root) + 1 
 get right height right_height = _tree_height(right of root) + 1 
 return the sum of left and right height
+#
+diameterOfBinaryTree(root) => 
+#
+if no root, return none
+get left node = diameterOfBinaryTree(left of root)
+get right node =  diameterOfBinaryTree(right of root)
+return the max of diameter of left and right and root (in this order)
 #
