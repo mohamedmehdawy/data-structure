@@ -19,15 +19,34 @@ class Solution:
         
         # return the max of left and right
         return 1 + max(self._tree_height(root.left), self._tree_height(root.right))
-    
-    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+    def _diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         """
             this function return the diameter of a binary tree
             returns: the length of the longest path between any two nodes in a tree
         """
+        # if no root, return -1
+        if not root:
+            return -1
+        
         # get left and right height and increase it by 1
         left_height = self._tree_height(root.left) + 1
         right_height = self._tree_height(root.right) + 1
         
         # return the sum of each height
         return left_height + right_height
+    
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        """
+            this function return the diameter of a binary tree
+            returns: the length of the longest path between any two nodes in a tree
+        """
+        # if no root, return none
+        if not root:
+            return None
+        
+        # get last left and right node
+        left_node = self.diameterOfBinaryTree(root.left)
+        right_node = self.diameterOfBinaryTree(root.right)
+        
+        
+        return max(left_node, right_node, self._diameterOfBinaryTree(root))

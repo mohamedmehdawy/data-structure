@@ -6,7 +6,7 @@ $
 _tree_height(root) => this function return the height of the tree stated from the target node
 _diameterOfBinaryTree(root) => this function return the diameter of a binary tree
 #
-if not root, return -1
+if not root, return None
 'get left and right height and increase each 1 by 1, because we start from the children not from the root'
 get left height left_height = _tree_height(left of root) + 1 
 get right height right_height = _tree_height(right of root) + 1 
@@ -15,6 +15,7 @@ return the sum of left and right height
 diameterOfBinaryTree(root) => 
 #
 if no root, return none
+'this to walk in the last node and work in reverse'
 get left node = diameterOfBinaryTree(left of root)
 get right node =  diameterOfBinaryTree(right of root)
 return the max of diameter of left and right and root (in this order)
