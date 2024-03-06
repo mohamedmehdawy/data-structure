@@ -42,7 +42,7 @@ class Solution:
         """
         # if no root, return none
         if not root:
-            return None
+            return -1
         
         # get last left and right node
         left_node = self.diameterOfBinaryTree(root.left)
