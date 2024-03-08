@@ -25,12 +25,12 @@ return the max of left node and right and _diameterOfBinaryTree of root root (in
 #
 v2
 #
-_long_path(root): => this function return the long path for the tree and calc the diameter
+_long_path(current): => this function return the long path for the tree and calc the diameter
 #
-if no root, return none
+if no current, return none
 
-get left height = _long_path(left of root)
-get right height = _long_path(right of root)
+get left height = _long_path(left of current)
+get right height = _long_path(right of current)
 
 set diameter = the max of diameter and left height + right height
 
