@@ -1,0 +1,22 @@
+check_operations(operator) => this function check if the operator is operator or not
+#
+if the operator in operators list return true
+else return false
+#
+$$$$$$$$$$$
+build_expression_tree(expression) => this function take the postfix expression and build a tree insted of insted
+#
+init last_root with none
+loop throw the expression but in reverse way and get the index:
+#
+if no root, add current element  and set last_root and continue
+if last root dont have right: add current element to right
+else: add current element to left
+
+if current is operator:
+--
+set last_root = current element
+--
+-
+#
+#
