@@ -10,7 +10,8 @@ init last_root with none
 loop throw the expression but in reverse way and get the index:
 #
 init current_element
-if no root, set root and create current element  and set last_root and continue
+increae the length
+if no root, set root and create current element  and set last_root and continue and increase the length
 if last root dont have right: add current element to right
 else: add current element to left
 

@@ -7,13 +7,18 @@ class Node:
 
 class BinaryTree:
     def __init__(self, expression) -> None:
+        # init root
         self.root = None
+        
         # length will start with 1, because we already add the root node
         self.length = 1
         
         # operators
         self.operators = ["*", "/", "+", "-"]
 
+        # create tree insted of expression
+        self.build_expression_tree(expression)
+        
     def is_operator(self, char):
         """
             this function check if the operator is operator or not
@@ -38,9 +43,9 @@ class BinaryTree:
         
         # loop throw the exporession in reverse way
         for index in range(len(expression)-1, -1, -1):
-            # init current element
+            # init current element and increase the length
             current_element = Node(expression[index])
-            
+            self.length += 1
             # if no root, set root and last root
             if not self.root:
                 self.root = current_element
@@ -171,3 +176,8 @@ class BinaryTree:
         
         return self._tree_nodes(self.root)
     
+
+if __name__ == "__main__":
+    tree = BinaryTree("23+4*")
+    
+    tree.print_inorder()
