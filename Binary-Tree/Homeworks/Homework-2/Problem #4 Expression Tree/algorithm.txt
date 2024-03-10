@@ -1,15 +1,16 @@
-check_operations(operator) => this function check if the operator is operator or not
+is_operator(char) => this function check if the operator is operator or not
 #
-if the operator in operators list return true
+if the char in operators list return true
 else return false
 #
 $$$$$$$$$$$
-build_expression_tree(expression) => this function take the postfix expression and build a tree insted of insted
+build_expression_tree(expression) => this function take the postfix expression and build a tree insted of it
 #
 init last_root with none
 loop throw the expression but in reverse way and get the index:
 #
-if no root, add current element  and set last_root and continue
+init current_element
+if no root, set root and create current element  and set last_root and continue
 if last root dont have right: add current element to right
 else: add current element to left
 

@@ -6,11 +6,56 @@ class Node:
 
 
 class BinaryTree:
-    def __init__(self, root) -> None:
-        self.root = Node(root)
+    def __init__(self, expression) -> None:
+        self.root = None
         # length will start with 1, because we already add the root node
         self.length = 1
+        
+        # operators
+        self.operators = ["*", "/", "+", "-"]
 
+    def is_operator(self, char):
+        """
+            this function check if the operator is operator or not
+            parameters:
+                char: the character will be check
+            returns: status if the operator is operator or not
+        """
+        # if the char in operators return true
+        if char in self.operators:
+            return True
+        
+        # if not operator, return false
+        return False
+    def build_expression_tree(self, expression):
+        """
+            this function take the postfix expression and build a tree insted of it
+            parameters:
+                expression: the expression the tree will be build insted of it
+        """
+        # init last root
+        last_root = None
+        
+        # loop throw the exporession in reverse way
+        for index in range(len(expression)-1, -1, -1):
+            # init current element
+            current_element = Node(expression[index])
+            
+            # if no root, set root and last root
+            if not self.root:
+                self.root = current_element
+                last_root = self.root
+                continue
+            
+            # if last root dont have right, add current element to right, else add in left
+            if not last_root.right:
+                last_root.right = current_element
+            else:
+                last_root.left = current_element
+            
+            # if current is operator, set last root
+            if self.is_operator(current_element.data):
+                last_root = current_element
     def add(self, nodes, directions):
         """
             this function add nodes to the binary insted of his directions
