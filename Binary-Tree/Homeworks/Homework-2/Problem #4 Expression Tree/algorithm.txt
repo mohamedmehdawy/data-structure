@@ -22,3 +22,20 @@ set last_root = current element
 -
 #
 #
+build_expression_tree_v2(expression) => this function take the postfix expression and build a tree insted of it
+#
+init nodes_stack = []
+for each char in expression:
+init node, the value of it = char
+-
+if char is is_operator:
+--
+right of node = last elelemnt in nodes_stack
+left of node = the previous of the last element in the nodes_stack
+pop stack 2 times
+--
+append current node to the nodes stack
+-
+set root = the last element in the stack
+
+#
