@@ -17,7 +17,7 @@ class BinaryTree:
         self.operators = ["*", "/", "+", "-"]
 
         # create tree insted of expression
-        self.build_expression_tree(expression)
+        self.build_expression_tree_v2(expression)
         
     def is_operator(self, char):
         """
@@ -61,6 +61,34 @@ class BinaryTree:
             # if current is operator, set last root
             if self.is_operator(current_element.data):
                 last_root = current_element
+    def build_expression_tree_v2(self, expression):
+        """
+            this function take the postfix expression and build a tree insted of it
+            parameters:
+                expression: the expression the tree will be build insted of it
+        """
+        # init nodes stack 
+        nodes_stack = []
+        
+        # loop into each character in the expression
+        for char in expression:
+            # init current node
+            node = Node(char)
+            # if char is operator, link it with elements in the stack
+            if self.is_operator(char):
+                node.right = nodes_stack[-1]
+                node.left = nodes_stack[-2]
+                nodes_stack.pop()
+                nodes_stack.pop()
+            
+            # append current node to the stack
+            nodes_stack.append(node)
+        
+        # here we should have only 1 element in the stack
+        assert len(nodes_stack) == 1
+        
+        # set the root
+        self.root = nodes_stack[-1]
     def add(self, nodes, directions):
         """
             this function add nodes to the binary insted of his directions
@@ -181,3 +209,4 @@ if __name__ == "__main__":
     tree = BinaryTree("23+4*")
     
     tree.print_inorder()
+    
