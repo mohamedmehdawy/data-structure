@@ -1,0 +1,25 @@
+print_inorder_expression:
+the main idea is add () if the parent of the sub tree is * or ^ and if it not the main root
+#
+inorder(current, paranthese="", direction="left"): this function walk throw the tree in print it with paranthese
+$
+parameters:
+    current: the current node
+    paranthese: the current paranthese of the node, is ( or )
+    direction: the place of the paranthese is in left or right
+$
+if no root, return no thing
+if the current is "*" or "/" or "^" and not a root:
+-
+call inorder for left with (
+print current with paranthese with correct direction by check it
+call inorder for right with )
+-
+else:
+-
+call inorder for left
+print current
+call inorder for right
+-
+
+#
