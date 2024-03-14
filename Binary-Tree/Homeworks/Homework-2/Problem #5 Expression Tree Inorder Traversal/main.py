@@ -209,38 +209,41 @@ class BinaryTree:
         """
             this function print the tree indorder with handle paranthese
         """
-        def inorder(current, direction="left"):
+        def inorder(current):
             """
                 this function walk throw the tree in print it with paranthese
                 parameters:
                     current: the current node
-                    direction: the place of the paranthese is in left or right
             """
             
-            # if no current, reutn nothing
-            if not current:
-                return
+            # if leaf, reutn current data
+            if not current.left and not current.right:
+                return current.data
             
-            # call it for left
-            inorder(current.left)
+            # get data of left side and right side
+            left_side = inorder(current.left)
+            right_side = inorder(current.right)
             
-            # if current need to add paranthese
-            if self.is_operator(current.data) and current is not self.root:
-                
-                # print current
-                if direction == "left":
-                    print(f"({current.data}", end="")
-                else:
-                    print(f"{current.data})", end="")
-            else:
-                # print current
-                print(f"{current.data}", end="")
-            # call it for right
-            inorder(current.right, direction="right")
-        inorder(self.root)
+            # if the current is not root, return it with paranthese, else return with out
+            if current is not self.root:
+                return f"({left_side}{current.data}{right_side})"
+
+            return f"{left_side}{current.data}{right_side}"
+
+        print(inorder(self.root))
 if __name__ == "__main__":
     tree = BinaryTree("23+4*")
     
     tree.print_inorder()
     tree.print_inorder_expression()
+    
+    tree2 = BinaryTree("51+2/")
+    
+    tree2.print_inorder()
+    tree2.print_inorder_expression()
+    
+    tree3 = BinaryTree("534*2^+")
+    
+    tree3.print_inorder()
+    tree3.print_inorder_expression()
     

@@ -22,4 +22,4 @@ else:
 return left_side + current + right_side
 
 #
-return the return value from inorder for the root
+print the return value from inorder for the root
