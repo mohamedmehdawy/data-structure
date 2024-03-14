@@ -4,22 +4,22 @@ add previous of it any paranthese
 note:
 use more test cases and show how can handle it
 #
-inorder(current, paranthese="", direction="left"): this function walk throw the tree in print it with paranthese
+inorder(current): this function walk throw the tree in print it with paranthese
 $
 parameters:
     current: the current node
-    direction: the place of the paranthese is in left or right
 $
-if no root, return no thing
-call inorder for left with direction left
-if the current operator and not a root:
--
-print current with correct direction by check it
--
+if the current is leaf, return the current node data
+
+left_side = call inorder for left
+right_side = call inorder for right side
+
+if the current is not root:
+'
+return (left_side + current + right_side)
+'
 else:
--
-print current
--
-call inorder for right with with direction right
+return left_side + current + right_side
 
 #
+return the return value from inorder for the root
