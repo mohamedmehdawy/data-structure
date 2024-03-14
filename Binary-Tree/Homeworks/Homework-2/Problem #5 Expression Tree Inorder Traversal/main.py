@@ -155,6 +155,7 @@ class BinaryTree:
             # call for right side
             inorder(current.right)
         inorder(self.root)
+        print()
 
     def first_not_perfect_check(self):
         """
@@ -204,9 +205,42 @@ class BinaryTree:
         
         return self._tree_nodes(self.root)
     
-
+    def print_inorder_expression(self):
+        """
+            this function print the tree indorder with handle paranthese
+        """
+        def inorder(current, direction="left"):
+            """
+                this function walk throw the tree in print it with paranthese
+                parameters:
+                    current: the current node
+                    direction: the place of the paranthese is in left or right
+            """
+            
+            # if no current, reutn nothing
+            if not current:
+                return
+            
+            # call it for left
+            inorder(current.left)
+            
+            # if current need to add paranthese
+            if self.is_operator(current.data) and current is not self.root:
+                
+                # print current
+                if direction == "left":
+                    print(f"({current.data}", end="")
+                else:
+                    print(f"{current.data})", end="")
+            else:
+                # print current
+                print(f"{current.data}", end="")
+            # call it for right
+            inorder(current.right, direction="right")
+        inorder(self.root)
 if __name__ == "__main__":
     tree = BinaryTree("23+4*")
     
     tree.print_inorder()
+    tree.print_inorder_expression()
     
