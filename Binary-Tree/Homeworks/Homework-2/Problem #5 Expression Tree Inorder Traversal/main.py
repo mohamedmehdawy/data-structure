@@ -14,7 +14,7 @@ class BinaryTree:
         self.length = 1
         
         # operators
-        self.operators = ["*", "/", "+", "-"]
+        self.operators = ["*", "/", "+", "-", "^"]
 
         # create tree insted of expression
         self.build_expression_tree_v2(expression)
