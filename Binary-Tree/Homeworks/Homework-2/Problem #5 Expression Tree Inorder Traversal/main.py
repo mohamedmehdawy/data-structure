@@ -18,7 +18,13 @@ class BinaryTree:
 
         # create tree insted of expression
         self.build_expression_tree_v2(expression)
-        
+    def _is_leaf(self, node):
+        """
+            this function return the status of the node is leaf or not
+            return: 
+                the status of the node is leaf or not
+        """
+        return not node.left and not node.right
     def is_operator(self, char):
         """
             this function check if the operator is operator or not
@@ -37,6 +43,8 @@ class BinaryTree:
             this function take the postfix expression and build a tree insted of it
             parameters:
                 expression: the expression the tree will be build insted of it
+            note:
+                this version will not for all cases
         """
         # init last root
         last_root = None
@@ -231,19 +239,57 @@ class BinaryTree:
             return f"{left_side}{current.data}{right_side}"
 
         print(inorder(self.root))
+    def print_inorder_expression_v2(self):
+        """
+            this function print the tree indorder with handle paranthese
+        """
+        def inorder(current):
+            """
+                this function walk throw the tree in print it with paranthese
+                parameters:
+                    current: the current node
+            """
+            
+            # if the current has left check if is leaf or not to add ()
+            if current.left:
+                if not self._is_leaf(current.left):
+                    print("(", end="")
+                
+                inorder(current.left)
+                
+                if not self._is_leaf(current.left):
+                    print(")", end="")
+
+            print(current.data, end="")
+            
+            # if the current has right check if is leaf or not to add ()
+            if current.right:
+                if not self._is_leaf(current.right):
+                    print("(", end="")
+                
+                inorder(current.right)
+                
+                if not self._is_leaf(current.right):
+                    print(")", end="")
+        inorder(self.root)
+        print()
+
 if __name__ == "__main__":
     tree = BinaryTree("23+4*")
     
     tree.print_inorder()
     tree.print_inorder_expression()
+    tree.print_inorder_expression_v2()
     
     tree2 = BinaryTree("51+2/")
     
     tree2.print_inorder()
     tree2.print_inorder_expression()
+    tree2.print_inorder_expression_v2()
     
     tree3 = BinaryTree("534*2^+")
     
     tree3.print_inorder()
     tree3.print_inorder_expression()
+    tree3.print_inorder_expression_v2()
     

@@ -23,3 +23,32 @@ return left_side + current + right_side
 
 #
 print the return value from inorder for the root
+
+$$$ v2 $$$
+_is_leaf(node): this function return the status of the node is leaf or not
+#
+return not node.left and not node.right
+#
+print_inorder_expression_v2:
+inorder(current): this function walk throw the tree in print it with paranthese
+$
+parameters:
+    current: the current node
+$
+#
+if current has left:
+-
+if the left of the current not leaf, print ( 
+call inorder for left of current
+if the left of the current not leaf, print )
+-
+
+print current value
+
+if current has right:
+-
+if the right of the current not leaf, print ( 
+call inorder for right of current
+if the right of the current not leaf, print )
+-
+#
