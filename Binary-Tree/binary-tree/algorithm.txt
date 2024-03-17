@@ -64,3 +64,9 @@ call print_expression_postfix for the left
 call print_expression_postfix for the right
 print the current value
 #
+- traversing_level_by_level(): this function print the tree level by level using breadth not depth
+the main idea is set current level nodes in queue and each level get all children of this level and
+this will be the new level
+#
+
+#
