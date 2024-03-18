@@ -68,5 +68,28 @@ print the current value
 the main idea is set current level nodes in queue and each level get all children of this level and
 this will be the new level
 #
+init current_level = 0
+init queue with size the length of the tree and enqueue the root
+init parent_numbers = 1
+init children_numbers = 0
 
+loop when the queue is not empty:
+-
+print "level" + current_level + :, with zero space
+loop in range of the parent_numbers:
+--
+current_node = first node in the queue
+print current_node with white space
+
+if have left children, add this children to the queue and increase children
+if have right children, add this children to the queue and increase children
+
+call dequeue to remove current_node from the queue
+--
+set parent_numbers = children_numbers
+set children_numbers = 0
+increase level by: 1
+print new line
+
+-
 #
